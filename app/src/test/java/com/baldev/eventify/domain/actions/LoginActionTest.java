@@ -1,7 +1,5 @@
 package com.baldev.eventify.domain.actions;
 
-import com.baldev.eventify.domain.actions.LoginAction;
-import com.baldev.eventify.domain.actions.LoginCallback;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.services.LoginService;
 
@@ -34,8 +32,8 @@ public class LoginActionTest {
 	@Mock
 	private LoginService loginService;
 
-	@InjectMocks
-	private LoginAction loginAction;
+	@InjectMocks()
+	private DefaultLoginAction LoginAction;
 
 	private Answer<Void> onLoginSuccessfulAnswer = new LoginSuccessfulAnswer();
 	private Answer<Void> onLoginFailedAnswer = new LoginFailedAnswer();
@@ -49,28 +47,28 @@ public class LoginActionTest {
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullLoginService_whenCreateLoginAction_ThenThrowNullPointerException() {
-		new LoginAction(null);
+		new DefaultLoginAction(null);
 	}
 
 	@Test
 	public void givenValidParameters_whenExecute_ThenOnLoginSuccessfulCalledOnce() {
-		loginAction.execute(validUser, loginCallback);
+		LoginAction.execute(validUser, loginCallback);
 		verify(loginCallback, times(1)).onLoginSuccessful();
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullUser_whenExecute_ThenThrowNullPointerException() {
-		loginAction.execute(null, loginCallback);
+		LoginAction.execute(null, loginCallback);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullListener_whenExecute_ThenThrowNullPointerException() {
-		loginAction.execute(validUser, null);
+		LoginAction.execute(validUser, null);
 	}
 
 	@Test
 	public void givenInvalidUser_whenExecute_ThenOnLoginFailedCalledOnce() {
-		loginAction.execute(invalidUser, loginCallback);
+		LoginAction.execute(invalidUser, loginCallback);
 		verify(loginCallback, times(1)).onLoginFailed();
 	}
 
