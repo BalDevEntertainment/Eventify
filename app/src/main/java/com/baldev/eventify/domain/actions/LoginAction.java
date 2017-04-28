@@ -20,6 +20,6 @@ public class LoginAction {
 		Preconditions.checkNotNull(user);
 		Preconditions.checkNotNull(loginCallback);
 
-		loginService.execute(user, loginCallback);
+		loginService.login(user, loginCallback);
 	}
 }

@@ -37,7 +37,7 @@ public class LoginServiceTest {
 
 	@Test
 	public void givenValidParameters_whenExecute_ThenOnLoginSuccessfulCalledOnce() {
-		loginService.execute(validUser, loginCallback);
+		loginService.login(validUser, loginCallback);
 		verify(loginCallback, times(1)).onLoginSuccessful();
 	}
 }

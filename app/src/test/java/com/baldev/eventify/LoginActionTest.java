@@ -43,8 +43,8 @@ public class LoginActionTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		doAnswer(onLoginSuccessfulAnswer).when(loginService).execute(validUser, loginCallback);
-		doAnswer(onLoginFailedAnswer).when(loginService).execute(invalidUser, loginCallback);
+		doAnswer(onLoginSuccessfulAnswer).when(loginService).login(validUser, loginCallback);
+		doAnswer(onLoginFailedAnswer).when(loginService).login(invalidUser, loginCallback);
 	}
 
 	@Test(expected = NullPointerException.class)
