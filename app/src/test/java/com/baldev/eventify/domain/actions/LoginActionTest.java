@@ -1,4 +1,4 @@
-package com.baldev.eventify;
+package com.baldev.eventify.domain.actions;
 
 import com.baldev.eventify.domain.actions.LoginAction;
 import com.baldev.eventify.domain.actions.LoginCallback;

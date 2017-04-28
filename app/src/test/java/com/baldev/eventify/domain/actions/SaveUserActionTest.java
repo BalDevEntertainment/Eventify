@@ -1,4 +1,4 @@
-package com.baldev.eventify;
+package com.baldev.eventify.domain.actions;
 
 import com.baldev.eventify.domain.actions.SaveUserAction;
 import com.baldev.eventify.domain.actions.SaveUserCallback;
