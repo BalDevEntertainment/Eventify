@@ -5,9 +5,11 @@ public interface CreateUserContract {
 
 	interface View {
 
+		String getUserName();
 	}
 
 	interface Presenter {
 
+		void acceptButtonPressed();
 	}
 }

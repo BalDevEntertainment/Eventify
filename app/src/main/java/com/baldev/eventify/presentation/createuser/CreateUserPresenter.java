@@ -5,22 +5,34 @@ import com.baldev.eventify.domain.actions.CreateUserAction;
 import com.baldev.eventify.domain.actions.SaveUserAction;
 import com.baldev.eventify.domain.actions.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.presentation.createuser.CreateUserContract.Presenter;
+import com.baldev.eventify.presentation.createuser.CreateUserContract.View;
 import com.google.common.base.Preconditions;
 
-public class CreateUserPresenter implements CreateUserContract.Presenter {
+public class CreateUserPresenter implements Presenter, SaveUserCallback {
 
 	private CreateUserAction createUserAction;
 	private SaveUserAction saveUserAction;
+	private View view;
 
-	public CreateUserPresenter(CreateUserAction createUserAction, SaveUserAction saveUserAction) {
+	public CreateUserPresenter(View view, CreateUserAction createUserAction, SaveUserAction saveUserAction) {
 		Preconditions.checkNotNull(createUserAction);
 		Preconditions.checkNotNull(saveUserAction);
+		Preconditions.checkNotNull(view);
 		this.createUserAction = createUserAction;
 		this.saveUserAction = saveUserAction;
+		this.view = view;
 	}
 
-	public void createUser(String userName, SaveUserCallback saveUserCallback) {
+	@Override
+	public void acceptButtonPressed() {
+		String userName = view.getUserName();
 		User user = createUserAction.execute(userName);
-		saveUserAction.execute(user, saveUserCallback);
+		saveUserAction.execute(user, this);
+	}
+
+	@Override
+	public void onUserCreated() {
+
 	}
 }

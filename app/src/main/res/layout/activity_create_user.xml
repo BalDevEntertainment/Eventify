@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Welcome!"
+        android:textSize="14sp"/>
+
+    <EditText
+        android:id="@+id/username_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="Select your username"
+        android:textColorHint="@android:color/darker_gray"
+        android:lines="1"
+        android:maxLength="20"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/accept_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="ACCEPT"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+
+</LinearLayout>

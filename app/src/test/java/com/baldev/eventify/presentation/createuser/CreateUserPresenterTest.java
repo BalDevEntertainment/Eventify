@@ -27,28 +27,36 @@ public class CreateUserPresenterTest {
 	private SaveUserAction saveUserAction;
 	@Mock
 	private SaveUserCallback createUserCallback;
+	@Mock
+	private CreateUserContract.View view;
 
-	private String userName = "Ari";
+	private String userName = "UserName";
 
 	@Before
 	public void setUp() throws Exception {
 		when(createUserAction.execute(userName)).thenReturn(Mockito.mock(User.class));
+		when(view.getUserName()).thenReturn(userName);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void givenNullView_whenNewPresenter_ThenThrowNullPointerException() {
+		new CreateUserPresenter(null, createUserAction, saveUserAction);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullCreateUserAction_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateUserPresenter(null, saveUserAction);
+		new CreateUserPresenter(view, null, saveUserAction);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullSaveUserAction_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateUserPresenter(createUserAction, null);
+		new CreateUserPresenter(view, createUserAction, null);
 	}
 
 	@Test
 	public void whenCreateUser_ThenSaveUserActionIsExecuted() {
-		CreateUserPresenter presenter = new CreateUserPresenter(createUserAction, saveUserAction);
-		presenter.createUser(userName, createUserCallback);
+		CreateUserPresenter presenter = new CreateUserPresenter(view, createUserAction, saveUserAction);
+		presenter.acceptButtonPressed();
 		verify(saveUserAction, times(1)).execute(isNotNull(User.class), isNotNull(SaveUserCallback.class));
 	}
 }
