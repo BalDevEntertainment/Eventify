@@ -48,3 +48,7 @@ captures/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/misc.xml
+/.idea/vcs.xml
