@@ -1,7 +1,5 @@
 package com.baldev.eventify.domain.actions;
 
-import com.baldev.eventify.domain.actions.SaveUserAction;
-import com.baldev.eventify.domain.actions.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.services.SaveUserService;
 
@@ -32,7 +30,7 @@ public class SaveUserActionTest {
 	private SaveUserService saveUserService;
 
 	@InjectMocks
-	private SaveUserAction saveUserAction;
+	private DefaultSaveUserAction saveUserAction;
 
 	private Answer<Void> saveUserSuccessfulAnswer = new SaveUserSuccessfulAnswer();
 
@@ -44,7 +42,7 @@ public class SaveUserActionTest {
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullCreateUserService_whenCreateCreateUserAction_ThenThrowNullPointerException() {
-		new SaveUserAction(null);
+		new DefaultSaveUserAction(null);
 	}
 
 	@Test

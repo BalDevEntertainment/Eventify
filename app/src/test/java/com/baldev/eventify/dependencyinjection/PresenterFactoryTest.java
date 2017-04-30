@@ -12,7 +12,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 public class PresenterFactoryTest {
 
-
 	@Test
 	public void whenProvideCreateUserPresenter_ThenReturnCreateUserPresenter() {
 		Assert.assertNotNull(PresenterFactory.provideCreateUserPresenter(Mockito.mock(CreateUserActivity.class)));
