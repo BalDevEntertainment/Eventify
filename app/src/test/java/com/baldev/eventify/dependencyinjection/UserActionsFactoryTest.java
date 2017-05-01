@@ -20,4 +20,9 @@ public class UserActionsFactoryTest {
 	public void whenProvideSaveUserAction_ThenReturnSaveUserAction() {
 		assertNotNull(UserActionsFactory.provideSaveUserAction());
 	}
+
+	@Test
+	public void whenProvideCreateGroupAction_ThenReturnCreateGroupAction() {
+		assertNotNull(UserActionsFactory.provideCreateGroupAction());
+	}
 }

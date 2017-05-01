@@ -3,6 +3,7 @@ package com.baldev.eventify.dependencyinjection;
 
 import android.support.annotation.NonNull;
 
+import com.baldev.eventify.domain.services.CreateGroupService;
 import com.baldev.eventify.domain.services.CreateUserService;
 import com.baldev.eventify.domain.services.SaveUserService;
 
@@ -15,5 +16,9 @@ public abstract class ServicesFactory {
 
 	public static SaveUserService provideSaveUserService() {
 		return new SaveUserService();
+	}
+
+	public static CreateGroupService provideCreateGroupService() {
+		return new CreateGroupService();
 	}
 }
