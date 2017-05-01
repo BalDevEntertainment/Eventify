@@ -14,6 +14,7 @@ import static junit.framework.Assert.assertNotNull;
 public class CreateUserServiceTest {
 
 	private CreateUserService createUserService;
+	private String userName = "User Name";
 
 	@Before
 	public void setUp() throws Exception {
@@ -22,7 +23,6 @@ public class CreateUserServiceTest {
 
 	@Test
 	public void givenValidUserName_whenCreateUser_ThenUserIsCreated() {
-		String userName = "Ari";
 		User user = createUserService.createUser(userName);
 		assertNotNull(user);
 	}

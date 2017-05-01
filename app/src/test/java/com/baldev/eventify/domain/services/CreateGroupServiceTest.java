@@ -22,7 +22,7 @@ public class CreateGroupServiceTest {
 	}
 
 	@Test
-	public void givenValidUserName_whenCreateUser_ThenUserIsCreated() {
+	public void givenValidGroupName_whenCreateGroup_ThenGroupHasThatName() {
 		Group group = createGroupService.createGroup(groupName);
 		assertNotNull(group);
 	}

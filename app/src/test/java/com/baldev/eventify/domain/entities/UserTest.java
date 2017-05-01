@@ -11,15 +11,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class UserTest {
 
 	@Test
-	public void givenValidUserName_WhenNewUser_ThenUserHasThatUserName(){
+	public void givenValidUserName_WhenNewUser_ThenUserHasThatUserName() {
 		String userName = "UserName";
 		User user = new User(userName);
 		Assert.assertEquals(user.getName(), userName);
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void givenNullUserName_WhenNewUser_ThenThrowNullPointerException(){
+	public void givenNullUserName_WhenNewUser_ThenThrowNullPointerException() {
 		new User(null);
 	}
-
 }
