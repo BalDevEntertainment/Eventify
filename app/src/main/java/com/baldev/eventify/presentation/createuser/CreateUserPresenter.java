@@ -33,7 +33,7 @@ public class CreateUserPresenter implements Presenter, SaveUserCallback {
 	}
 
 	@Override
-	public void onUserCreated() {
+	public void onUserSaved() {
 
 	}
 }

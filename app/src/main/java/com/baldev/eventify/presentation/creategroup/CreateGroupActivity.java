@@ -19,8 +19,6 @@ import com.baldev.eventify.presentation.userlist.UserListActivity;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,12 +31,16 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 	@BindView(R.id.user_list)
 	protected RecyclerView userList;
 
+	private Presenter presenter;
+
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_create_group);
 		ButterKnife.bind(this);
 		setupToolbar();
+
+		this.presenter = PresenterFactory.provideCreateGroupPresenter(this);
 	}
 
 	@Override
@@ -71,7 +73,6 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 	}
 
 	private void save() {
-
 	}
 
 	private void setupToolbar() {

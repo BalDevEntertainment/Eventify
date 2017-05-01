@@ -1,8 +1,6 @@
 package com.baldev.eventify.domain.entities;
 
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -25,11 +23,6 @@ public class UserTest {
 	public void givenValidUserId_WhenNewUser_ThenUserHasThatUserId() {
 		User user = new User(validId, userName);
 		assertEquals(user.getId(), validId);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void givenInvalidUserId_WhenNewUser_ThenThrowIllegalArgumentException() {
-		new User(- 1, userName);
 	}
 
 	@Test(expected = NullPointerException.class)

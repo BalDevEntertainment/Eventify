@@ -48,14 +48,14 @@ public class SaveUserActionTest {
 	@Test
 	public void givenValidUser_WhenCreateUserActionIsExecuted_ThenOnUserCreatedIsCalled() {
 		saveUserAction.execute(validUser, saveUserCallback);
-		verify(saveUserCallback, times(1)).onUserCreated();
+		verify(saveUserCallback, times(1)).onUserSaved();
 	}
 
 	private static final class SaveUserSuccessfulAnswer implements Answer<Void> {
 		@Override
 		public Void answer(InvocationOnMock invocation) throws Throwable {
 			SaveUserCallback callback = (SaveUserCallback) invocation.getArguments()[1];
-			callback.onUserCreated();
+			callback.onUserSaved();
 			return null;
 		}
 	}

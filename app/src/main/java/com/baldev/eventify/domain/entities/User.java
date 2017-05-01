@@ -9,7 +9,6 @@ public class User {
 
 	public User(int id, String name) {
 		Preconditions.checkNotNull(name);
-		Preconditions.checkArgument(id > 0);
 		this.name = name;
 		this.id = id;
 	}

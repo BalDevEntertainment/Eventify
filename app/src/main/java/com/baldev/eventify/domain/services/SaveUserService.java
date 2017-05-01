@@ -3,10 +3,17 @@ package com.baldev.eventify.domain.services;
 
 import com.baldev.eventify.domain.actions.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.repositories.UsersRepository;
 
 public class SaveUserService {
 
+	private UsersRepository usersRepository;
+
+	public SaveUserService(UsersRepository usersRepository) {
+		this.usersRepository = usersRepository;
+	}
+
 	public void saveUser(User user, SaveUserCallback saveUserCallback) {
-		saveUserCallback.onUserCreated();
+		usersRepository.saveUser(user, saveUserCallback);
 	}
 }

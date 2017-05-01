@@ -18,7 +18,7 @@ public abstract class ServicesFactory {
 
 	@NonNull
 	public static SaveUserService provideSaveUserService() {
-		return new SaveUserService();
+		return new SaveUserService(RepositoriesFactory.provideUsersRepository());
 	}
 
 	@NonNull
