@@ -8,4 +8,6 @@ public interface UsersRepository {
 	User getMyUser();
 
 	void saveUser(User validUser, SaveUserCallback saveUserCallback);
+
+	void getUsers(GetUsersCallback getUsersCallback);
 }

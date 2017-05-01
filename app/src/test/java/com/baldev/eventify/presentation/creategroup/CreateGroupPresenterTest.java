@@ -1,18 +1,13 @@
 package com.baldev.eventify.presentation.creategroup;
 
 import com.baldev.eventify.domain.actions.CreateGroupAction;
+import com.baldev.eventify.domain.actions.GetMyUserAction;
 import com.baldev.eventify.domain.entities.User;
-import com.baldev.eventify.domain.services.GetMyUserService;
-
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static junit.framework.Assert.assertNotNull;
@@ -29,7 +24,7 @@ public class CreateGroupPresenterTest {
 	private CreateGroupContract.View view;
 
 	@Mock
-	private GetMyUserService getMyUserService;
+	private GetMyUserAction getMyUserAction;
 
 	@Mock
 	private User myUser;
@@ -38,19 +33,19 @@ public class CreateGroupPresenterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		when(getMyUserService.getMyUser()).thenReturn(myUser);
+		when(getMyUserAction.execute()).thenReturn(myUser);
 		when(myUser.getId()).thenReturn(1);
-		createGroupPresenter = new CreateGroupPresenter(view, createGroupAction, getMyUserService);
+		createGroupPresenter = new CreateGroupPresenter(view, createGroupAction, getMyUserAction);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullView_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateGroupPresenter(null, createGroupAction, getMyUserService);
+		new CreateGroupPresenter(null, createGroupAction, getMyUserAction);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullCreateGroupAction_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateGroupPresenter(view, null, getMyUserService);
+		new CreateGroupPresenter(view, null, getMyUserAction);
 	}
 
 	@Test(expected = NullPointerException.class)

@@ -2,6 +2,7 @@ package com.baldev.eventify.dependencyinjection;
 
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract;
 import com.baldev.eventify.presentation.createuser.CreateUserContract;
+import com.baldev.eventify.presentation.userlist.UserListContract;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,5 +23,10 @@ public class PresenterFactoryTest {
 	@Test
 	public void whenProvideCreateGroupPresenter_ThenReturnCreateGroupPresenter() {
 		assertNotNull(PresenterFactory.provideCreateGroupPresenter(Mockito.mock(CreateGroupContract.View.class)));
+	}
+
+	@Test
+	public void whenProvideUserListPresenter_ThenReturnUserListPresenter() {
+		assertNotNull(PresenterFactory.provideUserListPresenter(Mockito.mock(UserListContract.View.class)));
 	}
 }

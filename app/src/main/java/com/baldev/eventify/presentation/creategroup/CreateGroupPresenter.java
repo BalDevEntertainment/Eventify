@@ -1,6 +1,7 @@
 package com.baldev.eventify.presentation.creategroup;
 
 import com.baldev.eventify.domain.actions.CreateGroupAction;
+import com.baldev.eventify.domain.actions.GetMyUserAction;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.services.GetMyUserService;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract.Presenter;
@@ -15,12 +16,12 @@ import javax.inject.Inject;
 public class CreateGroupPresenter implements Presenter {
 
 	private final List<User> users;
-	private final GetMyUserService getMyUserService;
+	private final GetMyUserAction getMyUserAction;
 
 	@Inject
-	public CreateGroupPresenter(View view, CreateGroupAction createGroupAction, GetMyUserService getMyUserService) {
-		new Validations(view, createGroupAction, getMyUserService).execute();
-		this.getMyUserService = getMyUserService;
+	public CreateGroupPresenter(View view, CreateGroupAction createGroupAction, GetMyUserAction getMyUserAction) {
+		new Validations(view, createGroupAction, getMyUserAction).execute();
+		this.getMyUserAction = getMyUserAction;
 		users = initializeUsersList();
 
 		initializeUserListAdapter(view);
@@ -36,25 +37,25 @@ public class CreateGroupPresenter implements Presenter {
 
 	private List<User> initializeUsersList() {
 		List<User> users = new ArrayList<>();
-		users.add(getMyUserService.getMyUser());
+		users.add(getMyUserAction.execute());
 		return users;
 	}
 
 	private class Validations {
 		private View view;
 		private CreateGroupAction createGroupAction;
-		private GetMyUserService getMyUserService;
+		private GetMyUserAction getMyUserAction;
 
-		public Validations(View view, CreateGroupAction createGroupAction, GetMyUserService getMyUserService) {
+		public Validations(View view, CreateGroupAction createGroupAction, GetMyUserAction getMyUserAction) {
 			this.view = view;
 			this.createGroupAction = createGroupAction;
-			this.getMyUserService = getMyUserService;
+			this.getMyUserAction = getMyUserAction;
 		}
 
 		public void execute() {
 			Preconditions.checkNotNull(view);
 			Preconditions.checkNotNull(createGroupAction);
-			Preconditions.checkNotNull(getMyUserService);
+			Preconditions.checkNotNull(getMyUserAction);
 		}
 	}
 }
