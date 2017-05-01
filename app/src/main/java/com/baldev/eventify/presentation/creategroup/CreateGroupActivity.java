@@ -2,8 +2,9 @@ package com.baldev.eventify.presentation.creategroup;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.SparseArrayCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,16 +14,14 @@ import com.baldev.eventify.presentation.creategroup.CreateGroupContract.Presente
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CreateGroupActivity extends AppCompatActivity implements CreateGroupContract.View {
 
+	private final SparseArrayCompat<CreateGroupMenuAction> menuActionsMap = new SparseArrayCompat<>();
+
 	@Inject
 	private Presenter presenter;
-
-	//@BindView(R.id.toolbar)
-	//protected Toolbar toolbar;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,12 +40,7 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.action_menu_save:
-				save();
-				return true;
-		}
-		return false;
+		return menuActionsMap.get(item.getItemId(), new TakeNoAction()).execute();
 	}
 
 	private void save() {
@@ -54,14 +48,29 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 	}
 
 	private void setupToolbar() {
-		//setSupportActionBar(toolbar);
 		if (isToolbarSet()) {
-			this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-			this.getSupportActionBar().setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
+			ActionBar actionBar = this.getSupportActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
+			setActionBarActions();
 		}
+	}
+
+	private void setActionBarActions() {
+		menuActionsMap.put(R.id.action_menu_save, () -> {
+			save();
+			return true;
+		});
 	}
 
 	private boolean isToolbarSet() {
 		return this.getSupportActionBar() != null;
+	}
+
+	private class TakeNoAction implements CreateGroupMenuAction {
+		@Override
+		public boolean execute() {
+			return false;
+		}
 	}
 }

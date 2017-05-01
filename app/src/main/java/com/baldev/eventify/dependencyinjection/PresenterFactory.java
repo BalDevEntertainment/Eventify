@@ -14,6 +14,7 @@ public abstract class PresenterFactory {
 		return new CreateUserPresenter(view, UserActionsFactory.provideCreateUserAction(), UserActionsFactory.provideSaveUserAction());
 	}
 
+	@NonNull
 	public static CreateGroupContract.Presenter provideCreateGroupPresenter(CreateGroupContract.View view) {
 		return new CreateGroupPresenter(view, UserActionsFactory.provideCreateGroupAction());
 	}

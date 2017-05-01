@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 
 import com.baldev.eventify.domain.services.CreateGroupService;
 import com.baldev.eventify.domain.services.CreateUserService;
+import com.baldev.eventify.domain.services.GetMyUserService;
 import com.baldev.eventify.domain.services.SaveUserService;
+import com.baldev.eventify.infrastructure.depdendencyinjection.RepositoriesFactory;
 
 public abstract class ServicesFactory {
 
@@ -14,11 +16,18 @@ public abstract class ServicesFactory {
 		return new CreateUserService();
 	}
 
+	@NonNull
 	public static SaveUserService provideSaveUserService() {
 		return new SaveUserService();
 	}
 
+	@NonNull
 	public static CreateGroupService provideCreateGroupService() {
-		return new CreateGroupService();
+		return new CreateGroupService(ServicesFactory.provideGetMyUserService());
+	}
+
+	@NonNull
+	public static GetMyUserService provideGetMyUserService() {
+		return new GetMyUserService(RepositoriesFactory.provideUsersRepository());
 	}
 }
