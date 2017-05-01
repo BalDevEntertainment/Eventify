@@ -8,14 +8,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.baldev.eventify.R;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
+import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract.Presenter;
 import com.baldev.eventify.presentation.userlist.UserListActivity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,19 +28,16 @@ import butterknife.OnClick;
 public class CreateGroupActivity extends AppCompatActivity implements CreateGroupContract.View {
 
 	private final SparseArrayCompat<CreateGroupMenuAction> menuActionsMap = new SparseArrayCompat<>();
+	private final UserListAdapter userListAdapter = new UserListAdapter();
 
 	@BindView(R.id.user_list)
 	protected RecyclerView userList;
-
-	@Inject
-	private Presenter presenter;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_create_group);
 		ButterKnife.bind(this);
-		this.presenter = PresenterFactory.provideCreateGroupPresenter(this);
 		setupToolbar();
 	}
 
@@ -59,9 +58,11 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 	}
 
 	@Override
-	public void setUserListAdapter(Adapter adapter) {
-		this.userList.setAdapter(adapter);
+	public void setUserListToAdapter(List<User> users) {
+		this.userList.setAdapter(userListAdapter);
 		this.userList.setLayoutManager(new LinearLayoutManager(this));
+		this.userListAdapter.setItems(users);
+		this.userListAdapter.notifyDataSetChanged();
 	}
 
 	private void startUserListActivity() {

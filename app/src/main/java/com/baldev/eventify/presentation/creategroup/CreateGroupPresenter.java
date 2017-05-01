@@ -16,7 +16,6 @@ public class CreateGroupPresenter implements Presenter {
 
 	private final List<User> users;
 	private final GetMyUserService getMyUserService;
-	private final UserListAdapter userListAdapter = new UserListAdapter();
 
 	@Inject
 	public CreateGroupPresenter(View view, CreateGroupAction createGroupAction, GetMyUserService getMyUserService) {
@@ -32,9 +31,7 @@ public class CreateGroupPresenter implements Presenter {
 	}
 
 	private void initializeUserListAdapter(View view) {
-		view.setUserListAdapter(userListAdapter);
-		userListAdapter.setItems(users);
-		userListAdapter.notifyDataSetChanged();
+		view.setUserListToAdapter(users);
 	}
 
 	private List<User> initializeUsersList() {
