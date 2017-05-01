@@ -1,24 +1,34 @@
 package com.baldev.eventify.presentation.creategroup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.baldev.eventify.R;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract.Presenter;
+import com.baldev.eventify.presentation.userlist.UserListActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CreateGroupActivity extends AppCompatActivity implements CreateGroupContract.View {
 
 	private final SparseArrayCompat<CreateGroupMenuAction> menuActionsMap = new SparseArrayCompat<>();
+
+	@BindView(R.id.user_list)
+	protected RecyclerView userList;
 
 	@Inject
 	private Presenter presenter;
@@ -41,6 +51,22 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return menuActionsMap.get(item.getItemId(), new TakeNoAction()).execute();
+	}
+
+	@OnClick(R.id.add_remove_members_button)
+	public void onAddRemoveMembersButtonPressed() {
+		startUserListActivity();
+	}
+
+	@Override
+	public void setUserListAdapter(Adapter adapter) {
+		this.userList.setAdapter(adapter);
+		this.userList.setLayoutManager(new LinearLayoutManager(this));
+	}
+
+	private void startUserListActivity() {
+		Intent intent = new Intent(this, UserListActivity.class);
+		startActivity(intent);
 	}
 
 	private void save() {

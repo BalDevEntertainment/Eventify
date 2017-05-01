@@ -16,6 +16,6 @@ public abstract class PresenterFactory {
 
 	@NonNull
 	public static CreateGroupContract.Presenter provideCreateGroupPresenter(CreateGroupContract.View view) {
-		return new CreateGroupPresenter(view, UserActionsFactory.provideCreateGroupAction());
+		return new CreateGroupPresenter(view, UserActionsFactory.provideCreateGroupAction(), ServicesFactory.provideGetMyUserService());
 	}
 }

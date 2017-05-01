@@ -23,7 +23,7 @@ public abstract class ServicesFactory {
 
 	@NonNull
 	public static CreateGroupService provideCreateGroupService() {
-		return new CreateGroupService(ServicesFactory.provideGetMyUserService());
+		return new CreateGroupService();
 	}
 
 	@NonNull

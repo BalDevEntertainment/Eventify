@@ -22,18 +22,12 @@ import static junit.framework.Assert.assertNotNull;
 @RunWith(MockitoJUnitRunner.class)
 public class CreateGroupServiceTest {
 
-	@Mock
-	private GetMyUserService getMyUserService;
 	private String groupName = "Group Name";
 	private List<User> emptyUserList = new ArrayList<>();
 	private List<User> userList = new ArrayList<>();
 
 	@InjectMocks
 	private CreateGroupService createGroupService;
-	public static final int ONE_USER = 1;
-
-	@Mock
-	private User myUser;
 
 	@Mock
 	private User mockUser;
@@ -41,10 +35,7 @@ public class CreateGroupServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		createGroupService = new CreateGroupService(getMyUserService);
-		Mockito.when(mockUser.getName()).thenReturn("MockUser");
-		Mockito.when(myUser.getName()).thenReturn("MyUser");
-		Mockito.when(getMyUserService.getMyUser()).thenReturn(myUser);
+		createGroupService = new CreateGroupService();
 		userList.add(mockUser);
 		userList.add(mockUser);
 	}
@@ -60,17 +51,9 @@ public class CreateGroupServiceTest {
 	}
 
 	@Test()
-	public void givenEmptyUserList_whenCreateGroup_ThenAddMyselfAtTheBeginningOfTheList() {
-		Group group = createGroupService.createGroup(groupName, emptyUserList);
-		assertEquals(group.getUsers().size(), ONE_USER);
-		assertEquals(group.getUsers().get(0), getMyUserService.getMyUser());
-	}
-
-	@Test()
-	public void givenUserList_whenCreateGroup_ThenAddMyselfAtTheBeginningOfTheList() {
+	public void givenUserList_whenCreateGroup_ThenGroupContainsThoseUsers() {
 		Group group = createGroupService.createGroup(groupName, userList);
-		assertEquals(group.getUsers().size(), userList.size() + ONE_USER);
-		assertEquals(group.getUsers().get(0).getName(), getMyUserService.getMyUser().getName());
+		assertEquals(group.getUsers().size(), userList.size());
 	}
 
 	@Test

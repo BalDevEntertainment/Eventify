@@ -7,18 +7,33 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static junit.framework.Assert.assertEquals;
+
 @RunWith(MockitoJUnitRunner.class)
 public class UserTest {
 
+	private String userName = "UserName";
+	private int validId = 1;
+
 	@Test
 	public void givenValidUserName_WhenNewUser_ThenUserHasThatUserName() {
-		String userName = "UserName";
-		User user = new User(userName);
-		Assert.assertEquals(user.getName(), userName);
+		User user = new User(1, userName);
+		assertEquals(user.getName(), userName);
+	}
+
+	@Test
+	public void givenValidUserId_WhenNewUser_ThenUserHasThatUserId() {
+		User user = new User(validId, userName);
+		assertEquals(user.getId(), validId);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void givenInvalidUserId_WhenNewUser_ThenThrowIllegalArgumentException() {
+		new User(- 1, userName);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullUserName_WhenNewUser_ThenThrowNullPointerException() {
-		new User(null);
+		new User(1, null);
 	}
 }

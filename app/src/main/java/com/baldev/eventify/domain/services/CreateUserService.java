@@ -6,6 +6,6 @@ import com.google.common.base.Preconditions;
 public class CreateUserService {
 	public User createUser(String userName) {
 		Preconditions.checkNotNull(userName);
-		return new User(userName);
+		return new User(1, userName);
 	}
 }

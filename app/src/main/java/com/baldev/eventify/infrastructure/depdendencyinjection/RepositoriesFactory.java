@@ -2,10 +2,10 @@ package com.baldev.eventify.infrastructure.depdendencyinjection;
 
 
 import com.baldev.eventify.domain.repositories.UsersRepository;
-import com.baldev.eventify.infrastructure.repositories.DefaultUsersRepository;
+import com.baldev.eventify.infrastructure.repositories.StubUsersRepository;
 
 public abstract class RepositoriesFactory {
 	public static UsersRepository provideUsersRepository() {
-		return new DefaultUsersRepository();
+		return new StubUsersRepository();
 	}
 }
