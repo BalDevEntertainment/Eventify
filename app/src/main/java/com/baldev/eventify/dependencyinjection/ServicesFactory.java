@@ -4,6 +4,7 @@ package com.baldev.eventify.dependencyinjection;
 import android.support.annotation.NonNull;
 
 import com.baldev.eventify.domain.repositories.UsersRepository;
+import com.baldev.eventify.domain.services.AddUsersToGroupService;
 import com.baldev.eventify.domain.services.CreateGroupService;
 import com.baldev.eventify.domain.services.CreateUserService;
 import com.baldev.eventify.domain.services.GetMyUserService;
@@ -38,5 +39,9 @@ public abstract class ServicesFactory {
 	@NonNull
 	public static GetUsersService provideGetUsersService() {
 		return new GetUsersService(usersRepository);
+	}
+
+	public static AddUsersToGroupService provideAddUsersToGroupService() {
+		return new AddUsersToGroupService();
 	}
 }

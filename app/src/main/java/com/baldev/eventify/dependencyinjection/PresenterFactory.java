@@ -10,20 +10,22 @@ import com.baldev.eventify.presentation.userlist.UserListContract;
 import com.baldev.eventify.presentation.userlist.UserListContract.Presenter;
 import com.baldev.eventify.presentation.userlist.UserListPresenter;
 
+import static com.baldev.eventify.dependencyinjection.ActionsFactory.*;
+
 public abstract class PresenterFactory {
 
 	@NonNull
 	public static CreateUserContract.Presenter provideCreateUserPresenter(CreateUserContract.View view) {
-		return new CreateUserPresenter(view, UserActionsFactory.provideCreateUserAction(), UserActionsFactory.provideSaveUserAction());
+		return new CreateUserPresenter(view, provideCreateUserAction(), provideSaveUserAction());
 	}
 
 	@NonNull
 	public static CreateGroupContract.Presenter provideCreateGroupPresenter(CreateGroupContract.View view) {
-		return new CreateGroupPresenter(view, UserActionsFactory.provideCreateGroupAction(), UserActionsFactory.provideGetMyUserAction());
+		return new CreateGroupPresenter(view, provideCreateGroupAction(), provideGetMyUserAction());
 	}
 
 	@NonNull
 	public static Presenter provideUserListPresenter(UserListContract.View view) {
-		return new UserListPresenter(view, UserActionsFactory.provideGetUsersAction());
+		return new UserListPresenter(view, provideGetUsersAction(), provideAddUsersToGroupAction(), provideGetGroupBeingCreated());
 	}
 }

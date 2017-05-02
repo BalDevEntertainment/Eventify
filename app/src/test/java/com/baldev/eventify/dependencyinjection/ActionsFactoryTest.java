@@ -9,20 +9,25 @@ import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserActionsFactoryTest {
+public class ActionsFactoryTest {
 
 	@Test
 	public void whenProvideCreateUserAction_ThenReturnCreateUserAction() {
-		assertNotNull(UserActionsFactory.provideCreateUserAction());
+		assertNotNull(ActionsFactory.provideCreateUserAction());
 	}
 
 	@Test
 	public void whenProvideSaveUserAction_ThenReturnSaveUserAction() {
-		assertNotNull(UserActionsFactory.provideSaveUserAction());
+		assertNotNull(ActionsFactory.provideSaveUserAction());
 	}
 
 	@Test
 	public void whenProvideCreateGroupAction_ThenReturnCreateGroupAction() {
-		assertNotNull(UserActionsFactory.provideCreateGroupAction());
+		assertNotNull(ActionsFactory.provideCreateGroupAction());
+	}
+
+	@Test
+	public void whenProvideAddUsersToGroupAction_ThenReturnCreateGroupAction() {
+		assertNotNull(ActionsFactory.provideAddUsersToGroupAction());
 	}
 }

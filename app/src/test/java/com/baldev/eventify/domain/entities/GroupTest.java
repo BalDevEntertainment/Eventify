@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 @RunWith(MockitoJUnitRunner.class)
 public class GroupTest {
 
-	private String groupName = "Group Name";
 	private List<User> emptyUserList = new ArrayList<>();
 	private List<User> userList = new ArrayList<>();
 
@@ -25,29 +24,13 @@ public class GroupTest {
 	}
 
 	@Test
-	public void givenValidGroupName_WhenNewGroup_ThenGroupHasThatGroupName() {
-		Group group = new Group(groupName, userList);
-		assertEquals(group.getName(), groupName);
-	}
-
-	@Test
 	public void givenValidUserListName_WhenNewGroup_ThenGroupHasThatAmoutOfUsers() {
-		Group group = new Group(groupName, userList);
+		Group group = new Group(userList);
 		assertEquals(group.getUsers().size(), userList.size());
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void givenNullGroupName_WhenNewGroup_ThenThrowNullPointerException() {
-		new Group(null, userList);
-	}
-
-	@Test(expected = NullPointerException.class)
 	public void givenNullUserList_WhenNewGroup_ThenThrowNullPointerException() {
-		new Group(groupName, null);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void givenEmptyUserList_WhenNewGroup_ThenThrowIllegalArgumentException() {
-		new Group(groupName, emptyUserList);
+		new Group(null);
 	}
 }

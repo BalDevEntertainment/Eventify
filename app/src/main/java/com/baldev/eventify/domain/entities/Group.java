@@ -15,11 +15,8 @@ public class Group {
 	private List<User> users;
 
 	@Inject
-	public Group(String name, List<User> users) {
-		Preconditions.checkNotNull(name);
+	public Group(List<User> users) {
 		Preconditions.checkNotNull(users);
-		Preconditions.checkArgument(!users.isEmpty());
-		this.name = name;
 		this.users = users;
 	}
 
@@ -30,5 +27,9 @@ public class Group {
 	@NonNull
 	public List<User> getUsers() {
 		return users;
+	}
+
+	public void addUsers(List<User> userList) {
+		this.users.addAll(userList);
 	}
 }

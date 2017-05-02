@@ -19,11 +19,10 @@ public class CreateGroupService {
 		this.groupsRepository = groupsRepository;
 	}
 
-	public Group createGroup(String groupName, List<User> userList) {
-		Preconditions.checkNotNull(groupName);
+	public Group createGroup(List<User> userList) {
 		Preconditions.checkNotNull(userList);
 
-		Group group = new Group(groupName, userList);
+		Group group = new Group(userList);
 		groupsRepository.setGroupBeingCreated(group);
 		return group;
 	}

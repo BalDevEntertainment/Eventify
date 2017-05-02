@@ -18,9 +18,8 @@ public class DefaultCreateGroupAction implements CreateGroupAction {
 	}
 
 	@Override
-	public Group execute(String groupName, List<User> users) {
-		Preconditions.checkNotNull(groupName);
+	public Group execute(List<User> users) {
 		Preconditions.checkNotNull(users);
-		return createGroupService.createGroup(groupName, null);
+		return createGroupService.createGroup(users);
 	}
 }

@@ -1,12 +1,18 @@
 package com.baldev.eventify.infrastructure.repositories;
 
 
+import android.support.annotation.NonNull;
+
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.repositories.GroupsRepository;
+import com.baldev.eventify.infrastructure.DummyGroup;
+import com.google.common.base.Preconditions;
+
+import java.util.ArrayList;
 
 public class CacheGroupsRepository implements GroupsRepository {
 	private static CacheGroupsRepository instance;
-	private Group groupBeingCreated;
+	private Group groupBeingCreated = new DummyGroup(new ArrayList<>());
 
 	private CacheGroupsRepository() {
 	}
@@ -19,17 +25,13 @@ public class CacheGroupsRepository implements GroupsRepository {
 	}
 
 	@Override
-	public void setGroupBeingCreated(Group group) {
+	public void setGroupBeingCreated(@NonNull Group group) {
+		Preconditions.checkNotNull(group);
 		this.groupBeingCreated = group;
 	}
 
 	@Override
-	public Group getGroupBeingCreated() throws IllegalStateException {
-		if(this.groupBeingCreated == null){
-			throw new IllegalStateException("Can't call getGroupBeingCreated without setting the group first");
-		}
-
+	public Group getGroupBeingCreated(){
 		return this.groupBeingCreated;
 	}
-
 }

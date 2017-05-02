@@ -24,8 +24,6 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class CreateGroupServiceTest {
 
-	private String groupName = "Group Name";
-	private List<User> emptyUserList = new ArrayList<>();
 	private List<User> userList = new ArrayList<>();
 
 	@Mock
@@ -45,31 +43,27 @@ public class CreateGroupServiceTest {
 		userList.add(mockUser);
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void givenNullGroupName_whenCreateGroup_ThenThrowNullPointerException() {
-		createGroupService.createGroup(null, emptyUserList);
-	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullUsersList_whenCreateGroup_ThenThrowNullPointerException() {
-		createGroupService.createGroup(groupName, null);
+		createGroupService.createGroup(null);
 	}
 
 	@Test()
 	public void givenUserList_whenCreateGroup_ThenGroupContainsThoseUsers() {
-		Group group = createGroupService.createGroup(groupName, userList);
+		Group group = createGroupService.createGroup(userList);
 		assertEquals(group.getUsers().size(), userList.size());
 	}
 
 	@Test
 	public void givenValidArguments_whenCreateGroup_ThenReturnGroup() {
-		Group group = createGroupService.createGroup(groupName, userList);
+		Group group = createGroupService.createGroup(userList);
 		assertNotNull(group);
 	}
 
 	@Test
 	public void givenValidArguments_whenCreateGroup_ThenSetGroupBeingCreatedCalledOnce() {
-		Group group = createGroupService.createGroup(groupName, userList);
+		Group group = createGroupService.createGroup(userList);
 		verify(groupsRepository, times(1)).setGroupBeingCreated(group);
 	}
 }

@@ -6,6 +6,6 @@ import com.baldev.eventify.domain.entities.User;
 
 import java.util.List;
 
-public interface CreateGroupAction {
-	Group execute(List<User> users);
+public interface AddUsersToGroupAction {
+	void execute(Group group, List<User> userList);
 }
