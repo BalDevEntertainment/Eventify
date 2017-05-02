@@ -29,11 +29,10 @@ public class CreateUserPresenter implements Presenter, SaveUserCallback {
 		String userName = view.getUserName();
 		User user = createUserAction.execute(userName);
 		saveUserAction.execute(user, this);
-		view.startCreateGroupActivity();
 	}
 
 	@Override
 	public void onUserSaved() {
-
+		view.startCreateGroupActivity();
 	}
 }

@@ -3,7 +3,6 @@ package com.baldev.eventify.presentation.creategroup;
 import com.baldev.eventify.domain.actions.CreateGroupAction;
 import com.baldev.eventify.domain.actions.GetMyUserAction;
 import com.baldev.eventify.domain.entities.User;
-import com.baldev.eventify.domain.services.GetMyUserService;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract.Presenter;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract.View;
 import com.google.common.base.Preconditions;

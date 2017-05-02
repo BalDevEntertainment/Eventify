@@ -1,4 +1,4 @@
-package com.baldev.eventify.presentation.creategroup;
+package com.baldev.eventify.presentation.userlist;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.baldev.eventify.domain.entities.User;
-import com.baldev.eventify.presentation.creategroup.UserListAdapter.UserViewHolder;
+import com.baldev.eventify.presentation.userlist.UserListAdapter.UserViewHolder;
 
 import java.util.List;
 

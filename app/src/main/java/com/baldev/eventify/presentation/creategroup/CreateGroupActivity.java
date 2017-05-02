@@ -26,7 +26,7 @@ import butterknife.OnClick;
 public class CreateGroupActivity extends AppCompatActivity implements CreateGroupContract.View {
 
 	private final SparseArrayCompat<CreateGroupMenuAction> menuActionsMap = new SparseArrayCompat<>();
-	private final UserListAdapter userListAdapter = new UserListAdapter();
+	private final GroupUserListAdapter groupUserListAdapter = new GroupUserListAdapter();
 
 	@BindView(R.id.user_list)
 	protected RecyclerView userList;
@@ -61,10 +61,10 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 
 	@Override
 	public void setUserListToAdapter(List<User> users) {
-		this.userList.setAdapter(userListAdapter);
+		this.userList.setAdapter(groupUserListAdapter);
 		this.userList.setLayoutManager(new LinearLayoutManager(this));
-		this.userListAdapter.setItems(users);
-		this.userListAdapter.notifyDataSetChanged();
+		this.groupUserListAdapter.setItems(users);
+		this.groupUserListAdapter.notifyDataSetChanged();
 	}
 
 	private void startUserListActivity() {

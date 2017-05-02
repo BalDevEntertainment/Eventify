@@ -6,7 +6,7 @@ import com.baldev.eventify.domain.repositories.UsersRepository;
 
 import javax.inject.Inject;
 
-class GetUsersService {
+public class GetUsersService {
 	private UsersRepository usersRepository;
 
 	@Inject

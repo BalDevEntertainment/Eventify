@@ -30,6 +30,6 @@ public abstract class UserActionsFactory {
 	}
 
 	public static GetUsersAction provideGetUsersAction() {
-		return new DefaultGetUsersAction();
+		return new DefaultGetUsersAction(ServicesFactory.provideGetUsersService());
 	}
 }
