@@ -3,13 +3,13 @@ package com.baldev.eventify.domain.services;
 
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.repositories.GroupsRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -18,6 +18,8 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CreateGroupServiceTest {
@@ -25,6 +27,9 @@ public class CreateGroupServiceTest {
 	private String groupName = "Group Name";
 	private List<User> emptyUserList = new ArrayList<>();
 	private List<User> userList = new ArrayList<>();
+
+	@Mock
+	private GroupsRepository groupsRepository;
 
 	@InjectMocks
 	private CreateGroupService createGroupService;
@@ -35,7 +40,7 @@ public class CreateGroupServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		createGroupService = new CreateGroupService();
+		createGroupService = new CreateGroupService(groupsRepository);
 		userList.add(mockUser);
 		userList.add(mockUser);
 	}
@@ -60,5 +65,11 @@ public class CreateGroupServiceTest {
 	public void givenValidArguments_whenCreateGroup_ThenReturnGroup() {
 		Group group = createGroupService.createGroup(groupName, userList);
 		assertNotNull(group);
+	}
+
+	@Test
+	public void givenValidArguments_whenCreateGroup_ThenSetGroupBeingCreatedCalledOnce() {
+		Group group = createGroupService.createGroup(groupName, userList);
+		verify(groupsRepository, times(1)).setGroupBeingCreated(group);
 	}
 }

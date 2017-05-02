@@ -34,6 +34,7 @@ public class CacheUsersRepository implements UsersRepository {
 	@Override
 	public void saveUser(User user, SaveUserCallback saveUserCallback) {
 		this.myUser = user;
+		saveUserCallback.onUserSaved();
 	}
 
 	@Override
