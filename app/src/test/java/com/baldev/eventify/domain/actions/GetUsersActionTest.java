@@ -2,7 +2,7 @@ package com.baldev.eventify.domain.actions;
 
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
-import com.baldev.eventify.domain.services.GetUsersService;
+import com.baldev.eventify.domain.repositories.UsersRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class GetUsersActionTest {
 	private static List<User> emptyUserList = new ArrayList<>();
 
 	@Mock
-	private GetUsersService getUsersService;
+	private UsersRepository usersRepository;
 
 	@Mock
 	private GetUsersCallback callback;
@@ -40,7 +40,7 @@ public class GetUsersActionTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		doAnswer(getUsersAnswer).when(getUsersService).getUsers(callback);
+		doAnswer(getUsersAnswer).when(usersRepository).getUsers(callback);
 	}
 
 	@Test

@@ -2,21 +2,22 @@ package com.baldev.eventify.domain.actions;
 
 
 import com.baldev.eventify.domain.entities.User;
-import com.baldev.eventify.domain.services.GetMyUserService;
+import com.baldev.eventify.domain.repositories.UsersRepository;
 
 import javax.inject.Inject;
 
 public class DefaultGetMyUserAction implements GetMyUserAction {
 
-	private GetMyUserService getMyUserService;
+
+	private final UsersRepository usersRepository;
 
 	@Inject
-	public DefaultGetMyUserAction(GetMyUserService getMyUserService) {
-		this.getMyUserService = getMyUserService;
+	public DefaultGetMyUserAction(UsersRepository usersRepository) {
+		this.usersRepository = usersRepository;
 	}
 
 	@Override
 	public User execute() {
-		return getMyUserService.getMyUser();
+		return usersRepository.getMyUser();
 	}
 }

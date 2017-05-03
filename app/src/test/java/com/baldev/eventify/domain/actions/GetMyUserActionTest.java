@@ -1,7 +1,7 @@
 package com.baldev.eventify.domain.actions;
 
 import com.baldev.eventify.domain.entities.User;
-import com.baldev.eventify.domain.services.GetMyUserService;
+import com.baldev.eventify.domain.repositories.UsersRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,16 +17,16 @@ import static org.mockito.Mockito.when;
 public class GetMyUserActionTest {
 
 	@Mock
-	GetMyUserService getMyUserService;
+	private UsersRepository usersRepository;
 
 	@Before
 	public void setUp() throws Exception {
-		when(getMyUserService.getMyUser()).thenReturn(mock(User.class));
+		when(usersRepository.getMyUser()).thenReturn(mock(User.class));
 	}
 
 	@Test
 	public void whenGetMyUserAction_ThenUserIsNotNull () {
-		GetMyUserAction getMyUserAction = new DefaultGetMyUserAction(getMyUserService);
+		GetMyUserAction getMyUserAction = new DefaultGetMyUserAction(usersRepository);
 		assertNotNull(getMyUserAction.execute());
 	}
 }

@@ -2,20 +2,20 @@ package com.baldev.eventify.domain.actions;
 
 
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
-import com.baldev.eventify.domain.services.GetUsersService;
+import com.baldev.eventify.domain.repositories.UsersRepository;
 
 import javax.inject.Inject;
 
 public class DefaultGetUsersAction implements GetUsersAction {
-	private GetUsersService getUsersService;
+	private UsersRepository usersRepository;
 
 	@Inject
-	public DefaultGetUsersAction(GetUsersService getUsersService) {
-		this.getUsersService = getUsersService;
+	public DefaultGetUsersAction(UsersRepository usersRepository) {
+		this.usersRepository = usersRepository;
 	}
 
 	@Override
 	public void execute(GetUsersCallback callback) {
-		this.getUsersService.getUsers(callback);
+		this.usersRepository.getUsers(callback);
 	}
 }

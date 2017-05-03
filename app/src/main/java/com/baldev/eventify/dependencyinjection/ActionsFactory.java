@@ -35,11 +35,11 @@ public abstract class ActionsFactory {
 	}
 
 	public static GetMyUserAction provideGetMyUserAction() {
-		return new DefaultGetMyUserAction(ServicesFactory.provideGetMyUserService());
+		return new DefaultGetMyUserAction(RepositoriesFactory.provideUsersRepository());
 	}
 
 	public static GetUsersAction provideGetUsersAction() {
-		return new DefaultGetUsersAction(ServicesFactory.provideGetUsersService());
+		return new DefaultGetUsersAction(RepositoriesFactory.provideUsersRepository());
 	}
 
 	public static AddUsersToGroupAction provideAddUsersToGroupAction() {
