@@ -1,4 +1,4 @@
-package com.baldev.eventify.domain.actions;
+package com.baldev.eventify.domain.actions.users;
 
 import com.baldev.eventify.domain.entities.User;
 

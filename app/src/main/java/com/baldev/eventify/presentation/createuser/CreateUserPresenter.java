@@ -1,9 +1,9 @@
 package com.baldev.eventify.presentation.createuser;
 
 
-import com.baldev.eventify.domain.actions.CreateUserAction;
-import com.baldev.eventify.domain.actions.SaveUserAction;
-import com.baldev.eventify.domain.actions.SaveUserCallback;
+import com.baldev.eventify.domain.actions.users.CreateUserAction;
+import com.baldev.eventify.domain.actions.users.SaveUserAction;
+import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.createuser.CreateUserContract.Presenter;
 import com.baldev.eventify.presentation.createuser.CreateUserContract.View;

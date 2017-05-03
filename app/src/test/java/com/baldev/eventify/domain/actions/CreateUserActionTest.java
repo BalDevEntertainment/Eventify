@@ -1,5 +1,7 @@
 package com.baldev.eventify.domain.actions;
 
+import com.baldev.eventify.domain.actions.users.CreateUserAction;
+import com.baldev.eventify.domain.actions.users.DefaultCreateUserAction;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.services.CreateUserService;
 

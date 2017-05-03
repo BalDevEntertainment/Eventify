@@ -1,8 +1,8 @@
 package com.baldev.eventify.presentation.userlist;
 
-import com.baldev.eventify.domain.actions.AddUsersToGroupAction;
-import com.baldev.eventify.domain.actions.GetGroupBeingCreatedAction;
-import com.baldev.eventify.domain.actions.GetUsersAction;
+import com.baldev.eventify.domain.actions.groups.AddUsersToGroupAction;
+import com.baldev.eventify.domain.actions.groups.GetGroupBeingCreatedAction;
+import com.baldev.eventify.domain.actions.users.GetUsersAction;
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.userlist.UserListContract.View;

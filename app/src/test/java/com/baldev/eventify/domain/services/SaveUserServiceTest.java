@@ -1,6 +1,6 @@
 package com.baldev.eventify.domain.services;
 
-import com.baldev.eventify.domain.actions.SaveUserCallback;
+import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 

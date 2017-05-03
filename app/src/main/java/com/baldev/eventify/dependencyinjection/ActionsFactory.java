@@ -1,20 +1,20 @@
 package com.baldev.eventify.dependencyinjection;
 
 
-import com.baldev.eventify.domain.actions.AddUsersToGroupAction;
-import com.baldev.eventify.domain.actions.CreateGroupAction;
-import com.baldev.eventify.domain.actions.CreateUserAction;
-import com.baldev.eventify.domain.actions.DefaultAddUsersToGroupAction;
-import com.baldev.eventify.domain.actions.DefaultCreateGroupAction;
-import com.baldev.eventify.domain.actions.DefaultCreateUserAction;
-import com.baldev.eventify.domain.actions.DefaultGetGroupBeingCreatedAction;
-import com.baldev.eventify.domain.actions.DefaultGetMyUserAction;
-import com.baldev.eventify.domain.actions.DefaultGetUsersAction;
-import com.baldev.eventify.domain.actions.DefaultSaveUserAction;
-import com.baldev.eventify.domain.actions.GetMyUserAction;
-import com.baldev.eventify.domain.actions.GetGroupBeingCreatedAction;
-import com.baldev.eventify.domain.actions.GetUsersAction;
-import com.baldev.eventify.domain.actions.SaveUserAction;
+import com.baldev.eventify.domain.actions.groups.AddUsersToGroupAction;
+import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
+import com.baldev.eventify.domain.actions.users.CreateUserAction;
+import com.baldev.eventify.domain.actions.groups.DefaultAddUsersToGroupAction;
+import com.baldev.eventify.domain.actions.groups.DefaultCreateGroupAction;
+import com.baldev.eventify.domain.actions.users.DefaultCreateUserAction;
+import com.baldev.eventify.domain.actions.groups.DefaultGetGroupBeingCreatedAction;
+import com.baldev.eventify.domain.actions.users.DefaultGetMyUserAction;
+import com.baldev.eventify.domain.actions.users.DefaultGetUsersAction;
+import com.baldev.eventify.domain.actions.users.DefaultSaveUserAction;
+import com.baldev.eventify.domain.actions.users.GetMyUserAction;
+import com.baldev.eventify.domain.actions.groups.GetGroupBeingCreatedAction;
+import com.baldev.eventify.domain.actions.users.GetUsersAction;
+import com.baldev.eventify.domain.actions.users.SaveUserAction;
 import com.baldev.eventify.infrastructure.depdendencyinjection.RepositoriesFactory;
 
 public abstract class ActionsFactory {

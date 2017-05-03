@@ -1,7 +1,7 @@
 package com.baldev.eventify.presentation.creategroup;
 
-import com.baldev.eventify.domain.actions.CreateGroupAction;
-import com.baldev.eventify.domain.actions.GetMyUserAction;
+import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
+import com.baldev.eventify.domain.actions.users.GetMyUserAction;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract.View;
 import com.google.common.base.Preconditions;
 

@@ -1,5 +1,6 @@
 package com.baldev.eventify.domain.actions;
 
+import com.baldev.eventify.domain.actions.users.DefaultGetUsersAction;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
 import com.baldev.eventify.domain.repositories.UsersRepository;

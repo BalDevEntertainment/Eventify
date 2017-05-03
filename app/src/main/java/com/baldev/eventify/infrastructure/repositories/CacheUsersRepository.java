@@ -1,8 +1,6 @@
 package com.baldev.eventify.infrastructure.repositories;
 
-import android.util.SparseArray;
-
-import com.baldev.eventify.domain.actions.SaveUserCallback;
+import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.InvalidUser;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;

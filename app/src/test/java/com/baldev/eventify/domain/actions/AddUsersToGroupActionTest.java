@@ -1,5 +1,6 @@
 package com.baldev.eventify.domain.actions;
 
+import com.baldev.eventify.domain.actions.groups.DefaultAddUsersToGroupAction;
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.services.AddUsersToGroupService;
