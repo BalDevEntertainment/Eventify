@@ -12,11 +12,6 @@ import static org.junit.Assert.assertNotNull;
 public class ActionsFactoryTest {
 
 	@Test
-	public void whenProvideCreateUserAction_ThenReturnCreateUserAction() {
-		assertNotNull(ActionsFactory.provideCreateUserAction());
-	}
-
-	@Test
 	public void whenProvideSaveUserAction_ThenReturnSaveUserAction() {
 		assertNotNull(ActionsFactory.provideSaveUserAction());
 	}

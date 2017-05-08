@@ -1,10 +1,10 @@
 package com.baldev.eventify.presentation.createuser;
 
 
-import com.baldev.eventify.domain.actions.users.CreateUserAction;
 import com.baldev.eventify.domain.actions.users.SaveUserAction;
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
-import static org.mockito.Matchers.isNotNull;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -26,8 +25,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CreateUserPresenterTest {
 
-	@Mock
-	private CreateUserAction createUserAction;
 	@Mock
 	private SaveUserAction saveUserAction;
 	@Mock
@@ -38,32 +35,26 @@ public class CreateUserPresenterTest {
 	@InjectMocks
 	private CreateUserPresenter presenter;
 
-	private String userName = "UserName";
+	private String validUserName = "UserName";
 	private Answer<Void> userSavedAnswer = new UserSavedAnswer();
 	private CreateUserPresenter presenterSpy;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception, InvalidUserNameException {
 		MockitoAnnotations.initMocks(this);
-		when(view.getUserName()).thenReturn(userName);
-		when(createUserAction.execute(userName)).thenReturn(validUser);
+		when(view.getUserName()).thenReturn(validUserName);
 		presenterSpy = Mockito.spy(presenter);
-		doAnswer(userSavedAnswer).when(saveUserAction).execute(validUser, presenter);
+		doAnswer(userSavedAnswer).when(saveUserAction).execute(validUserName, presenter);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullView_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateUserPresenter(null, createUserAction, saveUserAction);
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void givenNullCreateUserAction_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateUserPresenter(view, null, saveUserAction);
+		new CreateUserPresenter(null, saveUserAction);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullSaveUserAction_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateUserPresenter(view, createUserAction, null);
+		new CreateUserPresenter(view, null);
 	}
 
 	@Test

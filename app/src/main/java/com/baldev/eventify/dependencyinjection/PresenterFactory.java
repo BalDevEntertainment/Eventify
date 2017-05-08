@@ -16,7 +16,7 @@ public abstract class PresenterFactory {
 
 	@NonNull
 	public static CreateUserContract.Presenter provideCreateUserPresenter(CreateUserContract.View view) {
-		return new CreateUserPresenter(view, provideCreateUserAction(), provideSaveUserAction());
+		return new CreateUserPresenter(view, provideSaveUserAction());
 	}
 
 	@NonNull

@@ -5,7 +5,7 @@ import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.services.AddUsersToGroupService;
 
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -22,15 +22,26 @@ public class AddUsersToGroupActionTest {
 
 	@Mock
 	private Group group;
-	private DefaultAddUsersToGroupAction addUsersToGroupAction;
-	private List<User> userList = new ArrayList<>();
+
+	@Mock
 	private AddUsersToGroupService addUsersToGroupService;
 
-	@Ignore
+	private DefaultAddUsersToGroupAction addUsersToGroupAction;
+	private List<User> userList = new ArrayList<>();
+
+	@Before
+	public void setUp() throws Exception {
+		addUsersToGroupAction = new DefaultAddUsersToGroupAction(addUsersToGroupService);
+	}
+
 	@Test
-	public void xxx() {
+	public void whenAddUsersToGroupThenDomainServiceIsCalled() {
 		addUsersToGroupAction.execute(group, userList);
 		verify(addUsersToGroupService, times(1)).addUsersToGroup(group, userList);
 	}
 
+	@Test(expected = NullPointerException.class)
+	public void whenAddUsersToGroupThenThrowNullPointerException() {
+		addUsersToGroupAction.execute(null, userList);
+	}
 }

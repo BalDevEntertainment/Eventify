@@ -3,6 +3,7 @@ package com.baldev.eventify.infrastructure.repositories;
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.InvalidUser;
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 
@@ -15,11 +16,16 @@ import java.util.Map;
 public class CacheUsersRepository implements UsersRepository {
 
 	private static CacheUsersRepository instance;
-	private User myUser = new InvalidUser();
+	private User myUser;
 	private List<User> users = new ArrayList<>();
 
 	private CacheUsersRepository() {
 		initializeStubUserList();
+		try {
+			myUser = new InvalidUser();
+		} catch (InvalidUserNameException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static UsersRepository getInstance() {
@@ -55,7 +61,11 @@ public class CacheUsersRepository implements UsersRepository {
 		names.put(5, "Pablo");
 
 		for (int i = 0; i < names.size(); i++) {
-			users.add(new User(i, names.get(i)));
+			try {
+				users.add(new User(i, names.get(i)));
+			} catch (InvalidUserNameException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
