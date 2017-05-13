@@ -10,6 +10,7 @@ import com.baldev.eventify.presentation.mainactivity.MainActivityContract;
 import com.baldev.eventify.presentation.mainactivity.MainActivityPresenter;
 import com.baldev.eventify.presentation.userlist.UserListContract;
 import com.baldev.eventify.presentation.userlist.UserListContract.Presenter;
+import com.baldev.eventify.presentation.userlist.UserListContract.View;
 import com.baldev.eventify.presentation.userlist.UserListPresenter;
 
 import static com.baldev.eventify.dependencyinjection.ActionsFactory.*;
@@ -27,8 +28,8 @@ public abstract class PresenterFactory {
 	}
 
 	@NonNull
-	public static Presenter provideUserListPresenter(UserListContract.View view) {
-		return new UserListPresenter(view, provideGetUsersAction());
+	public static Presenter provideUserListPresenter(View view, int[] preselectedUserIds) {
+		return new UserListPresenter(view, preselectedUserIds, provideGetUsersAction());
 	}
 
 	@NonNull

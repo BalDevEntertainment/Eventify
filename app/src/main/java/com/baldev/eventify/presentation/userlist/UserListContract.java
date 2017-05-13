@@ -9,7 +9,7 @@ public interface UserListContract {
 
 	interface View {
 
-		void setUserListToAdapter(List<User> users);
+		void setUserListToAdapter(List<UserListItem> users);
 
 		void returnList(int[] selectedUserIds);
 	}

@@ -74,14 +74,14 @@ public class CacheUsersRepository implements UsersRepository {
 
 	private void initializeStubUserList() {
 		final Map<Integer, String> names = new HashMap<>();
-		names.put(0, "Ariel");
-		names.put(1, "Nicolas");
-		names.put(2, "Joaquin");
-		names.put(3, "Nacho");
-		names.put(4, "Matias");
-		names.put(5, "Pablo");
+		names.put(100, "Ariel");
+		names.put(101, "Nicolas");
+		names.put(102, "Joaquin");
+		names.put(103, "Nacho");
+		names.put(104, "Matias");
+		names.put(105, "Pablo");
 
-		for (int i = 0; i < names.size(); i++) {
+		for (int i = 100; i < names.size() + 100; i++) {
 			try {
 				users.add(new User(i, names.get(i)));
 			} catch (InvalidUserNameException e) {

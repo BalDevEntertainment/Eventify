@@ -28,7 +28,7 @@ public class PresenterFactoryTest {
 
 	@Test
 	public void whenProvideUserListPresenter_ThenReturnUserListPresenter() {
-		assertNotNull(PresenterFactory.provideUserListPresenter(Mockito.mock(UserListContract.View.class)));
+		assertNotNull(PresenterFactory.provideUserListPresenter(Mockito.mock(UserListContract.View.class), new int[]{}));
 	}
 
 	@Test

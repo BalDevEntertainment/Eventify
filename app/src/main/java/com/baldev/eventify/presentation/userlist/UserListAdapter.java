@@ -19,10 +19,8 @@ class UserListAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
 	private List<UserListItem> users = new ArrayList<>();
 
-	public void setItems(List<User> items) {
-		for (User item : items) {
-			users.add(new UserListItem(item, false));
-		}
+	public void setItems(List<UserListItem> items) {
+		users = items;
 	}
 
 	@Override
@@ -38,7 +36,9 @@ class UserListAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
 	@Override
 	public void onBindViewHolder(UserViewHolder holder, int position) {
-		holder.userName.setText(users.get(position).getUser().getName());
+		UserListItem userListItem = users.get(position);
+		holder.userName.setText(userListItem.getUser().getName());
+		holder.userSelectionCheckbox.setChecked(userListItem.isSelected());
 		holder.userSelectionCheckbox
 				.setOnCheckedChangeListener((compoundButton, checked) -> updateSelectionStatusForUserListItem(checked, position));
 	}

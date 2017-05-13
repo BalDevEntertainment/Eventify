@@ -22,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.baldev.eventify.presentation.creategroup.CreateGroupActivity.EXTRA_SELECTED_USER_IDS;
+
 public class UserListActivity extends AppCompatActivity implements View {
 	private final UserListAdapter userListAdapter = new UserListAdapter();
 
@@ -35,27 +37,33 @@ public class UserListActivity extends AppCompatActivity implements View {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_user_list);
 		ButterKnife.bind(this);
-		this.presenter = PresenterFactory.provideUserListPresenter(this);
+		int[] preselectedUserIds = getPreselectedUserIdsFromExtras();
+		this.presenter = PresenterFactory.provideUserListPresenter(this, preselectedUserIds);
 	}
 
 	@Override
-	public void setUserListToAdapter(List<User> users) {
+	public void setUserListToAdapter(List<UserListItem> userListItems) {
 		this.userList.setAdapter(userListAdapter);
 		this.userList.setLayoutManager(new LinearLayoutManager(this));
-		this.userListAdapter.setItems(users);
+		this.userListAdapter.setItems(userListItems);
 		this.userListAdapter.notifyDataSetChanged();
 	}
 
 	@OnClick(R.id.save_button)
-	public void onSaveButtonPressed(){
+	public void onSaveButtonPressed() {
 		presenter.onSaveButtonPressed(this.userListAdapter.getSelectedItems());
 	}
 
 	@Override
 	public void returnList(int[] selectedUserIds) {
 		Intent returnIntent = new Intent();
-		returnIntent.putExtra(CreateGroupActivity.EXTRA_SELECTED_USER_IDS, selectedUserIds);
+		returnIntent.putExtra(EXTRA_SELECTED_USER_IDS, selectedUserIds);
 		setResult(Activity.RESULT_OK, returnIntent);
 		finish();
+	}
+
+	private int[] getPreselectedUserIdsFromExtras() {
+		Bundle extras = getIntent().getExtras();
+		return extras.containsKey(EXTRA_SELECTED_USER_IDS) ? extras.getIntArray(EXTRA_SELECTED_USER_IDS) : new int[]{};
 	}
 }

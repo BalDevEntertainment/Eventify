@@ -1,5 +1,7 @@
 package com.baldev.eventify.presentation.creategroup;
 
+import android.support.annotation.NonNull;
+
 import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
 import com.baldev.eventify.domain.actions.users.FindUsersAction;
 import com.baldev.eventify.domain.actions.users.GetMyUserAction;
@@ -10,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -39,6 +42,7 @@ public class CreateGroupPresenterTest {
 	@Mock
 	private User myUser;
 	private CreateGroupPresenter createGroupPresenter;
+	private int[] userIdsEmptyArray = new int[]{};
 
 	@Before
 	public void setUp() throws Exception {
@@ -75,9 +79,19 @@ public class CreateGroupPresenterTest {
 
 	@Test()
 	public void whenSelectedUsersRetrieved_ThenFindUsersByIdIsCalledOnce() {
-		int[] userIds = {};
-		createGroupPresenter.onSelectedUsersRetrieved(userIds);
-		verify(findUsersAction, times(1)).execute(userIds);
+		createGroupPresenter.onSelectedUsersRetrieved(userIdsEmptyArray);
+		verify(findUsersAction, times(1)).execute(userIdsEmptyArray);
+	}
+
+	@Test()
+	public void whenAddRemoveMemberButtonPressed_ThenStartUserListActivityForResult() {
+		User aUser = givenAUser();
+		User anotherUser = givenAnotherUser();
+		int[] userIds = {myUser.getId(), aUser.getId(), anotherUser.getId()};
+		createGroupPresenter.users.add(aUser);
+		createGroupPresenter.users.add(anotherUser);
+		createGroupPresenter.onAddRemoveMemberButtonPressed();
+		verify(view, times(1)).startUserListActivityForResult(userIds);
 	}
 
 	@Test()
@@ -87,5 +101,19 @@ public class CreateGroupPresenterTest {
 		List<User> users = new ArrayList<>();
 		users.add(myUser);
 		verify(createGroupAction, times(1)).execute(getMyUserAction.execute().getId(), groupName, users);
+	}
+
+	@NonNull
+	private User givenAUser() {
+		User aUser = Mockito.mock(User.class);
+		when(aUser.getId()).thenReturn(10);
+		return aUser;
+	}
+
+	@NonNull
+	private User givenAnotherUser() {
+		User anotherUser = Mockito.mock(User.class);
+		when(anotherUser.getId()).thenReturn(11);
+		return anotherUser;
 	}
 }

@@ -64,7 +64,14 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 
 	@OnClick(R.id.add_remove_members_button)
 	public void onAddRemoveMembersButtonPressed() {
-		startUserListActivityForResult();
+		presenter.onAddRemoveMemberButtonPressed();
+	}
+
+	@Override
+	public void startUserListActivityForResult(int[] userIds) {
+		Intent intent = new Intent(this, UserListActivity.class);
+		intent.putExtra(EXTRA_SELECTED_USER_IDS, userIds);
+		startActivityForResult(intent, REQUEST_CODE_SELECTED_USER_IDS);
 	}
 
 	@Override
@@ -91,11 +98,6 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 			int[] userIds = data.getIntArrayExtra(EXTRA_SELECTED_USER_IDS);
 			presenter.onSelectedUsersRetrieved(userIds);
 		}
-	}
-
-	private void startUserListActivityForResult() {
-		Intent intent = new Intent(this, UserListActivity.class);
-		startActivityForResult(intent, REQUEST_CODE_SELECTED_USER_IDS);
 	}
 
 	private void save() {

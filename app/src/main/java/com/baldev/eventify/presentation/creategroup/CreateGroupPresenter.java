@@ -50,6 +50,15 @@ public class CreateGroupPresenter implements Presenter {
 		initializeUserListAdapter();
 	}
 
+	@Override
+	public void onAddRemoveMemberButtonPressed() {
+		int[] userIds = new int[users.size()];
+		for (int i = 0; i < users.size(); i++) {
+			userIds[i] = users.get(i).getId();
+		}
+		view.startUserListActivityForResult(userIds);
+	}
+
 	private void initializeUserListAdapter() {
 		view.setUserListToAdapter(users);
 	}

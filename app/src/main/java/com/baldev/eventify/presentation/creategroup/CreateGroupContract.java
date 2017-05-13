@@ -8,6 +8,8 @@ import java.util.List;
 public interface CreateGroupContract {
 
 	interface View {
+		void startUserListActivityForResult(int[] userIds);
+
 		void setUserListToAdapter(List<User> userListAdapter);
 
 		void showInvalidGroupNameError();
@@ -20,5 +22,7 @@ public interface CreateGroupContract {
 		void onSavePressed(String s);
 
 		void onSelectedUsersRetrieved(int[] userIds);
+
+		void onAddRemoveMemberButtonPressed();
 	}
 }
