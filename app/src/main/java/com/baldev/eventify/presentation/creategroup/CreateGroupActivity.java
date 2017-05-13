@@ -31,13 +31,14 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 	public static final String EXTRA_SELECTED_USER_IDS = "SELECTED_USER_IDS";
 
 	private final SparseArrayCompat<CreateGroupMenuAction> menuActionsMap = new SparseArrayCompat<>();
-
 	private final GroupUserListAdapter groupUserListAdapter = new GroupUserListAdapter();
 
 	@BindView(R.id.user_list)
 	protected RecyclerView userList;
+
 	@BindView(R.id.group_name_input)
 	protected TextView groupNameInput;
+
 	private Presenter presenter;
 
 	@Override
@@ -113,6 +114,10 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 	private void setActionBarActions() {
 		menuActionsMap.put(R.id.action_menu_save, () -> {
 			save();
+			return true;
+		});
+		menuActionsMap.put(android.R.id.home, () -> {
+			this.finish();
 			return true;
 		});
 	}

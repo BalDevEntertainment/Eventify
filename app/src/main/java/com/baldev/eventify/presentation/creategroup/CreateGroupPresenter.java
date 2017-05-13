@@ -47,6 +47,7 @@ public class CreateGroupPresenter implements Presenter {
 	public void onSelectedUsersRetrieved(int[] userIds) {
 		initializeUsersList();
 		users.addAll(findUsersAction.execute(userIds));
+		initializeUserListAdapter();
 	}
 
 	private void initializeUserListAdapter() {
