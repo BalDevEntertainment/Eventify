@@ -51,6 +51,27 @@ public class CacheUsersRepository implements UsersRepository {
 		return myUser;
 	}
 
+	@Override
+	public List<User> findUsers(int[] ids) {
+		List<User> users = new ArrayList<>();
+		for (int id : ids) {
+			User user = getUserById(id);
+			if (user != null) {
+				users.add(user);
+			}
+		}
+		return users;
+	}
+
+	private User getUserById(int id) {
+		for (User user : users) {
+			if (user.getId() == id) {
+				return user;
+			}
+		}
+		return null;
+	}
+
 	private void initializeStubUserList() {
 		final Map<Integer, String> names = new HashMap<>();
 		names.put(0, "Ariel");

@@ -10,9 +10,12 @@ public interface UserListContract {
 	interface View {
 
 		void setUserListToAdapter(List<User> users);
+
+		void returnList(int[] selectedUserIds);
 	}
 
 	interface Presenter {
 
+		void onSaveButtonPressed(List<User> users);
 	}
 }

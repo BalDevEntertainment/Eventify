@@ -6,6 +6,8 @@ import com.baldev.eventify.presentation.creategroup.CreateGroupContract;
 import com.baldev.eventify.presentation.creategroup.CreateGroupPresenter;
 import com.baldev.eventify.presentation.createuser.CreateUserContract;
 import com.baldev.eventify.presentation.createuser.CreateUserPresenter;
+import com.baldev.eventify.presentation.mainactivity.MainActivityContract;
+import com.baldev.eventify.presentation.mainactivity.MainActivityPresenter;
 import com.baldev.eventify.presentation.userlist.UserListContract;
 import com.baldev.eventify.presentation.userlist.UserListContract.Presenter;
 import com.baldev.eventify.presentation.userlist.UserListPresenter;
@@ -21,11 +23,16 @@ public abstract class PresenterFactory {
 
 	@NonNull
 	public static CreateGroupContract.Presenter provideCreateGroupPresenter(CreateGroupContract.View view) {
-		return new CreateGroupPresenter(view, provideCreateGroupAction(), provideGetMyUserAction());
+		return new CreateGroupPresenter(view, provideCreateGroupAction(), provideGetMyUserAction(), provideFindUsersAction());
 	}
 
 	@NonNull
 	public static Presenter provideUserListPresenter(UserListContract.View view) {
-		return new UserListPresenter(view, provideGetUsersAction(), provideAddUsersToGroupAction(), provideGetGroupBeingCreated());
+		return new UserListPresenter(view, provideGetUsersAction());
+	}
+
+	@NonNull
+	public static MainActivityContract.Presenter provideMainActivityPresenter(MainActivityContract.View view) {
+		return new MainActivityPresenter(view, provideGetMyGroupsAction());
 	}
 }

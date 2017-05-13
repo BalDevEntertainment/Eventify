@@ -1,6 +1,9 @@
 package com.baldev.eventify.domain.entities;
 
 
+import android.support.annotation.NonNull;
+
+import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
 import com.baldev.eventify.domain.exceptions.UserNotFoundException;
 
 import org.junit.Assert;
@@ -26,6 +29,7 @@ public class GroupTest {
 
 	@Mock
 	private User differentUser;
+	private String validGroupName = "Group Name";
 
 	@Before
 	public void setUp() throws Exception {
@@ -35,26 +39,42 @@ public class GroupTest {
 	}
 
 	@Test
-	public void givenValidUserListName_WhenNewGroup_ThenGroupHasThatAmoutOfUsers() {
-		Group group = new Group(userList);
+	public void givenValidUserListName_WhenNewGroup_ThenGroupHasThatAmountOfUsers() throws InvalidGroupNameException {
+		Group group = buildValidGroup();
 		assertEquals(group.getUsers().size(), userList.size());
 	}
 
+	@Test
+	public void givenValidGroupName_WhenNewGroup_ThenGroupHasThatName() throws InvalidGroupNameException {
+		Group group = buildValidGroup();
+		assertEquals(group.getName(), validGroupName);
+	}
+
+	@Test(expected = InvalidGroupNameException.class)
+	public void givenInvalidGroupName_WhenNewGroup_ThenThrowInvalidGroupNameException() throws InvalidGroupNameException {
+		new Group("", userList);
+	}
+
 	@Test(expected = NullPointerException.class)
-	public void givenNullUserList_WhenNewGroup_ThenThrowNullPointerException() {
-		new Group(null);
+	public void givenNullUserList_WhenNewGroup_ThenThrowNullPointerException() throws InvalidGroupNameException {
+		new Group(validGroupName, null);
 	}
 
 	@Test(expected = UserNotFoundException.class)
-	public void whenGetUser_ThenThrowUserNotFoundException() throws UserNotFoundException {
-		Group group = new Group(userList);
+	public void whenGetUser_ThenThrowUserNotFoundException() throws UserNotFoundException, InvalidGroupNameException {
+		Group group = buildValidGroup();
 		group.addUsers(userList);
 		group.getUser(differentUser);
 	}
 
+	@NonNull
+	private Group buildValidGroup() throws InvalidGroupNameException {
+		return new Group(validGroupName, userList);
+	}
+
 	@Test()
-	public void whenGetUser_ThenReturnUser() throws UserNotFoundException {
-		Group group = new Group(userList);
+	public void whenGetUser_ThenReturnUser() throws UserNotFoundException, InvalidGroupNameException {
+		Group group = buildValidGroup();
 		group.addUsers(userList);
 		Assert.assertEquals(group.getUser(user), user);
 	}

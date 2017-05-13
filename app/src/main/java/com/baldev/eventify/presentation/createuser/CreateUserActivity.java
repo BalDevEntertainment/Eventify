@@ -8,8 +8,8 @@ import android.widget.EditText;
 
 import com.baldev.eventify.R;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
-import com.baldev.eventify.presentation.creategroup.CreateGroupActivity;
 import com.baldev.eventify.presentation.createuser.CreateUserContract.Presenter;
+import com.baldev.eventify.presentation.mainactivity.MainActivity;
 
 import javax.inject.Inject;
 
@@ -44,8 +44,8 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
 	}
 
 	@Override
-	public void startCreateGroupActivity() {
-		Intent intent = new Intent(this, CreateGroupActivity.class);
+	public void startMainActivity() {
+		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
 }

@@ -15,6 +15,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".presentation.mainactivity.MainActivity"/>
         <activity android:name=".presentation.creategroup.CreateGroupActivity"/>
         <activity android:name=".presentation.userlist.UserListActivity"/>
 

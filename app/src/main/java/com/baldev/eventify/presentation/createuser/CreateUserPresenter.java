@@ -3,7 +3,6 @@ package com.baldev.eventify.presentation.createuser;
 
 import com.baldev.eventify.domain.actions.users.SaveUserAction;
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
-import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 import com.baldev.eventify.presentation.createuser.CreateUserContract.Presenter;
 import com.baldev.eventify.presentation.createuser.CreateUserContract.View;
@@ -33,7 +32,7 @@ public class CreateUserPresenter implements Presenter, SaveUserCallback {
 
 	@Override
 	public void onUserSaved() {
-		view.startCreateGroupActivity();
+		view.startMainActivity();
 	}
 
 	private void showError() {

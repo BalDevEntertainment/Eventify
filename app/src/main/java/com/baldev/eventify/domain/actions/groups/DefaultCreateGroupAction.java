@@ -1,25 +1,24 @@
 package com.baldev.eventify.domain.actions.groups;
 
+
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.entities.User;
-import com.baldev.eventify.domain.services.CreateGroupService;
+import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
+import com.baldev.eventify.domain.services.GroupsService;
 import com.google.common.base.Preconditions;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class DefaultCreateGroupAction implements CreateGroupAction {
-	private CreateGroupService createGroupService;
+	private GroupsService groupsService;
 
-	@Inject
-	public DefaultCreateGroupAction(CreateGroupService createGroupService) {
-		this.createGroupService = createGroupService;
+	public DefaultCreateGroupAction(GroupsService groupsService) {
+		this.groupsService = groupsService;
 	}
 
 	@Override
-	public Group execute(List<User> users) {
+	public Group execute(int userId, String groupName, List<User> users) throws InvalidGroupNameException {
 		Preconditions.checkNotNull(users);
-		return createGroupService.createGroup(users);
+		return groupsService.createGroup(userId, groupName, users);
 	}
 }

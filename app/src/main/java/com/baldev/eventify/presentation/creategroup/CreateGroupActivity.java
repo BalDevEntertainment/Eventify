@@ -1,5 +1,6 @@
 package com.baldev.eventify.presentation.creategroup;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.baldev.eventify.R;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
@@ -25,12 +27,17 @@ import butterknife.OnClick;
 
 public class CreateGroupActivity extends AppCompatActivity implements CreateGroupContract.View {
 
+	public static final int REQUEST_CODE_SELECTED_USER_IDS = 1;
+	public static final String EXTRA_SELECTED_USER_IDS = "SELECTED_USER_IDS";
+
 	private final SparseArrayCompat<CreateGroupMenuAction> menuActionsMap = new SparseArrayCompat<>();
+
 	private final GroupUserListAdapter groupUserListAdapter = new GroupUserListAdapter();
 
 	@BindView(R.id.user_list)
 	protected RecyclerView userList;
-
+	@BindView(R.id.group_name_input)
+	protected TextView groupNameInput;
 	private Presenter presenter;
 
 	@Override
@@ -56,7 +63,7 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 
 	@OnClick(R.id.add_remove_members_button)
 	public void onAddRemoveMembersButtonPressed() {
-		startUserListActivity();
+		startUserListActivityForResult();
 	}
 
 	@Override
@@ -67,12 +74,31 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 		this.groupUserListAdapter.notifyDataSetChanged();
 	}
 
-	private void startUserListActivity() {
+	@Override
+	public void showInvalidGroupNameError() {
+
+	}
+
+	@Override
+	public void finishActivity() {
+		this.finish();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (isResultValid(requestCode, resultCode)) {
+			int[] userIds = data.getIntArrayExtra(EXTRA_SELECTED_USER_IDS);
+			presenter.onSelectedUsersRetrieved(userIds);
+		}
+	}
+
+	private void startUserListActivityForResult() {
 		Intent intent = new Intent(this, UserListActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, REQUEST_CODE_SELECTED_USER_IDS);
 	}
 
 	private void save() {
+		presenter.onSavePressed(groupNameInput.getText().toString());
 	}
 
 	private void setupToolbar() {
@@ -93,6 +119,10 @@ public class CreateGroupActivity extends AppCompatActivity implements CreateGrou
 
 	private boolean isToolbarSet() {
 		return this.getSupportActionBar() != null;
+	}
+
+	private boolean isResultValid(int requestCode, int resultCode) {
+		return requestCode == REQUEST_CODE_SELECTED_USER_IDS && resultCode == Activity.RESULT_OK;
 	}
 
 	private class TakeNoAction implements CreateGroupMenuAction {

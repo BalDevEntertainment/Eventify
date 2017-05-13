@@ -7,8 +7,8 @@ import com.google.common.base.Preconditions;
 
 class CreateGroupPresenterValidations {
 	private View view;
-	private CreateGroupAction createGroupAction;
 	private GetMyUserAction getMyUserAction;
+	private final CreateGroupAction createGroupAction;
 
 	public CreateGroupPresenterValidations(View view, CreateGroupAction createGroupAction, GetMyUserAction getMyUserAction) {
 		this.view = view;

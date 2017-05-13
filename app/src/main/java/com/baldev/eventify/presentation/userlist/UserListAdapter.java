@@ -36,6 +36,10 @@ class UserListAdapter extends RecyclerView.Adapter<UserViewHolder> {
 		holder.userName.setText(items.get(position).getName());
 	}
 
+	public List<User> getSelectedItems() {
+		return items;
+	}
+
 	public class UserViewHolder extends RecyclerView.ViewHolder {
 		private final TextView userName;
 

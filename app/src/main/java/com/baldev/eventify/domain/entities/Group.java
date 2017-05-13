@@ -3,8 +3,10 @@ package com.baldev.eventify.domain.entities;
 
 import android.support.annotation.NonNull;
 
+import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
 import com.baldev.eventify.domain.exceptions.UserNotFoundException;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 import java.util.List;
 
@@ -15,8 +17,12 @@ public class Group {
 	private List<User> users;
 
 	@Inject
-	public Group(List<User> users) {
+	public Group(String groupName, List<User> users) throws InvalidGroupNameException {
 		Preconditions.checkNotNull(users);
+		if(Strings.isNullOrEmpty(groupName)){
+			throw new InvalidGroupNameException("Group name can't be empty or null");
+		}
+		this.name = groupName;
 		this.users = users;
 	}
 

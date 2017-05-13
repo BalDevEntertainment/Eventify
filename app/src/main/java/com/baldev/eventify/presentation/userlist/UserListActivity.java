@@ -1,6 +1,8 @@
 package com.baldev.eventify.presentation.userlist;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import com.baldev.eventify.R;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.presentation.creategroup.CreateGroupActivity;
 import com.baldev.eventify.presentation.userlist.UserListContract.Presenter;
 import com.baldev.eventify.presentation.userlist.UserListContract.View;
 
@@ -17,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class UserListActivity extends AppCompatActivity implements View {
 	private final UserListAdapter userListAdapter = new UserListAdapter();
@@ -40,5 +44,18 @@ public class UserListActivity extends AppCompatActivity implements View {
 		this.userList.setLayoutManager(new LinearLayoutManager(this));
 		this.userListAdapter.setItems(users);
 		this.userListAdapter.notifyDataSetChanged();
+	}
+
+	@OnClick(R.id.save_button)
+	public void onSaveButtonPressed(){
+		presenter.onSaveButtonPressed(this.userListAdapter.getSelectedItems());
+	}
+
+	@Override
+	public void returnList(int[] selectedUserIds) {
+		Intent returnIntent = new Intent();
+		returnIntent.putExtra(CreateGroupActivity.EXTRA_SELECTED_USER_IDS, selectedUserIds);
+		setResult(Activity.RESULT_OK, returnIntent);
+		finish();
 	}
 }

@@ -8,11 +8,11 @@ import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotSame;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTest {
@@ -60,6 +60,14 @@ public class UserTest {
 	public void notEquals() {
 		int differentId = 2;
 		assertFalse(validUser.equals(buildUser(differentId, userName)));
+	}
+
+	@SuppressWarnings("EqualsBetweenInconvertibleTypes")
+	@Test
+	public void compareDifferentTypes() {
+		Group differentObject = Mockito.mock(Group.class);
+		User user = buildUser(validId, userName);
+		assertFalse(user.equals(differentObject));
 	}
 
 	@NonNull

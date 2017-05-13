@@ -7,7 +7,7 @@ public interface CreateUserContract {
 
 		String getUserName();
 
-		void startCreateGroupActivity();
+		void startMainActivity();
 	}
 
 	interface Presenter {
