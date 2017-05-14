@@ -29,6 +29,12 @@ public class MainActivityPresenter implements Presenter {
 		initializeGroupListAdapter(view);
 	}
 
+	@Override
+	public void onCreateGroupPressed() {
+		view.collapseFabMenu();
+		view.startCreateGroupActivity();
+	}
+
 	private void retrieveGroupList() {
 		groups = getMyGroupsAction.execute();
 	}

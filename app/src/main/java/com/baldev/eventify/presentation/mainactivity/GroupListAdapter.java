@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.baldev.eventify.R;
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.presentation.mainactivity.GroupListAdapter.GroupViewHolder;
 
@@ -28,13 +29,13 @@ class GroupListAdapter extends RecyclerView.Adapter<GroupViewHolder> {
 	@Override
 	public GroupViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		return new GroupViewHolder(LayoutInflater.from(parent.getContext())
-				.inflate(android.R.layout.simple_list_item_1, parent, false));
+				.inflate(R.layout.list_item_group, parent, false));
 	}
 
 	@Override
 	public void onBindViewHolder(GroupViewHolder holder, int position) {
 		Group group = items.get(position);
-		holder.groupName.setText(group.getName() + " " + String.valueOf(group.getUsers().size()));
+		holder.groupName.setText(group.getName() + " (" + String.valueOf(group.getUsers().size() + " members)"));
 	}
 
 	public class GroupViewHolder extends RecyclerView.ViewHolder {
@@ -42,7 +43,7 @@ class GroupListAdapter extends RecyclerView.Adapter<GroupViewHolder> {
 
 		public GroupViewHolder(View itemView) {
 			super(itemView);
-			groupName = (TextView)itemView.findViewById(android.R.id.text1);
+			groupName = (TextView) itemView.findViewById(R.id.group_name_text);
 		}
 	}
 }

@@ -12,6 +12,7 @@ import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.presentation.creategroup.CreateGroupActivity;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract.Presenter;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
 	@BindView(R.id.group_list)
 	protected RecyclerView userList;
+
+	@BindView(R.id.fab_actions)
+	protected FloatingActionsMenu fabMenu;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,9 +57,19 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 		this.groupListAdapter.notifyDataSetChanged();
 	}
 
-	@OnClick(R.id.fab)
-	public void onFabClicked(){
+	@Override
+	public void collapseFabMenu() {
+		fabMenu.collapse();
+	}
+
+	@Override
+	public void startCreateGroupActivity() {
 		Intent intent = new Intent(this, CreateGroupActivity.class);
 		startActivity(intent);
+	}
+
+	@OnClick(R.id.create_group)
+	public void onFabPressed() {
+		presenter.onCreateGroupPressed();
 	}
 }
