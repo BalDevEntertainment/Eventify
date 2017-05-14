@@ -10,10 +10,16 @@ public interface MainActivityContract {
 	interface View {
 
 		void setGroupListToAdapter(List<Group> groups);
+
+		void collapseFabMenu();
+
+		void startCreateGroupActivity();
 	}
 
 	interface Presenter {
 
 		void onResume();
+
+		void onCreateGroupPressed();
 	}
 }

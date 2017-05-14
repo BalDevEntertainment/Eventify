@@ -18,8 +18,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="Select your username"
+        android:inputType="text"
         android:lines="1"
         android:maxLength="20"
+        android:maxLines="1"
         android:textColorHint="@android:color/darker_gray"
         android:textSize="18sp"/>
 
