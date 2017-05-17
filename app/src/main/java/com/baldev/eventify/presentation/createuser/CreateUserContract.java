@@ -6,6 +6,8 @@ public interface CreateUserContract {
 	interface View {
 
 		String getUserName();
+
+		void startMainActivity();
 	}
 
 	interface Presenter {

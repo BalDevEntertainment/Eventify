@@ -1,5 +1,6 @@
 package com.baldev.eventify.presentation.createuser;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.widget.EditText;
 
 import com.baldev.eventify.R;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
+import com.baldev.eventify.presentation.createuser.CreateUserContract.Presenter;
+import com.baldev.eventify.presentation.mainactivity.MainActivity;
 
 import javax.inject.Inject;
 
@@ -20,7 +23,7 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
 	protected EditText usernameInput;
 
 	@Inject
-	private CreateUserPresenter presenter;
+	private Presenter presenter;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,5 +41,12 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
 	@Override
 	public String getUserName() {
 		return usernameInput.getText().toString();
+	}
+
+	@Override
+	public void startMainActivity() {
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		startActivity(intent);
 	}
 }
