@@ -18,6 +18,8 @@
         <activity android:name=".presentation.mainactivity.MainActivity"/>
         <activity android:name=".presentation.creategroup.CreateGroupActivity"
             android:label="Add new group"/>
+        <activity android:name=".presentation.createevent.CreateEventActivity"
+            android:label="Add new event"/>
         <activity android:name=".presentation.userlist.UserListActivity"/>
 
     </application>

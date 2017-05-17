@@ -2,6 +2,10 @@ package com.baldev.eventify.dependencyinjection;
 
 import android.support.annotation.NonNull;
 
+import com.baldev.eventify.domain.actions.groups.GetMyGroups;
+import com.baldev.eventify.presentation.createevent.CreateEventActivity;
+import com.baldev.eventify.presentation.createevent.CreateEventContract;
+import com.baldev.eventify.presentation.createevent.CreateEventPresenter;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract;
 import com.baldev.eventify.presentation.creategroup.CreateGroupPresenter;
 import com.baldev.eventify.presentation.createuser.CreateUserContract;
@@ -17,6 +21,8 @@ import static com.baldev.eventify.dependencyinjection.ActionsFactory.*;
 
 public abstract class PresenterFactory {
 
+	private static GetMyGroups getMyGroups = provideGetMyGroupsAction();
+
 	@NonNull
 	public static CreateUserContract.Presenter provideCreateUserPresenter(CreateUserContract.View view) {
 		return new CreateUserPresenter(view, provideSaveUserAction());
@@ -28,12 +34,16 @@ public abstract class PresenterFactory {
 	}
 
 	@NonNull
-	public static Presenter provideUserListPresenter(View view, int[] preselectedUserIds) {
+	public static UserListContract.Presenter provideUserListPresenter(View view, int[] preselectedUserIds) {
 		return new UserListPresenter(view, preselectedUserIds, provideGetUsersAction());
 	}
 
 	@NonNull
 	public static MainActivityContract.Presenter provideMainActivityPresenter(MainActivityContract.View view) {
-		return new MainActivityPresenter(view, provideGetMyGroupsAction());
+		return new MainActivityPresenter(view, getMyGroups);
+	}
+
+	public static CreateEventContract.Presenter provideCreateEventPresenter(CreateEventContract.View view) {
+		return new CreateEventPresenter(view, getMyGroups);
 	}
 }

@@ -7,12 +7,12 @@ import com.baldev.eventify.domain.repositories.GroupsRepository;
 
 import java.util.List;
 
-public class DefaultGetMyGroupsAction implements GetMyGroupsAction {
+public class DefaultGetMyGroups implements GetMyGroups {
 
 	private GroupsRepository repository;
 	private GetMyUserAction getMyUserAction;
 
-	public DefaultGetMyGroupsAction(GroupsRepository repository, GetMyUserAction getMyUserAction) {
+	public DefaultGetMyGroups(GroupsRepository repository, GetMyUserAction getMyUserAction) {
 		this.repository = repository;
 		this.getMyUserAction = getMyUserAction;
 	}

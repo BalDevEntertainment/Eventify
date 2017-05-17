@@ -5,8 +5,8 @@ import com.baldev.eventify.domain.actions.groups.AddUsersToGroupAction;
 import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
 import com.baldev.eventify.domain.actions.groups.DefaultAddUsersToGroupAction;
 import com.baldev.eventify.domain.actions.groups.DefaultCreateGroupAction;
-import com.baldev.eventify.domain.actions.groups.DefaultGetMyGroupsAction;
-import com.baldev.eventify.domain.actions.groups.GetMyGroupsAction;
+import com.baldev.eventify.domain.actions.groups.DefaultGetMyGroups;
+import com.baldev.eventify.domain.actions.groups.GetMyGroups;
 import com.baldev.eventify.domain.actions.users.DefaultFindUsersAction;
 import com.baldev.eventify.domain.actions.users.DefaultGetMyUserAction;
 import com.baldev.eventify.domain.actions.users.DefaultGetUsersAction;
@@ -48,7 +48,7 @@ public abstract class ActionsFactory {
 		return new DefaultAddUsersToGroupAction(ServicesFactory.provideAddUsersToGroupService());
 	}
 
-	public static GetMyGroupsAction provideGetMyGroupsAction() {
-		return new DefaultGetMyGroupsAction(groupsRepository, provideGetMyUserAction());
+	public static GetMyGroups provideGetMyGroupsAction() {
+		return new DefaultGetMyGroups(groupsRepository, provideGetMyUserAction());
 	}
 }

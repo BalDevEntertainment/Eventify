@@ -1,5 +1,6 @@
 package com.baldev.eventify.dependencyinjection;
 
+import com.baldev.eventify.presentation.createevent.CreateEventContract;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract;
 import com.baldev.eventify.presentation.createuser.CreateUserContract;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract;
@@ -34,5 +35,10 @@ public class PresenterFactoryTest {
 	@Test
 	public void whenProvideMainActivityPresenter_ThenReturnMainActivityPresenter() {
 		assertNotNull(PresenterFactory.provideMainActivityPresenter(Mockito.mock(MainActivityContract.View.class)));
+	}
+
+	@Test
+	public void whenProvideCreateEventPresenter_ThenReturnCreateEventPresenter() {
+		assertNotNull(PresenterFactory.provideCreateEventPresenter(Mockito.mock(CreateEventContract.View.class)));
 	}
 }
