@@ -1,6 +1,6 @@
 package com.baldev.eventify.presentation.mainactivity;
 
-import com.baldev.eventify.domain.actions.groups.GetMyGroupsAction;
+import com.baldev.eventify.domain.actions.groups.GetMyGroups;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract.View;
 
 import org.junit.Before;
@@ -16,14 +16,14 @@ import static org.mockito.Mockito.verify;
 public class MainActivityPresenterTest {
 
 	@Mock
-	private GetMyGroupsAction getMyGroupsAction;
+	private GetMyGroups getMyGroups;
 	@Mock
 	private View view;
 	private MainActivityPresenter presenter;
 
 	@Before
 	public void setUp() throws Exception {
-		presenter = buildPresenter(view, getMyGroupsAction);
+		presenter = buildPresenter(view, getMyGroups);
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -33,7 +33,7 @@ public class MainActivityPresenterTest {
 
 	@Test(expected = NullPointerException.class)
 	public void whenViewIsNullThrowNullPointerException () {
-		buildPresenter(null, getMyGroupsAction);
+		buildPresenter(null, getMyGroups);
 	}
 
 	@Test()
@@ -42,13 +42,20 @@ public class MainActivityPresenterTest {
 	}
 
 	@Test
-	public void whenCreateGroupPressed_ThenCollapseFabAndChangeStartCreateGroupActivity(){
+	public void whenCreateGroupPressed_ThenCollapseFabAndStartCreateGroupActivity(){
 		presenter.onCreateGroupPressed();
 		verify(view, times(1)).collapseFabMenu();
 		verify(view, times(1)).startCreateGroupActivity();
 	}
 
-	private MainActivityPresenter buildPresenter(View view, GetMyGroupsAction getMyGroupsAction) {
-		return new MainActivityPresenter(view, getMyGroupsAction);
+	@Test
+	public void whenCreateEventPressed_ThenCollapseFabAndStartCreateEventActivity(){
+		presenter.onCreateEventPressed();
+		verify(view, times(1)).collapseFabMenu();
+		verify(view, times(1)).startCreateEventActivity();
+	}
+
+	private MainActivityPresenter buildPresenter(View view, GetMyGroups getMyGroups) {
+		return new MainActivityPresenter(view, getMyGroups);
 	}
 }

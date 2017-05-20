@@ -45,4 +45,9 @@ public class ActionsFactoryTest {
 	public void whenProvideFindUsersAction_ThenReturnFindUsersAction() {
 		assertNotNull(ActionsFactory.provideFindUsersAction());
 	}
+
+	@Test
+	public void whenProvideSaveEvent_ThenReturnSaveEvent() {
+		assertNotNull(ActionsFactory.provideSaveEvent());
+	}
 }

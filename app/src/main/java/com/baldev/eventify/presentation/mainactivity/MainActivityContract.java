@@ -14,6 +14,8 @@ public interface MainActivityContract {
 		void collapseFabMenu();
 
 		void startCreateGroupActivity();
+
+		void startCreateEventActivity();
 	}
 
 	interface Presenter {
@@ -21,5 +23,7 @@ public interface MainActivityContract {
 		void onResume();
 
 		void onCreateGroupPressed();
+
+		void onCreateEventPressed();
 	}
 }

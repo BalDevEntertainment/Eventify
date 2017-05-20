@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.baldev.eventify.R;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.domain.entities.Group;
+import com.baldev.eventify.presentation.createevent.CreateEventActivity;
 import com.baldev.eventify.presentation.creategroup.CreateGroupActivity;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract.Presenter;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -68,8 +69,19 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 		startActivity(intent);
 	}
 
+	@Override
+	public void startCreateEventActivity() {
+		Intent intent = new Intent(this, CreateEventActivity.class);
+		startActivity(intent);
+	}
+
 	@OnClick(R.id.create_group)
-	public void onFabPressed() {
+	public void onFabCreateGroupPressed() {
 		presenter.onCreateGroupPressed();
+	}
+
+	@OnClick(R.id.create_event)
+	public void onFabCreateEventPressed() {
+		presenter.onCreateEventPressed();
 	}
 }

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultGetMyGroupsActionTest {
+public class DefaultGetMyGroupsTest {
 
 	@Mock
 	private GroupsRepository groupsRepository;
@@ -27,7 +27,7 @@ public class DefaultGetMyGroupsActionTest {
 		User user = Mockito.mock(User.class);
 		when(getMyUserAction.execute()).thenReturn(user);
 		when(user.getId()).thenReturn(1);
-		new DefaultGetMyGroupsAction(groupsRepository, getMyUserAction).execute();
+		new DefaultGetMyGroups(groupsRepository, getMyUserAction).execute();
 		verify(groupsRepository, times(1)).getGroupsByUserId(user.getId());
 	}
 }
