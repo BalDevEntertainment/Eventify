@@ -84,7 +84,7 @@ public class CreateGroupActivity extends SaveToolbarActivity implements CreateGr
 	}
 
 	@Override
-	protected void save() {
+	protected void onSavePressed() {
 		presenter.onSavePressed(groupNameInput.getText().toString());
 	}
 

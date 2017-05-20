@@ -1,18 +1,26 @@
 package com.baldev.eventify.presentation.createevent;
 
 
-import com.baldev.eventify.domain.entities.Group;
-
-import java.util.List;
+import java.util.Date;
+import java.util.Set;
 
 public interface CreateEventContract {
 
 	interface View {
 
-		void setGroupListToSpinner(List<Group> groups);
+		void setGroupListToSpinner(Set<String> groups);
+
+		String getSelectedGroupName();
+
+		String getEventDescription();
+
+		Date getDate();
+
+		String getDuration();
 	}
 
 	interface Presenter {
 
+		void onSaveEventButtonPressed();
 	}
 }

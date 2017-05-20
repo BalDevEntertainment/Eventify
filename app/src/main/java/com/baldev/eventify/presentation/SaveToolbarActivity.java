@@ -30,7 +30,7 @@ public abstract class SaveToolbarActivity extends AppCompatActivity {
 		return true;
 	}
 
-	protected abstract void save();
+	protected abstract void onSavePressed();
 
 	protected void setupToolbar() {
 		if (isToolbarSet()) {
@@ -43,7 +43,7 @@ public abstract class SaveToolbarActivity extends AppCompatActivity {
 
 	private void setActionBarActions() {
 		menuActionsMap.put(R.id.action_menu_save, () -> {
-			save();
+			onSavePressed();
 			return true;
 		});
 		menuActionsMap.put(android.R.id.home, () -> {

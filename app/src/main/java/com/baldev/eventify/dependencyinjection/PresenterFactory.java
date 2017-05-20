@@ -2,8 +2,8 @@ package com.baldev.eventify.dependencyinjection;
 
 import android.support.annotation.NonNull;
 
+import com.baldev.eventify.domain.actions.SaveEvent;
 import com.baldev.eventify.domain.actions.groups.GetMyGroups;
-import com.baldev.eventify.presentation.createevent.CreateEventActivity;
 import com.baldev.eventify.presentation.createevent.CreateEventContract;
 import com.baldev.eventify.presentation.createevent.CreateEventPresenter;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract;
@@ -13,7 +13,6 @@ import com.baldev.eventify.presentation.createuser.CreateUserPresenter;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract;
 import com.baldev.eventify.presentation.mainactivity.MainActivityPresenter;
 import com.baldev.eventify.presentation.userlist.UserListContract;
-import com.baldev.eventify.presentation.userlist.UserListContract.Presenter;
 import com.baldev.eventify.presentation.userlist.UserListContract.View;
 import com.baldev.eventify.presentation.userlist.UserListPresenter;
 
@@ -44,6 +43,6 @@ public abstract class PresenterFactory {
 	}
 
 	public static CreateEventContract.Presenter provideCreateEventPresenter(CreateEventContract.View view) {
-		return new CreateEventPresenter(view, getMyGroups);
+		return new CreateEventPresenter(view, getMyGroups, provideSaveEvent());
 	}
 }
