@@ -50,4 +50,9 @@ public class ActionsFactoryTest {
 	public void whenProvideSaveEvent_ThenReturnSaveEvent() {
 		assertNotNull(ActionsFactory.provideSaveEvent());
 	}
+
+	@Test
+	public void whenProvideGetMyEvents_ThenReturnGetMyEvents() {
+		assertNotNull(ActionsFactory.provideGetMyEvents());
+	}
 }

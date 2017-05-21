@@ -12,6 +12,10 @@ import com.baldev.eventify.presentation.createuser.CreateUserContract;
 import com.baldev.eventify.presentation.createuser.CreateUserPresenter;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract;
 import com.baldev.eventify.presentation.mainactivity.MainActivityPresenter;
+import com.baldev.eventify.presentation.mainactivity.events.EventsFragment;
+import com.baldev.eventify.presentation.mainactivity.events.EventsFragmentPresenter;
+import com.baldev.eventify.presentation.mainactivity.groups.GroupsFragment;
+import com.baldev.eventify.presentation.mainactivity.groups.GroupsFragmentPresenter;
 import com.baldev.eventify.presentation.userlist.UserListContract;
 import com.baldev.eventify.presentation.userlist.UserListContract.View;
 import com.baldev.eventify.presentation.userlist.UserListPresenter;
@@ -44,5 +48,13 @@ public abstract class PresenterFactory {
 
 	public static CreateEventContract.Presenter provideCreateEventPresenter(CreateEventContract.View view) {
 		return new CreateEventPresenter(view, getMyGroups, provideSaveEvent());
+	}
+
+	public static GroupsFragmentPresenter provideGroupsFragmentPresenter(GroupsFragment view) {
+		return new GroupsFragmentPresenter(view, provideGetMyGroupsAction());
+	}
+
+	public static EventsFragmentPresenter provideEventsFragmentPresenter(EventsFragment view) {
+		return new EventsFragmentPresenter(view, provideGetMyEvents());
 	}
 }

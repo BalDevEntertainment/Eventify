@@ -36,7 +36,7 @@ public abstract class ServicesFactory {
 	}
 
 	public static SaveEventService provideSaveEvent() {
-		return new SaveEventService(RepositoriesFactory.eventsRepository());
+		return new SaveEventService(RepositoriesFactory.provideEventsRepository());
 	}
 
 	public static CreateEventService provideCreateEventService() {

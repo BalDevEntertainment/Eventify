@@ -11,8 +11,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
+import java.util.regex.Matcher;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CreateEventServiceTest {
@@ -33,6 +35,12 @@ public class CreateEventServiceTest {
 	@Test
 	public void whenCreateEventService_ThenReturnCreateEventService() {
 		assertNotNull(buildCreateEventService());
+	}
+
+	@Test
+	public void whenExecute_ThenReturnEvent() {
+		CreateEventService service = buildCreateEventService();
+		assertNotNull(service.createEvent(group, eventDescription, date, durationInHours));
 	}
 
 	@Test(expected = NullPointerException.class)

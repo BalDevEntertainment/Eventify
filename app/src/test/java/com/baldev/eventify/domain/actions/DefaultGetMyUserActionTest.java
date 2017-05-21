@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GetMyUserActionTest {
+public class DefaultGetMyUserActionTest {
 
 	@Mock
 	private UsersRepository usersRepository;
