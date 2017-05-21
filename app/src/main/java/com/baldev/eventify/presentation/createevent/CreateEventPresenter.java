@@ -18,7 +18,7 @@ public class CreateEventPresenter implements Presenter {
 
 	private SaveEvent saveEvent;
 	private View view;
-	private Map<String, Group> groupNameMap = new HashMap<>();
+	protected Map<String, Group> groupNameMap = new HashMap<>();
 
 	@Override
 	public void onSaveEventButtonPressed() {
