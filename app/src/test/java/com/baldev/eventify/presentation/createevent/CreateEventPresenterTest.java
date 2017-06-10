@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.baldev.eventify.domain.actions.SaveEvent;
 import com.baldev.eventify.domain.actions.groups.GetMyGroups;
 import com.baldev.eventify.domain.entities.Group;
+import com.baldev.eventify.domain.exceptions.NoGroupSelectedException;
 import com.baldev.eventify.presentation.createevent.CreateEventContract.View;
 
 import org.junit.Before;
@@ -18,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertNotNull;
-import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anySetOf;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -78,19 +79,47 @@ public class CreateEventPresenterTest {
 	}
 
 	@Test()
-	public void whenSaveButtonIsPressed_ThenSaveIsExecutedOnce(){
+	public void whenSaveButtonIsPressed_ThenSaveIsExecutedOnce() throws NoGroupSelectedException {
 		CreateEventPresenter presenter = buildPresenter();
-		presenter.groupNameMap = groupNameMap;
-		when(view.getSelectedGroupName()).thenReturn(groupName);
-		when(view.getEventDescription()).thenReturn(eventDescription);
-		when(view.getDate()).thenReturn(date);
-		when(view.getDuration()).thenReturn(durationInHours);
+		givenValidGroup();
+		givenValidEventDescription();
+		givenValidDate();
+		givenValidDuration();
 		presenter.onSaveEventButtonPressed();
 		verify(saveEvent, times(1)).execute(group, eventDescription, date, Integer.valueOf(durationInHours));
 	}
 
+	@Test()
+	public void whenSaveButtonIsPressed_ThenThrowNoGroupSelectedException() throws NoGroupSelectedException {
+		CreateEventPresenter presenter = buildPresenter();
+		doThrow(new NoGroupSelectedException()).when(saveEvent).execute(null, eventDescription, date, Integer.valueOf(durationInHours));
+		givenValidEventDescription();
+		givenValidDate();
+		givenValidDuration();
+		presenter.onSaveEventButtonPressed();
+		verify(view, times(1)).showNoGroupSelectedError();
+	}
+
 	@NonNull
 	private CreateEventPresenter buildPresenter() {
-		return new CreateEventPresenter(view, getMyGroups, saveEvent);
+		CreateEventPresenter createEventPresenter = new CreateEventPresenter(view, getMyGroups, saveEvent);
+		createEventPresenter.groupNameMap = groupNameMap;
+		return createEventPresenter;
+	}
+
+	private void givenValidGroup() {
+		when(view.getSelectedGroupName()).thenReturn(groupName);
+	}
+
+	private void givenValidDuration() {
+		when(view.getDuration()).thenReturn(durationInHours);
+	}
+
+	private void givenValidDate() {
+		when(view.getDate()).thenReturn(date);
+	}
+
+	private void givenValidEventDescription() {
+		when(view.getEventDescription()).thenReturn(eventDescription);
 	}
 }

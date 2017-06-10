@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.baldev.eventify.domain.actions.SaveEvent;
 import com.baldev.eventify.domain.actions.groups.GetMyGroups;
 import com.baldev.eventify.domain.entities.Group;
+import com.baldev.eventify.domain.exceptions.NoGroupSelectedException;
 import com.baldev.eventify.presentation.createevent.CreateEventContract.Presenter;
 import com.baldev.eventify.presentation.createevent.CreateEventContract.View;
 import com.google.common.base.Preconditions;
@@ -22,7 +23,11 @@ public class CreateEventPresenter implements Presenter {
 
 	@Override
 	public void onSaveEventButtonPressed() {
-		saveEvent.execute(getSelectedGroupByName(view.getSelectedGroupName()), view.getEventDescription(), view.getDate(), Integer.valueOf(view.getDuration()));
+		try {
+			saveEvent.execute(getSelectedGroupByName(view.getSelectedGroupName()), view.getEventDescription(), view.getDate(), Integer.valueOf(view.getDuration()));
+		} catch (NoGroupSelectedException e) {
+			view.showNoGroupSelectedError();
+		}
 	}
 
 	public CreateEventPresenter(View view, GetMyGroups getMyGroups, SaveEvent saveEvent) {

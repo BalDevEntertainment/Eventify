@@ -71,6 +71,11 @@ public class CreateEventActivity extends SaveToolbarActivity implements View {
 	}
 
 	@Override
+	public void showNoGroupSelectedError() {
+
+	}
+
+	@Override
 	protected void onSavePressed() {
 		presenter.onSaveEventButtonPressed();
 	}

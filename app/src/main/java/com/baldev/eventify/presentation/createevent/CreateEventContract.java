@@ -17,6 +17,8 @@ public interface CreateEventContract {
 		Date getDate();
 
 		String getDuration();
+
+		void showNoGroupSelectedError();
 	}
 
 	interface Presenter {
