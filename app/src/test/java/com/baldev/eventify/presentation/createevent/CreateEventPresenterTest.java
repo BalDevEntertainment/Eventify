@@ -2,7 +2,7 @@ package com.baldev.eventify.presentation.createevent;
 
 import android.support.annotation.NonNull;
 
-import com.baldev.eventify.domain.actions.SaveEvent;
+import com.baldev.eventify.domain.actions.events.SaveEvent;
 import com.baldev.eventify.domain.actions.groups.GetMyGroups;
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.exceptions.NoGroupSelectedException;

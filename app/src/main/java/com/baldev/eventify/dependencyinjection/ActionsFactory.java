@@ -1,10 +1,10 @@
 package com.baldev.eventify.dependencyinjection;
 
 
-import com.baldev.eventify.domain.actions.DefaultGetMyEvents;
-import com.baldev.eventify.domain.actions.DefaultSaveEvent;
-import com.baldev.eventify.domain.actions.GetMyEvents;
-import com.baldev.eventify.domain.actions.SaveEvent;
+import com.baldev.eventify.domain.actions.events.DefaultGetMyEvents;
+import com.baldev.eventify.domain.actions.events.DefaultSaveEvent;
+import com.baldev.eventify.domain.actions.events.GetMyEvents;
+import com.baldev.eventify.domain.actions.events.SaveEvent;
 import com.baldev.eventify.domain.actions.groups.AddUsersToGroupAction;
 import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
 import com.baldev.eventify.domain.actions.groups.DefaultAddUsersToGroupAction;

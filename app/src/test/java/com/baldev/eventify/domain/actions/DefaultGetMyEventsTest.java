@@ -1,6 +1,6 @@
 package com.baldev.eventify.domain.actions;
 
-import com.baldev.eventify.domain.actions.groups.DefaultGetMyGroups;
+import com.baldev.eventify.domain.actions.events.DefaultGetMyEvents;
 import com.baldev.eventify.domain.actions.users.GetMyUserAction;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.EventsRepository;

@@ -1,7 +1,7 @@
 package com.baldev.eventify.presentation.mainactivity.events;
 
 
-import com.baldev.eventify.domain.actions.GetMyEvents;
+import com.baldev.eventify.domain.actions.events.GetMyEvents;
 import com.baldev.eventify.domain.entities.Event;
 
 import java.util.List;

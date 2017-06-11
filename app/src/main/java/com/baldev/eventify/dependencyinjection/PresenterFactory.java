@@ -2,7 +2,6 @@ package com.baldev.eventify.dependencyinjection;
 
 import android.support.annotation.NonNull;
 
-import com.baldev.eventify.domain.actions.SaveEvent;
 import com.baldev.eventify.domain.actions.groups.GetMyGroups;
 import com.baldev.eventify.presentation.createevent.CreateEventContract;
 import com.baldev.eventify.presentation.createevent.CreateEventPresenter;

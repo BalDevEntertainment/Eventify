@@ -1,4 +1,4 @@
-package com.baldev.eventify.domain.actions;
+package com.baldev.eventify.domain.actions.events;
 
 
 import com.baldev.eventify.domain.entities.Group;
