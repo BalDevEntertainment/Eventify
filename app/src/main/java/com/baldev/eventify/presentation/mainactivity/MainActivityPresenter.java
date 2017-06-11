@@ -1,32 +1,31 @@
 package com.baldev.eventify.presentation.mainactivity;
 
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+
 import com.baldev.eventify.domain.actions.groups.GetMyGroups;
-import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract.Presenter;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract.View;
+import com.baldev.eventify.presentation.mainactivity.events.EventsFragment;
+import com.baldev.eventify.presentation.mainactivity.groups.GroupsFragment;
 import com.google.common.base.Preconditions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivityPresenter implements Presenter {
 
-	protected List<Group> groups;
-	private GetMyGroups getMyGroups;
 	private final View view;
 
 	public MainActivityPresenter(View view, GetMyGroups getMyGroups) {
 		Preconditions.checkNotNull(getMyGroups);
 		Preconditions.checkNotNull(view);
 		this.view = view;
-		this.getMyGroups = getMyGroups;
-		retrieveGroupList();
-		initializeGroupListAdapter(view);
+		initializePagerAdapter(view);
 	}
 
-	@Override
-	public void onResume() {
-		retrieveGroupList();
-		initializeGroupListAdapter(view);
+	private void initializePagerAdapter(View view) {
+		view.buildPagerAdapter(instantiateMainActivityPagerFragmentList());
 	}
 
 	@Override
@@ -41,11 +40,40 @@ public class MainActivityPresenter implements Presenter {
 		view.startCreateEventActivity();
 	}
 
-	private void retrieveGroupList() {
-		groups = getMyGroups.execute();
+	private List<MainActivityPagerFragmentBuilder> instantiateMainActivityPagerFragmentList() {
+		List<MainActivityPagerFragmentBuilder> list = new ArrayList<>();
+		list.add(getGroupsFragmentBuilder());
+		list.add(getEventsFragmentBuilder());
+		return list;
 	}
 
-	private void initializeGroupListAdapter(MainActivityContract.View view) {
-		view.setGroupListToAdapter(groups);
+	@NonNull
+	private MainActivityPagerFragmentBuilder getEventsFragmentBuilder() {
+		return new MainActivityPagerFragmentBuilder() {
+			@Override
+			public Fragment build() {
+				return new EventsFragment();
+			}
+
+			@Override
+			public String getPageTitle() {
+				return EventsFragment.title;
+			}
+		};
+	}
+
+	@NonNull
+	private MainActivityPagerFragmentBuilder getGroupsFragmentBuilder() {
+		return new MainActivityPagerFragmentBuilder() {
+			@Override
+			public Fragment build() {
+				return new GroupsFragment();
+			}
+
+			@Override
+			public String getPageTitle() {
+				return GroupsFragment.title;
+			}
+		};
 	}
 }

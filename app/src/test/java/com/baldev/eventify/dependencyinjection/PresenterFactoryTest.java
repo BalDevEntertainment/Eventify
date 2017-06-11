@@ -4,6 +4,9 @@ import com.baldev.eventify.presentation.createevent.CreateEventContract;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract;
 import com.baldev.eventify.presentation.createuser.CreateUserContract;
 import com.baldev.eventify.presentation.mainactivity.MainActivityContract;
+import com.baldev.eventify.presentation.mainactivity.events.EventsFragment;
+import com.baldev.eventify.presentation.mainactivity.events.EventsFragmentPresenter;
+import com.baldev.eventify.presentation.mainactivity.groups.GroupsFragment;
 import com.baldev.eventify.presentation.userlist.UserListContract;
 
 import org.junit.Test;
@@ -40,5 +43,15 @@ public class PresenterFactoryTest {
 	@Test
 	public void whenProvideCreateEventPresenter_ThenReturnCreateEventPresenter() {
 		assertNotNull(PresenterFactory.provideCreateEventPresenter(Mockito.mock(CreateEventContract.View.class)));
+	}
+
+	@Test
+	public void whenProvideGroupsFragmentPresenter_ThenReturnGroupsFragmentPresenter() {
+		assertNotNull(PresenterFactory.provideGroupsFragmentPresenter(Mockito.mock(GroupsFragment.class)));
+	}
+
+	@Test
+	public void whenProvideEventsFragmentPresenter_ThenReturnEventsFragmentPresenter() {
+		assertNotNull(PresenterFactory.provideEventsFragmentPresenter(Mockito.mock(EventsFragment.class)));
 	}
 }

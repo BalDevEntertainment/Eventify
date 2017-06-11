@@ -76,6 +76,11 @@ public class CreateEventActivity extends SaveToolbarActivity implements View {
 	}
 
 	@Override
+	public void finishActivity() {
+		this.finish();
+	}
+
+	@Override
 	protected void onSavePressed() {
 		presenter.onSaveEventButtonPressed();
 	}

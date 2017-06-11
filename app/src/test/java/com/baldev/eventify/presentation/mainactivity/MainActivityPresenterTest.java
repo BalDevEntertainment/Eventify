@@ -9,6 +9,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.List;
+
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -19,6 +22,7 @@ public class MainActivityPresenterTest {
 	private GetMyGroups getMyGroups;
 	@Mock
 	private View view;
+
 	private MainActivityPresenter presenter;
 
 	@Before
@@ -27,29 +31,29 @@ public class MainActivityPresenterTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void whenGetMyGroupsActionIsNullThrowNullPointerException () {
+	public void whenGetMyGroupsActionIsNullThrowNullPointerException() {
 		buildPresenter(view, null);
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void whenViewIsNullThrowNullPointerException () {
+	public void whenViewIsNullThrowNullPointerException() {
 		buildPresenter(null, getMyGroups);
 	}
 
 	@Test()
-	public void whenBuildPresenterThenInitializeGroupListAdapter () {
-		verify(view, times(1)).setGroupListToAdapter(presenter.groups);
+	public void whenBuildPresenter_ThenInitializeMainActivityPagerAdapter() {
+		verify(view, times(1)).buildPagerAdapter(anyListOf(MainActivityPagerFragmentBuilder.class));
 	}
 
 	@Test
-	public void whenCreateGroupPressed_ThenCollapseFabAndStartCreateGroupActivity(){
+	public void whenCreateGroupPressed_ThenCollapseFabAndStartCreateGroupActivity() {
 		presenter.onCreateGroupPressed();
 		verify(view, times(1)).collapseFabMenu();
 		verify(view, times(1)).startCreateGroupActivity();
 	}
 
 	@Test
-	public void whenCreateEventPressed_ThenCollapseFabAndStartCreateEventActivity(){
+	public void whenCreateEventPressed_ThenCollapseFabAndStartCreateEventActivity() {
 		presenter.onCreateEventPressed();
 		verify(view, times(1)).collapseFabMenu();
 		verify(view, times(1)).startCreateEventActivity();

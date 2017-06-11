@@ -15,4 +15,8 @@ public class Event {
 		this.date = date;
 		this.duration = duration;
 	}
+
+	public String getDescription() {
+		return description;
+	}
 }

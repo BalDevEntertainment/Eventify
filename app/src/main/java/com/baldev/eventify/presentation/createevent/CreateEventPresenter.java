@@ -17,18 +17,9 @@ import java.util.Map;
 
 public class CreateEventPresenter implements Presenter {
 
+	protected Map<String, Group> groupNameMap = new HashMap<>();
 	private SaveEvent saveEvent;
 	private View view;
-	protected Map<String, Group> groupNameMap = new HashMap<>();
-
-	@Override
-	public void onSaveEventButtonPressed() {
-		try {
-			saveEvent.execute(getSelectedGroupByName(view.getSelectedGroupName()), view.getEventDescription(), view.getDate(), Integer.valueOf(view.getDuration()));
-		} catch (NoGroupSelectedException e) {
-			view.showNoGroupSelectedError();
-		}
-	}
 
 	public CreateEventPresenter(View view, GetMyGroups getMyGroups, SaveEvent saveEvent) {
 		Preconditions.checkNotNull(view);
@@ -38,6 +29,16 @@ public class CreateEventPresenter implements Presenter {
 		this.view = view;
 		initializeGroupNameMap(getMyGroups.execute());
 		view.setGroupListToSpinner(groupNameMap.keySet());
+	}
+
+	@Override
+	public void onSaveEventButtonPressed() {
+		try {
+		saveEvent.execute(getSelectedGroupByName(view.getSelectedGroupName()), view.getEventDescription(), view.getDate(), Integer.valueOf(view.getDuration()));
+		view.finishActivity();
+		} catch (NoGroupSelectedException e) {
+			view.showNoGroupSelectedError();
+		}
 	}
 
 	private Group getSelectedGroupByName(String selectedGroupName) {

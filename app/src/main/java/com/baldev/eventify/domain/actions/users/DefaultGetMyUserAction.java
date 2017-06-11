@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 public class DefaultGetMyUserAction implements GetMyUserAction {
 
-
 	private final UsersRepository usersRepository;
 
 	@Inject

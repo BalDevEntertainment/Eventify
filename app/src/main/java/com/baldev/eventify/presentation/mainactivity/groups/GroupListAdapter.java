@@ -1,4 +1,4 @@
-package com.baldev.eventify.presentation.mainactivity;
+package com.baldev.eventify.presentation.mainactivity.groups;
 
 
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.baldev.eventify.R;
 import com.baldev.eventify.domain.entities.Group;
-import com.baldev.eventify.presentation.mainactivity.GroupListAdapter.GroupViewHolder;
+import com.baldev.eventify.presentation.mainactivity.groups.GroupListAdapter.GroupViewHolder;
 
 import java.util.List;
 

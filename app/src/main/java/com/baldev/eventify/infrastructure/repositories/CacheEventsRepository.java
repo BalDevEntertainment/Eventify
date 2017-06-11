@@ -24,4 +24,9 @@ public class CacheEventsRepository implements EventsRepository {
 	public void saveEvent(Event event) {
 		events.add(event);
 	}
+
+	@Override
+	public List<Event> getEventsByUserId(int id) {
+		return events;
+	}
 }

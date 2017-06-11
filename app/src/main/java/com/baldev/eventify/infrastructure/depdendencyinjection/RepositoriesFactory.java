@@ -22,7 +22,7 @@ public abstract class RepositoriesFactory {
 		return CacheGroupsRepository.getInstance();
 	}
 
-	public static EventsRepository eventsRepository() {
+	public static EventsRepository provideEventsRepository() {
 		return CacheEventsRepository.getInstance();
 	}
 }

@@ -1,7 +1,9 @@
 package com.baldev.eventify.dependencyinjection;
 
 
+import com.baldev.eventify.domain.actions.DefaultGetMyEvents;
 import com.baldev.eventify.domain.actions.DefaultSaveEvent;
+import com.baldev.eventify.domain.actions.GetMyEvents;
 import com.baldev.eventify.domain.actions.SaveEvent;
 import com.baldev.eventify.domain.actions.groups.AddUsersToGroupAction;
 import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
@@ -52,6 +54,10 @@ public abstract class ActionsFactory {
 
 	public static GetMyGroups provideGetMyGroupsAction() {
 		return new DefaultGetMyGroups(groupsRepository, provideGetMyUserAction());
+	}
+
+	public static GetMyEvents provideGetMyEvents() {
+		return new DefaultGetMyEvents(RepositoriesFactory.provideEventsRepository(), provideGetMyUserAction());
 	}
 
 	public static SaveEvent provideSaveEvent() {
