@@ -71,6 +71,11 @@ public class CreateEventActivity extends SaveToolbarActivity implements View {
 	}
 
 	@Override
+	public void showNoGroupSelectedError() {
+
+	}
+
+	@Override
 	public void finishActivity() {
 		this.finish();
 	}

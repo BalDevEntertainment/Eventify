@@ -3,6 +3,7 @@ package com.baldev.eventify.domain.actions;
 
 import com.baldev.eventify.domain.entities.Event;
 import com.baldev.eventify.domain.entities.Group;
+import com.baldev.eventify.domain.exceptions.NoGroupSelectedException;
 import com.baldev.eventify.domain.services.CreateEventService;
 import com.baldev.eventify.domain.services.SaveEventService;
 
@@ -45,10 +46,9 @@ public class DefaultSaveEventTest {
 	}
 
 	@Test
-	public void whenSaveEvent_ThenSaveEventServiceIsCalledOnce() {
+	public void whenSaveEvent_ThenSaveEventServiceIsCalledOnce() throws NoGroupSelectedException {
 		SaveEvent saveEvent = new DefaultSaveEvent(createEventService, saveEventService);
 		when(createEventService.createEvent(group, description, date, duration)).thenReturn(event);
-
 		saveEvent.execute(group, description, date, duration);
 		verify(createEventService, times(1)).createEvent(group, description, date, duration);
 		verify(saveEventService, times(1)).saveEvent(event);

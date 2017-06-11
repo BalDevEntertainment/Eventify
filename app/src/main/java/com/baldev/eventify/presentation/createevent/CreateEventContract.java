@@ -18,6 +18,8 @@ public interface CreateEventContract {
 
 		String getDuration();
 
+		void showNoGroupSelectedError();
+
 		void finishActivity();
 	}
 

@@ -3,6 +3,7 @@ package com.baldev.eventify.domain.services;
 import android.support.annotation.NonNull;
 
 import com.baldev.eventify.domain.entities.Group;
+import com.baldev.eventify.domain.exceptions.NoGroupSelectedException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,23 +44,23 @@ public class CreateEventServiceTest {
 		assertNotNull(service.createEvent(group, eventDescription, date, durationInHours));
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void givenNullGroup_whenCreateEvent_ThenThrowNullPointerException() {
+	@Test(expected = NoGroupSelectedException.class)
+	public void givenNullGroup_whenCreateEvent_ThenThrowNoGroupSelectedException() throws NoGroupSelectedException {
 		service.createEvent(null, eventDescription, date, durationInHours);
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void givenNullEventDescription_whenCreateEvent_ThenThrowNullPointerException() {
+	public void givenNullEventDescription_whenCreateEvent_ThenThrowNullPointerException() throws NoGroupSelectedException {
 		service.createEvent(group, null, date, durationInHours);
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void givenNullDate_whenCreateEvent_ThenThrowNullPointerException() {
+	public void givenNullDate_whenCreateEvent_ThenThrowNullPointerException() throws NoGroupSelectedException {
 		service.createEvent(group, eventDescription, null, durationInHours);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void givenNegativeDurationInHours_whenCreateEvent_ThenThrowIllegalArgumentException() {
+	public void givenNegativeDurationInHours_whenCreateEvent_ThenThrowIllegalArgumentException() throws NoGroupSelectedException {
 		service = buildCreateEventService();
 		service.createEvent(group, eventDescription, date, -1);
 	}
