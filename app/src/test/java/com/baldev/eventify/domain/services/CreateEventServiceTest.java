@@ -39,7 +39,7 @@ public class CreateEventServiceTest {
 	}
 
 	@Test
-	public void whenExecute_ThenReturnEvent() {
+	public void whenExecute_ThenReturnEvent() throws NoGroupSelectedException {
 		CreateEventService service = buildCreateEventService();
 		assertNotNull(service.createEvent(group, eventDescription, date, durationInHours));
 	}
