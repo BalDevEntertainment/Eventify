@@ -19,6 +19,6 @@ public class DefaultGetMyGroups implements GetMyGroups {
 
 	@Override
 	public List<Group> execute() {
-		return repository.getGroupsByUserId(getMyUserAction.execute().getId());
+		return repository.getGroupsByUser(getMyUserAction.execute());
 	}
 }

@@ -1,7 +1,6 @@
 package com.baldev.eventify.presentation.creategroup;
 
 import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
-import com.baldev.eventify.domain.actions.users.FindUsersAction;
 import com.baldev.eventify.domain.actions.users.GetMyUserAction;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
@@ -18,16 +17,14 @@ public class CreateGroupPresenter implements Presenter {
 	protected final List<User> users = new ArrayList<>();
 	private final GetMyUserAction getMyUserAction;
 	private final CreateGroupAction createGroupAction;
-	private FindUsersAction findUsersAction;
 	private View view;
 
 	@Inject
 	public CreateGroupPresenter(View view, CreateGroupAction createGroupAction,
-								GetMyUserAction getMyUserAction, FindUsersAction findUsersAction) {
+								GetMyUserAction getMyUserAction) {
 		new CreateGroupPresenterValidations(view, createGroupAction, getMyUserAction).execute();
 		this.getMyUserAction = getMyUserAction;
 		this.createGroupAction = createGroupAction;
-		this.findUsersAction = findUsersAction;
 		this.view = view;
 		initializeUsersList();
 		initializeUserListAdapter();
@@ -36,7 +33,7 @@ public class CreateGroupPresenter implements Presenter {
 	@Override
 	public void onSavePressed(String groupName) {
 		try {
-			createGroupAction.execute(getMyUserAction.execute().getId(), groupName, users);
+			createGroupAction.execute(getMyUserAction.execute(), groupName, users);
 			view.finishActivity();
 		} catch (InvalidGroupNameException e) {
 			view.showInvalidGroupNameError();
@@ -44,19 +41,14 @@ public class CreateGroupPresenter implements Presenter {
 	}
 
 	@Override
-	public void onSelectedUsersRetrieved(int[] userIds) {
+	public void onSelectedUsersRetrieved(List<User> users) {
 		initializeUsersList();
-		users.addAll(findUsersAction.execute(userIds));
 		initializeUserListAdapter();
 	}
 
 	@Override
 	public void onAddRemoveMemberButtonPressed() {
-		int[] userIds = new int[users.size()];
-		for (int i = 0; i < users.size(); i++) {
-			userIds[i] = users.get(i).getId();
-		}
-		view.startUserListActivityForResult(userIds);
+		view.startUserListActivityForResult(users);
 	}
 
 	private void initializeUserListAdapter() {

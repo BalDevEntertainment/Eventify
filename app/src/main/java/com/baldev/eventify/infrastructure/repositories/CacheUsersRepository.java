@@ -3,14 +3,13 @@ package com.baldev.eventify.infrastructure.repositories;
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.InvalidUser;
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.entities.UserCreationRequest;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class CacheUsersRepository implements UsersRepository {
@@ -20,7 +19,6 @@ public class CacheUsersRepository implements UsersRepository {
 	private List<User> users = new ArrayList<>();
 
 	private CacheUsersRepository() {
-		initializeStubUserList();
 		try {
 			myUser = new InvalidUser();
 		} catch (InvalidUserNameException e) {
@@ -36,8 +34,12 @@ public class CacheUsersRepository implements UsersRepository {
 	}
 
 	@Override
-	public void saveUser(User user, SaveUserCallback saveUserCallback) {
-		this.myUser = user;
+	public void saveUser(UserCreationRequest userCreationRequest, SaveUserCallback saveUserCallback) {
+		try {
+			this.myUser = new User("NewId", userCreationRequest.getName());
+		} catch (InvalidUserNameException e) {
+			e.printStackTrace();
+		}
 		saveUserCallback.onUserSaved();
 	}
 
@@ -52,9 +54,9 @@ public class CacheUsersRepository implements UsersRepository {
 	}
 
 	@Override
-	public List<User> findUsers(int[] ids) {
+	public List<User> findUsers(String[] ids) {
 		List<User> users = new ArrayList<>();
-		for (int id : ids) {
+		for (String id : ids) {
 			User user = getUserById(id);
 			if (user != null) {
 				users.add(user);
@@ -63,30 +65,12 @@ public class CacheUsersRepository implements UsersRepository {
 		return users;
 	}
 
-	private User getUserById(int id) {
+	private User getUserById(String id) {
 		for (User user : users) {
-			if (user.getId() == id) {
+			if (user.getId().equals(id)) {
 				return user;
 			}
 		}
 		return null;
-	}
-
-	private void initializeStubUserList() {
-		final Map<Integer, String> names = new HashMap<>();
-		names.put(100, "Ariel");
-		names.put(101, "Nicolas");
-		names.put(102, "Joaquin");
-		names.put(103, "Nacho");
-		names.put(104, "Matias");
-		names.put(105, "Pablo");
-
-		for (int i = 100; i < names.size() + 100; i++) {
-			try {
-				users.add(new User(i, names.get(i)));
-			} catch (InvalidUserNameException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }

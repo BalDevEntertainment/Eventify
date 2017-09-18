@@ -4,6 +4,7 @@ package com.baldev.eventify.infrastructure.depdendencyinjection;
 import android.support.annotation.NonNull;
 
 import com.baldev.eventify.domain.repositories.EventsRepository;
+import com.baldev.eventify.domain.repositories.FirebaseUserRepository;
 import com.baldev.eventify.domain.repositories.GroupsRepository;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 import com.baldev.eventify.infrastructure.repositories.CacheEventsRepository;
@@ -14,7 +15,7 @@ public abstract class RepositoriesFactory {
 
 	@NonNull
 	public static UsersRepository provideUsersRepository() {
-		return CacheUsersRepository.getInstance();
+		return FirebaseUserRepository.getInstance();
 	}
 
 	@NonNull

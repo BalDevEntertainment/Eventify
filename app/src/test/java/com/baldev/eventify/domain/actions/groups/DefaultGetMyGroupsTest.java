@@ -26,8 +26,8 @@ public class DefaultGetMyGroupsTest {
 	public void whenExecuteThenReturnGroups(){
 		User user = Mockito.mock(User.class);
 		when(getMyUserAction.execute()).thenReturn(user);
-		when(user.getId()).thenReturn(1);
+		when(user.getId()).thenReturn("1");
 		new DefaultGetMyGroups(groupsRepository, getMyUserAction).execute();
-		verify(groupsRepository, times(1)).getGroupsByUserId(user.getId());
+		verify(groupsRepository, times(1)).getGroupsByUser(user);
 	}
 }

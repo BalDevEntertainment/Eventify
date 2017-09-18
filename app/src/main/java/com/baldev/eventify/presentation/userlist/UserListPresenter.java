@@ -2,7 +2,6 @@ package com.baldev.eventify.presentation.userlist;
 
 import android.support.annotation.NonNull;
 
-import com.baldev.eventify.domain.actions.users.FindUsersAction;
 import com.baldev.eventify.domain.actions.users.GetUsersAction;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
@@ -20,15 +19,15 @@ public class UserListPresenter implements Presenter, GetUsersCallback {
 
 	private final View view;
 	private final GetUsersAction getUsersAction;
-	private final int[] preselectUserIds;
+	private final List<User> preselectUsers;
 
 	@Inject
-	public UserListPresenter(View view, int[] preselectUserIds, GetUsersAction getUsersAction) {
+	public UserListPresenter(View view, List<User> preselectUsers, GetUsersAction getUsersAction) {
 		Preconditions.checkNotNull(view);
 		Preconditions.checkNotNull(getUsersAction);
 		this.view = view;
 		this.getUsersAction = getUsersAction;
-		this.preselectUserIds = preselectUserIds;
+		this.preselectUsers = preselectUsers;
 		initializeUserListAdapter();
 	}
 
@@ -44,11 +43,7 @@ public class UserListPresenter implements Presenter, GetUsersCallback {
 
 	@Override
 	public void onSaveButtonPressed(List<User> users) {
-		int[] selectedUserIds = new int[users.size()];
-		for (int i = 0; i < users.size(); i++) {
-			selectedUserIds[i] = users.get(i).getId();
-		}
-		view.returnList(selectedUserIds);
+		view.returnList(users);
 	}
 
 	@NonNull
@@ -61,8 +56,8 @@ public class UserListPresenter implements Presenter, GetUsersCallback {
 	}
 
 	private boolean isPreselected(User user) {
-		for (int preselectUserId : this.preselectUserIds) {
-			if (user.getId() == preselectUserId) {
+		for (User preselectUser : this.preselectUsers) {
+			if (user.getId().equals(preselectUser.getId())) {
 				return true;
 			}
 		}

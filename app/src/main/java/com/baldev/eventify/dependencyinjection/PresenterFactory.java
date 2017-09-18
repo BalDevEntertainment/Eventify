@@ -3,6 +3,7 @@ package com.baldev.eventify.dependencyinjection;
 import android.support.annotation.NonNull;
 
 import com.baldev.eventify.domain.actions.groups.GetMyGroups;
+import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.createevent.CreateEventContract;
 import com.baldev.eventify.presentation.createevent.CreateEventPresenter;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract;
@@ -19,7 +20,15 @@ import com.baldev.eventify.presentation.userlist.UserListContract;
 import com.baldev.eventify.presentation.userlist.UserListContract.View;
 import com.baldev.eventify.presentation.userlist.UserListPresenter;
 
-import static com.baldev.eventify.dependencyinjection.ActionsFactory.*;
+import java.util.List;
+
+import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideCreateGroupAction;
+import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideGetMyEvents;
+import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideGetMyGroupsAction;
+import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideGetMyUserAction;
+import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideGetUsersAction;
+import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideSaveEvent;
+import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideSaveUserAction;
 
 public abstract class PresenterFactory {
 
@@ -32,12 +41,12 @@ public abstract class PresenterFactory {
 
 	@NonNull
 	public static CreateGroupContract.Presenter provideCreateGroupPresenter(CreateGroupContract.View view) {
-		return new CreateGroupPresenter(view, provideCreateGroupAction(), provideGetMyUserAction(), provideFindUsersAction());
+		return new CreateGroupPresenter(view, provideCreateGroupAction(), provideGetMyUserAction());
 	}
 
 	@NonNull
-	public static UserListContract.Presenter provideUserListPresenter(View view, int[] preselectedUserIds) {
-		return new UserListPresenter(view, preselectedUserIds, provideGetUsersAction());
+	public static UserListContract.Presenter provideUserListPresenter(View view, List<User> preselectedUsers) {
+		return new UserListPresenter(view, preselectedUsers, provideGetUsersAction());
 	}
 
 	@NonNull

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GroupsRepository {
 
-	List<Group> getGroupsByUserId(int userId);
+	List<Group> getGroupsByUser(User user);
 
-	Group createGroup(int userId, String groupName, List<User> users) throws InvalidGroupNameException;
+	Group createGroup(User user, String groupName, List<User> users) throws InvalidGroupNameException;
 }

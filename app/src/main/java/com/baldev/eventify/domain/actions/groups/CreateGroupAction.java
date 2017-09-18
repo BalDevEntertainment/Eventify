@@ -8,5 +8,5 @@ import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
 import java.util.List;
 
 public interface CreateGroupAction {
-	Group execute(int userId, String groupName, List<User> users) throws InvalidGroupNameException;
+	Group execute(User user, String groupName, List<User> users) throws InvalidGroupNameException;
 }

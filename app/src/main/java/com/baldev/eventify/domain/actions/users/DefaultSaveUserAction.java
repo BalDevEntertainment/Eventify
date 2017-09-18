@@ -2,6 +2,7 @@ package com.baldev.eventify.domain.actions.users;
 
 
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.entities.UserCreationRequest;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 import com.baldev.eventify.domain.services.CreateUserService;
 import com.baldev.eventify.domain.services.SaveUserService;
@@ -24,7 +25,7 @@ public class DefaultSaveUserAction implements SaveUserAction {
 
 	@Override
 	public void execute(String username, SaveUserCallback saveUserCallback) throws InvalidUserNameException {
-		User user = createUserService.createUser(username);
-		saveUserService.saveUser(user, saveUserCallback);
+		UserCreationRequest userCreationRequest = createUserService.createUser(username);
+		saveUserService.saveUser(userCreationRequest, saveUserCallback);
 	}
 }

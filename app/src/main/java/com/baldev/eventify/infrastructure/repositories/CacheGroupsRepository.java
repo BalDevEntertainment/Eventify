@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CacheGroupsRepository implements GroupsRepository {
-	protected Map<Integer, ArrayList<Group>> groupsMap = new HashMap<>();
+	protected Map<User, ArrayList<Group>> groupsMap = new HashMap<>();
 	private static CacheGroupsRepository instance;
 
 	protected CacheGroupsRepository() throws InvalidGroupNameException {
@@ -31,20 +31,20 @@ public class CacheGroupsRepository implements GroupsRepository {
 	}
 
 	@Override
-	public List<Group> getGroupsByUserId(int userId) {
-		return Optional.fromNullable(groupsMap.get(userId))
+	public List<Group> getGroupsByUser(User user) {
+		return Optional.fromNullable(groupsMap.get(user))
 				.or(new ArrayList<>());
 	}
 
 	@Override
-	public Group createGroup(int userId, String groupName, List<User> users) throws InvalidGroupNameException {
+	public Group createGroup(User user, String groupName, List<User> users) throws InvalidGroupNameException {
 		Group group = new Group(groupName, users);
-		if(groupsMap.containsKey(userId)){
-			groupsMap.get(userId).add(group);
+		if (groupsMap.containsKey(user)) {
+			groupsMap.get(user).add(group);
 		} else {
 			ArrayList<Group> groups = new ArrayList<>();
 			groups.add(group);
-			groupsMap.put(userId, groups);
+			groupsMap.put(user, groups);
 		}
 		return group;
 	}

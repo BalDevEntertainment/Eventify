@@ -27,7 +27,7 @@ public class DefaultGetMyEventsTest {
 	public void whenExecuteThenReturnGroups(){
 		User user = Mockito.mock(User.class);
 		when(getMyUserAction.execute()).thenReturn(user);
-		when(user.getId()).thenReturn(1);
+		when(user.getId()).thenReturn("1");
 		new DefaultGetMyEvents(eventsRepository, getMyUserAction).execute();
 		verify(eventsRepository, times(1)).getEventsByUserId(user.getId());
 	}

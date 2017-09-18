@@ -8,5 +8,5 @@ import java.util.List;
 public interface EventsRepository {
 	void saveEvent(Event event);
 
-	List<Event> getEventsByUserId(int id);
+	List<Event> getEventsByUserId(String id);
 }

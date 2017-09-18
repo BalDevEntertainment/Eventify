@@ -2,7 +2,7 @@ package com.baldev.eventify.domain.actions;
 
 import com.baldev.eventify.domain.actions.users.DefaultSaveUserAction;
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
-import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.entities.UserCreationRequest;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 import com.baldev.eventify.domain.services.CreateUserService;
 import com.baldev.eventify.domain.services.SaveUserService;
@@ -29,7 +29,7 @@ public class SaveUserActionTest {
 	private SaveUserCallback saveUserCallback;
 
 	@Mock
-	private User validUser;
+	private UserCreationRequest validUserCreationRequest;
 
 	@Mock
 	private SaveUserService saveUserService;
@@ -46,8 +46,8 @@ public class SaveUserActionTest {
 	@Before
 	public void setUp() throws Exception, InvalidUserNameException {
 		MockitoAnnotations.initMocks(this);
-		when(createUserService.createUser(validUsername)).thenReturn(validUser);
-		doAnswer(saveUserSuccessfulAnswer).when(saveUserService).saveUser(validUser, saveUserCallback);
+		when(createUserService.createUser(validUsername)).thenReturn(validUserCreationRequest);
+		doAnswer(saveUserSuccessfulAnswer).when(saveUserService).saveUser(validUserCreationRequest, saveUserCallback);
 	}
 
 	@Test(expected = NullPointerException.class)

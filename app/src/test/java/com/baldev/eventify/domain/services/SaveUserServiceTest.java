@@ -2,6 +2,7 @@ package com.baldev.eventify.domain.services;
 
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.entities.UserCreationRequest;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class SaveUserServiceTest {
 	private UsersRepository usersRepository;
 
 	@Mock
-	private User validUser;
+	private UserCreationRequest validUserCreationRequest;
 
 	@Mock
 	private User invalidUser;
@@ -41,12 +42,12 @@ public class SaveUserServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		doAnswer(userSavedAnswer).when(usersRepository).saveUser(validUser, saveUserCallback);
+		doAnswer(userSavedAnswer).when(usersRepository).saveUser(validUserCreationRequest, saveUserCallback);
 	}
 
 	@Test
 	public void givenValidParameters_whenExecute_ThenOnUserSavedCalledOnce() {
-		saveUserService.saveUser(validUser, saveUserCallback);
+		saveUserService.saveUser(validUserCreationRequest, saveUserCallback);
 		verify(saveUserCallback, times(1)).onUserSaved();
 	}
 
