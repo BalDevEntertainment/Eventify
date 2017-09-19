@@ -1,7 +1,7 @@
 package com.baldev.eventify.presentation.createuser;
 
 
-import com.baldev.eventify.domain.actions.users.SaveUserAction;
+import com.baldev.eventify.domain.actions.users.SaveUser;
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 public class CreateUserPresenterTest {
 
 	@Mock
-	private SaveUserAction saveUserAction;
+	private SaveUser saveUser;
 	@Mock
 	private CreateUserContract.View view;
 	@Mock
@@ -44,12 +44,12 @@ public class CreateUserPresenterTest {
 		MockitoAnnotations.initMocks(this);
 		when(view.getUserName()).thenReturn(validUserName);
 		presenterSpy = Mockito.spy(presenter);
-		doAnswer(userSavedAnswer).when(saveUserAction).execute(validUserName, presenter);
+		doAnswer(userSavedAnswer).when(saveUser).execute(validUserName, presenter);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullView_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateUserPresenter(null, saveUserAction);
+		new CreateUserPresenter(null, saveUser);
 	}
 
 	@Test(expected = NullPointerException.class)

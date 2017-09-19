@@ -1,12 +1,16 @@
 package com.baldev.eventify.presentation.createuser;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
 import com.baldev.eventify.R;
+import com.baldev.eventify.dependencyinjection.ActionsFactory;
+import com.baldev.eventify.dependencyinjection.FactoryProvider;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.presentation.createuser.CreateUserContract.Presenter;
 import com.baldev.eventify.presentation.mainactivity.MainActivity;
@@ -30,7 +34,7 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_create_user);
 		ButterKnife.bind(this);
-		this.presenter = PresenterFactory.provideCreateUserPresenter(this);
+		this.presenter = FactoryProvider.presenterFactory().provideCreateUserPresenter(this);
 	}
 
 	@OnClick(R.id.accept_button)
@@ -48,5 +52,13 @@ public class CreateUserActivity extends AppCompatActivity implements CreateUserC
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(intent);
+	}
+
+	@Override
+	public void saveUserIdLocallyOnPhone() {
+		SharedPreferences sharedPref = this.getSharedPreferences("User", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString("MyUserId", FactoryProvider.actionsFactory().provideGetMyUser().execute().getId());
+		editor.commit();
 	}
 }

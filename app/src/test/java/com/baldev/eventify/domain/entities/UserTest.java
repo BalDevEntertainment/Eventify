@@ -18,7 +18,7 @@ import static junit.framework.Assert.assertFalse;
 public class UserTest {
 
 	private String userName = "UserName";
-	private int validId = 1;
+	private String validId = "ValidId";
 	private User validUser;
 
 	@Before
@@ -58,7 +58,7 @@ public class UserTest {
 
 	@Test
 	public void notEquals() {
-		int differentId = 2;
+		String differentId = "DifferentId";
 		assertFalse(validUser.equals(buildUser(differentId, userName)));
 	}
 
@@ -71,7 +71,7 @@ public class UserTest {
 	}
 
 	@NonNull
-	private User buildUser(int id, String username) {
+	private User buildUser(String id, String username) {
 		try {
 			return new User(id, username);
 		} catch (InvalidUserNameException e) {

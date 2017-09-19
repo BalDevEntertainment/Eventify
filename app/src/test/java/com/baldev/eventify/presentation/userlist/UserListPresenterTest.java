@@ -1,7 +1,7 @@
 package com.baldev.eventify.presentation.userlist;
 
-import com.baldev.eventify.domain.actions.groups.AddUsersToGroupAction;
-import com.baldev.eventify.domain.actions.users.GetUsersAction;
+import com.baldev.eventify.domain.actions.groups.AddUsersToGroup;
+import com.baldev.eventify.domain.actions.users.GetUsers;
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.userlist.UserListContract.View;
@@ -21,17 +21,17 @@ import java.util.List;
 public class UserListPresenterTest {
 
 	@Mock
-	private GetUsersAction getUsersAction;
+	private GetUsers getUsers;
 	@Mock
 	private View view;
 	@Mock
-	private AddUsersToGroupAction addUsersToGroupAction;
+	private AddUsersToGroup addUsersToGroup;
 	@Mock
 	private Group group;
 
 	private List<User> userList = new ArrayList<>();
 
-	private int[] preselectedUserIds = new int[]{};
+	private List<User> preselectedUsers = new ArrayList<>();
 
 	@InjectMocks
 	private UserListPresenter presenter;
@@ -43,11 +43,11 @@ public class UserListPresenterTest {
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullView_whenNewPresenter_ThenThrowNullPointerException() {
-		new UserListPresenter(null, preselectedUserIds, getUsersAction);
+		new UserListPresenter(null, preselectedUsers, getUsers);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullGetUsersAction_whenNewPresenter_ThenThrowNullPointerException() {
-		new UserListPresenter(view, preselectedUserIds, null);
+		new UserListPresenter(view, preselectedUsers, null);
 	}
 }

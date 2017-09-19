@@ -33,7 +33,6 @@ public class GroupsServiceTest {
 	@Mock
 	private User mockUser;
 	private String groupName = "Group Name";
-	private int userId = 1;
 
 	@Before
 	public void setUp() throws Exception, InvalidGroupNameException {
@@ -45,7 +44,7 @@ public class GroupsServiceTest {
 
 	@Test
 	public void whenCreateGroup_ThenCreateGroupInRepositoryIsCalledOnce() throws InvalidGroupNameException {
-		groupsService.createGroup(userId, groupName, userList);
-		verify(groupsRepository, times(1)).createGroup(userId, groupName, userList);
+		groupsService.createGroup(mockUser, groupName, userList);
+		verify(groupsRepository, times(1)).createGroup(mockUser, groupName, userList);
 	}
 }

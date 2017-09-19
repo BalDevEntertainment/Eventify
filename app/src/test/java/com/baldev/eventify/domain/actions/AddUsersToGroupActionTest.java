@@ -1,6 +1,6 @@
 package com.baldev.eventify.domain.actions;
 
-import com.baldev.eventify.domain.actions.groups.DefaultAddUsersToGroupAction;
+import com.baldev.eventify.domain.actions.groups.AddUsersToGroup;
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.services.AddUsersToGroupService;
@@ -26,12 +26,12 @@ public class AddUsersToGroupActionTest {
 	@Mock
 	private AddUsersToGroupService addUsersToGroupService;
 
-	private DefaultAddUsersToGroupAction addUsersToGroupAction;
+	private AddUsersToGroup addUsersToGroupAction;
 	private List<User> userList = new ArrayList<>();
 
 	@Before
 	public void setUp() throws Exception {
-		addUsersToGroupAction = new DefaultAddUsersToGroupAction(addUsersToGroupService);
+		addUsersToGroupAction = new AddUsersToGroup(addUsersToGroupService);
 	}
 
 	@Test

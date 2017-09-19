@@ -33,7 +33,7 @@ public class LoginActionTest {
 	private LoginService loginService;
 
 	@InjectMocks()
-	private DefaultLoginAction LoginAction;
+	private Login LoginAction;
 
 	private Answer<Void> onLoginSuccessfulAnswer = new LoginSuccessfulAnswer();
 	private Answer<Void> onLoginFailedAnswer = new LoginFailedAnswer();
@@ -47,7 +47,7 @@ public class LoginActionTest {
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullLoginService_whenCreateLoginAction_ThenThrowNullPointerException() {
-		new DefaultLoginAction(null);
+		new Login(null);
 	}
 
 	@Test

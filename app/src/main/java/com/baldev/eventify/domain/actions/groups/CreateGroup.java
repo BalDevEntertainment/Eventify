@@ -9,16 +9,15 @@ import com.google.common.base.Preconditions;
 
 import java.util.List;
 
-public class DefaultCreateGroupAction implements CreateGroupAction {
+public class CreateGroup {
 	private GroupsService groupsService;
 
-	public DefaultCreateGroupAction(GroupsService groupsService) {
+	public CreateGroup(GroupsService groupsService) {
 		this.groupsService = groupsService;
 	}
 
-	@Override
-	public Group execute(int userId, String groupName, List<User> users) throws InvalidGroupNameException {
+	public Group execute(User user, String groupName, List<User> users) throws InvalidGroupNameException {
 		Preconditions.checkNotNull(users);
-		return groupsService.createGroup(userId, groupName, users);
+		return groupsService.createGroup(user, groupName, users);
 	}
 }

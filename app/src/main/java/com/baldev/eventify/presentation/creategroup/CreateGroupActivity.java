@@ -6,16 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.widget.TextView;
 
 import com.baldev.eventify.R;
+import com.baldev.eventify.dependencyinjection.FactoryProvider;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.SaveToolbarActivity;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract.Presenter;
 import com.baldev.eventify.presentation.userlist.UserListActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,7 +26,7 @@ import butterknife.OnClick;
 public class CreateGroupActivity extends SaveToolbarActivity implements CreateGroupContract.View {
 
 	public static final int REQUEST_CODE_SELECTED_USER_IDS = 1;
-	public static final String EXTRA_SELECTED_USER_IDS = "SELECTED_USER_IDS";
+	public static final String EXTRA_SELECTED_USERS = "SELECTED_USER_IDS";
 
 	@BindView(R.id.user_list)
 	protected RecyclerView userList;
@@ -41,7 +42,7 @@ public class CreateGroupActivity extends SaveToolbarActivity implements CreateGr
 		this.setContentView(R.layout.activity_create_group);
 		ButterKnife.bind(this);
 
-		this.presenter = PresenterFactory.provideCreateGroupPresenter(this);
+		this.presenter = FactoryProvider.presenterFactory().provideCreateGroupPresenter(this);
 	}
 
 	@OnClick(R.id.add_remove_members_button)
@@ -50,9 +51,9 @@ public class CreateGroupActivity extends SaveToolbarActivity implements CreateGr
 	}
 
 	@Override
-	public void startUserListActivityForResult(int[] userIds) {
+	public void startUserListActivityForResult(List<User> users) {
 		Intent intent = new Intent(this, UserListActivity.class);
-		intent.putExtra(EXTRA_SELECTED_USER_IDS, userIds);
+		intent.putExtra(EXTRA_SELECTED_USERS, (ArrayList<User>) users);
 		startActivityForResult(intent, REQUEST_CODE_SELECTED_USER_IDS);
 	}
 
@@ -78,8 +79,8 @@ public class CreateGroupActivity extends SaveToolbarActivity implements CreateGr
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (isResultValid(requestCode, resultCode)) {
-			int[] userIds = data.getIntArrayExtra(EXTRA_SELECTED_USER_IDS);
-			presenter.onSelectedUsersRetrieved(userIds);
+			ArrayList<User> users = (ArrayList<User>) data.getSerializableExtra(EXTRA_SELECTED_USERS);
+			presenter.onSelectedUsersRetrieved(users);
 		}
 	}
 

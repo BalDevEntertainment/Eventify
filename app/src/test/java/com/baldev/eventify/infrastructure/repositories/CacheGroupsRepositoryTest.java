@@ -1,6 +1,7 @@
 package com.baldev.eventify.infrastructure.repositories;
 
 import com.baldev.eventify.domain.entities.Group;
+import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
 import com.baldev.eventify.domain.exceptions.UserNotFoundException;
 
@@ -18,9 +19,10 @@ import static junit.framework.Assert.assertNotNull;
 public class CacheGroupsRepositoryTest {
 
 	@Mock
+	private User someUser;
+	@Mock
 	private Group groupBeingCreated;
 	private CacheGroupsRepository groupsRepository;
-	private int userId = 1;
 
 	@Mock
 	private Group group;
@@ -29,8 +31,8 @@ public class CacheGroupsRepositoryTest {
 	@Test()
 	public void whenGetUserGroupsByIdWithoutGroupsThenReturnEmptyList() throws UserNotFoundException {
 		buildGroupsRepository();
-		assertNotNull(groupsRepository.getGroupsByUserId(1));
-		assertEquals(groupsRepository.getGroupsByUserId(1).size(), 0);
+		assertNotNull(groupsRepository.getGroupsByUser(someUser));
+		assertEquals(groupsRepository.getGroupsByUser(someUser).size(), 0);
 	}
 
 	@Test()
@@ -51,11 +53,11 @@ public class CacheGroupsRepositoryTest {
 	}
 
 	private void thenGroupMapContainsListWithSize(int size) {
-		assertEquals(groupsRepository.groupsMap.get(userId).size(), size);
+		assertEquals(groupsRepository.groupsMap.get(someUser).size(), size);
 	}
 
 	private void addGroupWithUserId() throws InvalidGroupNameException {
-		groupsRepository.createGroup(userId, "Group Name" , new ArrayList<>());
+		groupsRepository.createGroup(someUser, "Group Name" , new ArrayList<>());
 	}
 
 	private void buildGroupsRepository() {

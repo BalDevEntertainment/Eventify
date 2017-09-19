@@ -1,7 +1,7 @@
 package com.baldev.eventify.presentation.createuser;
 
 
-import com.baldev.eventify.domain.actions.users.SaveUserAction;
+import com.baldev.eventify.domain.actions.users.SaveUser;
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 import com.baldev.eventify.presentation.createuser.CreateUserContract.Presenter;
@@ -10,13 +10,13 @@ import com.google.common.base.Preconditions;
 
 public class CreateUserPresenter implements Presenter, SaveUserCallback {
 
-	private SaveUserAction saveUserAction;
+	private SaveUser saveUser;
 	private View view;
 
-	public CreateUserPresenter(View view, SaveUserAction saveUserAction) {
-		Preconditions.checkNotNull(saveUserAction);
+	public CreateUserPresenter(View view, SaveUser saveUser) {
+		Preconditions.checkNotNull(saveUser);
 		Preconditions.checkNotNull(view);
-		this.saveUserAction = saveUserAction;
+		this.saveUser = saveUser;
 		this.view = view;
 	}
 
@@ -24,7 +24,7 @@ public class CreateUserPresenter implements Presenter, SaveUserCallback {
 	public void acceptButtonPressed() {
 		String userName = view.getUserName();
 		try {
-			saveUserAction.execute(userName, this);
+			saveUser.execute(userName, this);
 		} catch (InvalidUserNameException e) {
 			showError();
 		}
@@ -32,6 +32,7 @@ public class CreateUserPresenter implements Presenter, SaveUserCallback {
 
 	@Override
 	public void onUserSaved() {
+		view.saveUserIdLocallyOnPhone(); // TODO: 18/09/2017 move to other place
 		view.startMainActivity();
 	}
 

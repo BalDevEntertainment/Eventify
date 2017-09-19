@@ -19,7 +19,7 @@ public class GroupsService {
 		this.groupsRepository = groupsRepository;
 	}
 
-	public Group createGroup(int userId, String groupName, List<User> users) throws InvalidGroupNameException {
-		return groupsRepository.createGroup(userId, groupName, users);
+	public Group createGroup(User user, String groupName, List<User> users) throws InvalidGroupNameException {
+		return groupsRepository.createGroup(user, groupName, users);
 	}
 }

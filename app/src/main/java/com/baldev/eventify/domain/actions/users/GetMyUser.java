@@ -6,16 +6,15 @@ import com.baldev.eventify.domain.repositories.UsersRepository;
 
 import javax.inject.Inject;
 
-public class DefaultGetMyUserAction implements GetMyUserAction {
+public class GetMyUser {
 
 	private final UsersRepository usersRepository;
 
 	@Inject
-	public DefaultGetMyUserAction(UsersRepository usersRepository) {
+	public GetMyUser(UsersRepository usersRepository) {
 		this.usersRepository = usersRepository;
 	}
 
-	@Override
 	public User execute() {
 		return usersRepository.getMyUser();
 	}

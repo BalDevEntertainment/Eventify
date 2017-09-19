@@ -34,8 +34,8 @@ public class GroupTest {
 	@Before
 	public void setUp() throws Exception {
 		userList.add(user);
-		when(user.getId()).thenReturn(1);
-		when(differentUser.getId()).thenReturn(2);
+		when(user.getId()).thenReturn("1");
+		when(differentUser.getId()).thenReturn("2");
 	}
 
 	@Test

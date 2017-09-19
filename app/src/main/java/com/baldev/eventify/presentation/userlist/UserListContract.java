@@ -11,7 +11,7 @@ public interface UserListContract {
 
 		void setUserListToAdapter(List<UserListItem> users);
 
-		void returnList(int[] selectedUserIds);
+		void returnList(List<User> users);
 	}
 
 	interface Presenter {

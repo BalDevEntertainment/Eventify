@@ -1,66 +1,62 @@
 package com.baldev.eventify.dependencyinjection;
 
 
-import com.baldev.eventify.domain.actions.events.DefaultGetMyEvents;
-import com.baldev.eventify.domain.actions.events.DefaultSaveEvent;
+import com.baldev.eventify.domain.actions.StartApplication;
 import com.baldev.eventify.domain.actions.events.GetMyEvents;
 import com.baldev.eventify.domain.actions.events.SaveEvent;
-import com.baldev.eventify.domain.actions.groups.AddUsersToGroupAction;
-import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
-import com.baldev.eventify.domain.actions.groups.DefaultAddUsersToGroupAction;
-import com.baldev.eventify.domain.actions.groups.DefaultCreateGroupAction;
-import com.baldev.eventify.domain.actions.groups.DefaultGetMyGroups;
+import com.baldev.eventify.domain.actions.groups.AddUsersToGroup;
+import com.baldev.eventify.domain.actions.groups.CreateGroup;
 import com.baldev.eventify.domain.actions.groups.GetMyGroups;
-import com.baldev.eventify.domain.actions.users.DefaultFindUsersAction;
-import com.baldev.eventify.domain.actions.users.DefaultGetMyUserAction;
-import com.baldev.eventify.domain.actions.users.DefaultGetUsersAction;
-import com.baldev.eventify.domain.actions.users.DefaultSaveUserAction;
-import com.baldev.eventify.domain.actions.users.FindUsersAction;
-import com.baldev.eventify.domain.actions.users.GetMyUserAction;
-import com.baldev.eventify.domain.actions.users.GetUsersAction;
-import com.baldev.eventify.domain.actions.users.SaveUserAction;
+import com.baldev.eventify.domain.actions.users.GetMyUser;
+import com.baldev.eventify.domain.actions.users.GetUsers;
+import com.baldev.eventify.domain.actions.users.SaveUser;
 import com.baldev.eventify.domain.repositories.GroupsRepository;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 import com.baldev.eventify.infrastructure.depdendencyinjection.RepositoriesFactory;
 
-public abstract class ActionsFactory {
+public class ActionsFactory {
 
-	private static GroupsRepository groupsRepository = RepositoriesFactory.provideGroupsRepository();
-	private static UsersRepository usersRepository = RepositoriesFactory.provideUsersRepository();
+	private GroupsRepository groupsRepository;
+	private UsersRepository usersRepository;
 
-	public static SaveUserAction provideSaveUserAction() {
-		return new DefaultSaveUserAction(ServicesFactory.provideCreateUserService(), ServicesFactory.provideSaveUserService());
+	public ActionsFactory(GroupsRepository groupsRepository, UsersRepository usersRepository) {
+		this.groupsRepository = groupsRepository;
+		this.usersRepository = usersRepository;
 	}
 
-	public static CreateGroupAction provideCreateGroupAction() {
-		return new DefaultCreateGroupAction(ServicesFactory.provideGroupService());
+	public SaveUser provideSaveUser() {
+		return new SaveUser(ServicesFactory.provideCreateUserService(), ServicesFactory.provideSaveUserService());
 	}
 
-	public static GetMyUserAction provideGetMyUserAction() {
-		return new DefaultGetMyUserAction(usersRepository);
+	public CreateGroup provideCreateGroup() {
+		return new CreateGroup(ServicesFactory.provideGroupService());
 	}
 
-	public static FindUsersAction provideFindUsersAction() {
-		return new DefaultFindUsersAction(usersRepository);
+	public GetMyUser provideGetMyUser() {
+		return new GetMyUser(usersRepository);
 	}
 
-	public static GetUsersAction provideGetUsersAction() {
-		return new DefaultGetUsersAction(usersRepository);
+	public GetUsers provideGetUsers() {
+		return new GetUsers(usersRepository);
 	}
 
-	public static AddUsersToGroupAction provideAddUsersToGroupAction() {
-		return new DefaultAddUsersToGroupAction(ServicesFactory.provideAddUsersToGroupService());
+	public AddUsersToGroup provideAddUsersToGroup() {
+		return new AddUsersToGroup(ServicesFactory.provideAddUsersToGroupService());
 	}
 
-	public static GetMyGroups provideGetMyGroupsAction() {
-		return new DefaultGetMyGroups(groupsRepository, provideGetMyUserAction());
+	public GetMyGroups provideGetMyGroups() {
+		return new GetMyGroups(groupsRepository, provideGetMyUser());
 	}
 
-	public static GetMyEvents provideGetMyEvents() {
-		return new DefaultGetMyEvents(RepositoriesFactory.provideEventsRepository(), provideGetMyUserAction());
+	public GetMyEvents provideGetMyEvents() {
+		return new GetMyEvents(RepositoriesFactory.provideEventsRepository(), provideGetMyUser());
 	}
 
-	public static SaveEvent provideSaveEvent() {
-		return new DefaultSaveEvent(ServicesFactory.provideCreateEventService(), ServicesFactory.provideSaveEvent());
+	public SaveEvent provideSaveEvent() {
+		return new SaveEvent(ServicesFactory.provideCreateEventService(), ServicesFactory.provideSaveEvent());
+	}
+
+	public StartApplication startApplication() {
+		return new StartApplication();
 	}
 }

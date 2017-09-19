@@ -26,7 +26,7 @@ public class CacheEventsRepository implements EventsRepository {
 	}
 
 	@Override
-	public List<Event> getEventsByUserId(int id) {
+	public List<Event> getEventsByUserId(String id) {
 		return events;
 	}
 }

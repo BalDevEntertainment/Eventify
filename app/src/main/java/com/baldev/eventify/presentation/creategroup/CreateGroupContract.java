@@ -8,7 +8,7 @@ import java.util.List;
 public interface CreateGroupContract {
 
 	interface View {
-		void startUserListActivityForResult(int[] userIds);
+		void startUserListActivityForResult(List<User> users);
 
 		void setUserListToAdapter(List<User> userListAdapter);
 
@@ -19,9 +19,9 @@ public interface CreateGroupContract {
 
 	interface Presenter {
 
-		void onSavePressed(String s);
+		void onSavePressed(String groupName);
 
-		void onSelectedUsersRetrieved(int[] userIds);
+		void onSelectedUsersRetrieved(List<User> users);
 
 		void onAddRemoveMemberButtonPressed();
 	}

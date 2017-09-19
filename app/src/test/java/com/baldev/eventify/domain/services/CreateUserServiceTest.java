@@ -2,6 +2,7 @@ package com.baldev.eventify.domain.services;
 
 
 import com.baldev.eventify.domain.entities.User;
+import com.baldev.eventify.domain.entities.UserCreationRequest;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 
 import org.junit.Before;
@@ -24,7 +25,7 @@ public class CreateUserServiceTest {
 
 	@Test
 	public void givenValidUserName_whenCreateUser_ThenUserIsCreated() throws InvalidUserNameException {
-		User user = createUserService.createUser(userName);
+		UserCreationRequest user = createUserService.createUser(userName);
 		assertNotNull(user);
 	}
 
