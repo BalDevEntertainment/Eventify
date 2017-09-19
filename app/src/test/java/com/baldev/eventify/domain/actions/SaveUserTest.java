@@ -1,6 +1,6 @@
 package com.baldev.eventify.domain.actions;
 
-import com.baldev.eventify.domain.actions.users.DefaultSaveUserAction;
+import com.baldev.eventify.domain.actions.users.SaveUser;
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.UserCreationRequest;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SaveUserActionTest {
+public class SaveUserTest {
 
 	@Mock
 	private SaveUserCallback saveUserCallback;
@@ -40,7 +40,7 @@ public class SaveUserActionTest {
 	private String validUsername = "UserName";
 
 	@InjectMocks
-	private DefaultSaveUserAction saveUserAction;
+	private SaveUser saveUser;
 	private Answer<Void> saveUserSuccessfulAnswer = new SaveUserSuccessfulAnswer();
 
 	@Before
@@ -52,17 +52,17 @@ public class SaveUserActionTest {
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullSaveUserService_whenCreateCreateUserAction_ThenThrowNullPointerException() {
-		new DefaultSaveUserAction(createUserService, null);
+		new SaveUser(createUserService, null);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullCreateUserService_whenCreateCreateUserAction_ThenThrowNullPointerException() {
-		new DefaultSaveUserAction(null, saveUserService);
+		new SaveUser(null, saveUserService);
 	}
 
 	@Test
 	public void givenValidUser_WhenCreateUserActionIsExecuted_ThenOnUserCreatedIsCalled() throws InvalidUserNameException {
-		saveUserAction.execute(validUsername, saveUserCallback);
+		saveUser.execute(validUsername, saveUserCallback);
 		verify(saveUserCallback, times(1)).onUserSaved();
 	}
 

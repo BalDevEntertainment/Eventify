@@ -6,21 +6,19 @@ import com.google.common.base.Preconditions;
 
 import javax.inject.Inject;
 
-public class DefaultLoginAction implements LoginAction {
+public class Login {
 
 	private LoginService loginService;
 
 	@Inject
-	public DefaultLoginAction(LoginService loginService) {
+	public Login(LoginService loginService) {
 		Preconditions.checkNotNull(loginService);
 		this.loginService = loginService;
 	}
 
-	@Override
 	public void execute(User user, final LoginCallback loginCallback) {
 		Preconditions.checkNotNull(user);
 		Preconditions.checkNotNull(loginCallback);
-
 		loginService.login(user, loginCallback);
 	}
 }

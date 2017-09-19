@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baldev.eventify.R;
+import com.baldev.eventify.dependencyinjection.FactoryProvider;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.domain.entities.Event;
 
@@ -32,7 +33,7 @@ public class EventsFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		presenter = PresenterFactory.provideEventsFragmentPresenter(this);
+		presenter = FactoryProvider.presenterFactory().provideEventsFragmentPresenter(this);
 	}
 
 	@Nullable

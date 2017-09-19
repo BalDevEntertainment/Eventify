@@ -1,6 +1,6 @@
 package com.baldev.eventify.domain.actions;
 
-import com.baldev.eventify.domain.actions.users.DefaultGetUsersAction;
+import com.baldev.eventify.domain.actions.users.GetUsers;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
 import com.baldev.eventify.domain.repositories.UsersRepository;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GetUsersActionTest {
+public class GetUsersTest {
 
 	private static List<User> emptyUserList = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class GetUsersActionTest {
 	private GetUsersCallback callback;
 
 	@InjectMocks
-	private DefaultGetUsersAction getUsersAction;
+	private GetUsers getUsers;
 
 	private Answer<Void> getUsersAnswer = new GetUsersAnswer();
 
@@ -46,7 +46,7 @@ public class GetUsersActionTest {
 
 	@Test
 	public void whenGetUsersActionIsExecuted_ThenGetUserList() {
-		getUsersAction.execute(callback);
+		getUsers.execute(callback);
 		verify(callback, times(1)).onUsersRetrieved(emptyUserList);
 	}
 

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.baldev.eventify.R;
+import com.baldev.eventify.dependencyinjection.FactoryProvider;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.userlist.UserListContract.Presenter;
@@ -37,7 +38,7 @@ public class UserListActivity extends AppCompatActivity implements View {
 		this.setContentView(R.layout.activity_user_list);
 		ButterKnife.bind(this);
 		List<User> preselectedUsers = getPreselectedUsersFromExtras();
-		this.presenter = PresenterFactory.provideUserListPresenter(this, preselectedUsers);
+		this.presenter = FactoryProvider.presenterFactory().provideUserListPresenter(this, preselectedUsers);
 	}
 
 	@Override

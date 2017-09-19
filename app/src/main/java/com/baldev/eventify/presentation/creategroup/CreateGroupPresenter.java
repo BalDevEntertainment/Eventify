@@ -1,7 +1,7 @@
 package com.baldev.eventify.presentation.creategroup;
 
-import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
-import com.baldev.eventify.domain.actions.users.GetMyUserAction;
+import com.baldev.eventify.domain.actions.groups.CreateGroup;
+import com.baldev.eventify.domain.actions.users.GetMyUser;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
 import com.baldev.eventify.presentation.creategroup.CreateGroupContract.Presenter;
@@ -15,16 +15,16 @@ import javax.inject.Inject;
 public class CreateGroupPresenter implements Presenter {
 
 	protected final List<User> users = new ArrayList<>();
-	private final GetMyUserAction getMyUserAction;
-	private final CreateGroupAction createGroupAction;
+	private final GetMyUser getMyUser;
+	private final CreateGroup createGroup;
 	private View view;
 
 	@Inject
-	public CreateGroupPresenter(View view, CreateGroupAction createGroupAction,
-								GetMyUserAction getMyUserAction) {
-		new CreateGroupPresenterValidations(view, createGroupAction, getMyUserAction).execute();
-		this.getMyUserAction = getMyUserAction;
-		this.createGroupAction = createGroupAction;
+	public CreateGroupPresenter(View view, CreateGroup createGroup,
+								GetMyUser getMyUser) {
+		new CreateGroupPresenterValidations(view, createGroup, getMyUser).execute();
+		this.getMyUser = getMyUser;
+		this.createGroup = createGroup;
 		this.view = view;
 		initializeUsersList();
 		initializeUserListAdapter();
@@ -33,7 +33,7 @@ public class CreateGroupPresenter implements Presenter {
 	@Override
 	public void onSavePressed(String groupName) {
 		try {
-			createGroupAction.execute(getMyUserAction.execute(), groupName, users);
+			createGroup.execute(getMyUser.execute(), groupName, users);
 			view.finishActivity();
 		} catch (InvalidGroupNameException e) {
 			view.showInvalidGroupNameError();
@@ -57,6 +57,6 @@ public class CreateGroupPresenter implements Presenter {
 
 	private void initializeUsersList() {
 		users.clear();
-		users.add(getMyUserAction.execute());
+		users.add(getMyUser.execute());
 	}
 }

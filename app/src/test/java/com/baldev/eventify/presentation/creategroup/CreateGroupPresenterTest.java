@@ -2,8 +2,8 @@ package com.baldev.eventify.presentation.creategroup;
 
 import android.support.annotation.NonNull;
 
-import com.baldev.eventify.domain.actions.groups.CreateGroupAction;
-import com.baldev.eventify.domain.actions.users.GetMyUserAction;
+import com.baldev.eventify.domain.actions.groups.CreateGroup;
+import com.baldev.eventify.domain.actions.users.GetMyUser;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
 
@@ -30,10 +30,10 @@ public class CreateGroupPresenterTest {
 	private CreateGroupContract.View view;
 
 	@Mock
-	private GetMyUserAction getMyUserAction;
+	private GetMyUser getMyUser;
 
 	@Mock
-	private CreateGroupAction createGroupAction;
+	private CreateGroup createGroup;
 
 	@Mock
 	private User myUser;
@@ -42,24 +42,24 @@ public class CreateGroupPresenterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		when(getMyUserAction.execute()).thenReturn(myUser);
+		when(getMyUser.execute()).thenReturn(myUser);
 		when(myUser.getId()).thenReturn("1");
-		createGroupPresenter = new CreateGroupPresenter(view, createGroupAction, getMyUserAction);
+		createGroupPresenter = new CreateGroupPresenter(view, createGroup, getMyUser);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullView_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateGroupPresenter(null, createGroupAction, getMyUserAction);
+		new CreateGroupPresenter(null, createGroup, getMyUser);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullCreateGroupAction_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateGroupPresenter(view, null, getMyUserAction);
+		new CreateGroupPresenter(view, null, getMyUser);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullGetMyUserAction_whenNewPresenter_ThenThrowNullPointerException() {
-		new CreateGroupPresenter(view, createGroupAction, null);
+		new CreateGroupPresenter(view, createGroup, null);
 	}
 
 	@Test()
@@ -93,7 +93,7 @@ public class CreateGroupPresenterTest {
 		createGroupPresenter.onSavePressed(groupName);
 		List<User> users = new ArrayList<>();
 		users.add(myUser);
-		verify(createGroupAction, times(1)).execute(getMyUserAction.execute(), groupName, users);
+		verify(createGroup, times(1)).execute(getMyUser.execute(), groupName, users);
 	}
 
 	@NonNull

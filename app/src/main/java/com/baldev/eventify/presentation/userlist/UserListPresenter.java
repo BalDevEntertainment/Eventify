@@ -2,7 +2,7 @@ package com.baldev.eventify.presentation.userlist;
 
 import android.support.annotation.NonNull;
 
-import com.baldev.eventify.domain.actions.users.GetUsersAction;
+import com.baldev.eventify.domain.actions.users.GetUsers;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
 import com.baldev.eventify.presentation.userlist.UserListContract.Presenter;
@@ -18,21 +18,21 @@ import javax.inject.Inject;
 public class UserListPresenter implements Presenter, GetUsersCallback {
 
 	private final View view;
-	private final GetUsersAction getUsersAction;
+	private final GetUsers getUsers;
 	private final List<User> preselectUsers;
 
 	@Inject
-	public UserListPresenter(View view, List<User> preselectUsers, GetUsersAction getUsersAction) {
+	public UserListPresenter(View view, List<User> preselectUsers, GetUsers getUsers) {
 		Preconditions.checkNotNull(view);
-		Preconditions.checkNotNull(getUsersAction);
+		Preconditions.checkNotNull(getUsers);
 		this.view = view;
-		this.getUsersAction = getUsersAction;
+		this.getUsers = getUsers;
 		this.preselectUsers = preselectUsers;
 		initializeUserListAdapter();
 	}
 
 	private void initializeUserListAdapter() {
-		getUsersAction.execute(this);
+		getUsers.execute(this);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.baldev.eventify.R;
+import com.baldev.eventify.dependencyinjection.FactoryProvider;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.SaveToolbarActivity;
@@ -41,7 +42,7 @@ public class CreateGroupActivity extends SaveToolbarActivity implements CreateGr
 		this.setContentView(R.layout.activity_create_group);
 		ButterKnife.bind(this);
 
-		this.presenter = PresenterFactory.provideCreateGroupPresenter(this);
+		this.presenter = FactoryProvider.presenterFactory().provideCreateGroupPresenter(this);
 	}
 
 	@OnClick(R.id.add_remove_members_button)

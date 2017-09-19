@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.baldev.eventify.R;
+import com.baldev.eventify.dependencyinjection.FactoryProvider;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.presentation.SaveToolbarActivity;
 import com.baldev.eventify.presentation.createevent.CreateEventContract.Presenter;
@@ -40,7 +41,7 @@ public class CreateEventActivity extends SaveToolbarActivity implements View {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_event);
 		ButterKnife.bind(this);
-		presenter = PresenterFactory.provideCreateEventPresenter(this);
+		presenter = FactoryProvider.presenterFactory().provideCreateEventPresenter(this);
 	}
 
 	@Override

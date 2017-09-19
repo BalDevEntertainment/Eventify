@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.baldev.eventify.R;
+import com.baldev.eventify.dependencyinjection.FactoryProvider;
 import com.baldev.eventify.dependencyinjection.PresenterFactory;
 import com.baldev.eventify.presentation.createevent.CreateEventActivity;
 import com.baldev.eventify.presentation.creategroup.CreateGroupActivity;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
-		this.presenter = PresenterFactory.provideMainActivityPresenter(this);
+		this.presenter = FactoryProvider.presenterFactory().provideMainActivityPresenter(this);
 		tabLayout.setupWithViewPager(viewPager);
 	}
 

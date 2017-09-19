@@ -29,24 +29,24 @@ public class CreateGroupActionTest {
 	@Mock
 	private User myUser;
 
-	private CreateGroupAction createGroupAction;
+	private CreateGroup createGroup;
 	private List<User> userList = new ArrayList<>();
 	private String groupName = "Group Name";
 
 	@Before
 	public void setUp() throws Exception, InvalidGroupNameException {
-		createGroupAction = new DefaultCreateGroupAction(groupsService);
+		createGroup = new CreateGroup(groupsService);
 		Mockito.when(groupsService.createGroup(user, groupName, userList)).thenReturn(Mockito.mock(Group.class));
 		userList.add(Mockito.mock(User.class));
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullUserList_whenCreateUserAction_ThenThrowNullPointerException() throws InvalidGroupNameException {
-		createGroupAction.execute(myUser, groupName, null);
+		createGroup.execute(myUser, groupName, null);
 	}
 
 	@Test
 	public void whenCreateGroupAction_ThenGroupIsNotNull() throws InvalidGroupNameException {
-		assertNotNull(createGroupAction.execute(user, groupName, userList));
+		assertNotNull(createGroup.execute(user, groupName, userList));
 	}
 }

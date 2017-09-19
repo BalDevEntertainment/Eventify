@@ -1,7 +1,6 @@
 package com.baldev.eventify.domain.actions;
 
 
-import com.baldev.eventify.domain.actions.events.DefaultSaveEvent;
 import com.baldev.eventify.domain.actions.events.SaveEvent;
 import com.baldev.eventify.domain.entities.Event;
 import com.baldev.eventify.domain.entities.Group;
@@ -21,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultSaveEventTest {
+public class SaveEventTest {
 
 	@Mock
 	private Group group;
@@ -39,17 +38,17 @@ public class DefaultSaveEventTest {
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullCreateEventService_whenSaveEvent_ThenThrowNullPointerException() {
-		new DefaultSaveEvent(null, saveEventService);
+		new SaveEvent(null, saveEventService);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullSaveEventService_whenSaveEvent_ThenThrowNullPointerException() {
-		new DefaultSaveEvent(createEventService, null);
+		new SaveEvent(createEventService, null);
 	}
 
 	@Test
 	public void whenSaveEvent_ThenSaveEventServiceIsCalledOnce() throws NoGroupSelectedException {
-		SaveEvent saveEvent = new DefaultSaveEvent(createEventService, saveEventService);
+		SaveEvent saveEvent = new SaveEvent(createEventService, saveEventService);
 		when(createEventService.createEvent(group, description, date, duration)).thenReturn(event);
 		saveEvent.execute(group, description, date, duration);
 		verify(createEventService, times(1)).createEvent(group, description, date, duration);

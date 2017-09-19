@@ -7,6 +7,7 @@ import com.baldev.eventify.domain.entities.UserCreationRequest;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
 import com.baldev.eventify.domain.repositories.GetUsersCallback;
 import com.baldev.eventify.domain.repositories.UsersRepository;
+import com.baldev.eventify.infrastructure.depdendencyinjection.RepositoriesFactory.InitializeRepositoriesCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,11 @@ public class CacheUsersRepository implements UsersRepository {
 			}
 		}
 		return users;
+	}
+
+	@Override
+	public void initialize(String myUserId, InitializeRepositoriesCallback callback) {
+		callback.onDatabaseInitialized();
 	}
 
 	private User getUserById(String id) {

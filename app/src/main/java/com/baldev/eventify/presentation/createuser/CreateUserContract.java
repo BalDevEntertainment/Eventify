@@ -8,6 +8,8 @@ public interface CreateUserContract {
 		String getUserName();
 
 		void startMainActivity();
+
+		void saveUserIdLocallyOnPhone();
 	}
 
 	interface Presenter {

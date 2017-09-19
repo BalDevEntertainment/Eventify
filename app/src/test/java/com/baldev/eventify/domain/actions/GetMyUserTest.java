@@ -1,7 +1,6 @@
 package com.baldev.eventify.domain.actions;
 
-import com.baldev.eventify.domain.actions.users.DefaultGetMyUserAction;
-import com.baldev.eventify.domain.actions.users.GetMyUserAction;
+import com.baldev.eventify.domain.actions.users.GetMyUser;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 
@@ -16,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultGetMyUserActionTest {
+public class GetMyUserTest {
 
 	@Mock
 	private UsersRepository usersRepository;
@@ -28,7 +27,7 @@ public class DefaultGetMyUserActionTest {
 
 	@Test
 	public void whenGetMyUserAction_ThenUserIsNotNull () {
-		GetMyUserAction getMyUserAction = new DefaultGetMyUserAction(usersRepository);
-		assertNotNull(getMyUserAction.execute());
+		GetMyUser getMyUser = new GetMyUser(usersRepository);
+		assertNotNull(getMyUser.execute());
 	}
 }

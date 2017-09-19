@@ -9,8 +9,12 @@ import java.io.Serializable;
 
 @IgnoreExtraProperties
 public class User implements Serializable {
-	private final String name;
-	private final String id;
+	private String name;
+	private String id;
+
+	public User() {
+		//Constructor for Firebase.
+	}
 
 	public User(String id, String name) throws InvalidUserNameException {
 		Preconditions.checkNotNull(name);

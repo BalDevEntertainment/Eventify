@@ -1,6 +1,6 @@
 package com.baldev.eventify.domain.actions.groups;
 
-import com.baldev.eventify.domain.actions.users.GetMyUserAction;
+import com.baldev.eventify.domain.actions.users.GetMyUser;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.repositories.GroupsRepository;
 
@@ -15,19 +15,19 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DefaultGetMyGroupsTest {
+public class GetMyGroupsTest {
 
 	@Mock
 	private GroupsRepository groupsRepository;
 	@Mock
-	private GetMyUserAction getMyUserAction;
+	private GetMyUser getMyUser;
 
 	@Test()
 	public void whenExecuteThenReturnGroups(){
 		User user = Mockito.mock(User.class);
-		when(getMyUserAction.execute()).thenReturn(user);
+		when(getMyUser.execute()).thenReturn(user);
 		when(user.getId()).thenReturn("1");
-		new DefaultGetMyGroups(groupsRepository, getMyUserAction).execute();
+		new GetMyGroups(groupsRepository, getMyUser).execute();
 		verify(groupsRepository, times(1)).getGroupsByUser(user);
 	}
 }

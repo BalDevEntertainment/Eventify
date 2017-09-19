@@ -2,7 +2,7 @@ package com.baldev.eventify.dependencyinjection;
 
 import android.support.annotation.NonNull;
 
-import com.baldev.eventify.domain.actions.groups.GetMyGroups;
+import com.baldev.eventify.domain.actions.StartApplication;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.presentation.createevent.CreateEventContract;
 import com.baldev.eventify.presentation.createevent.CreateEventPresenter;
@@ -16,53 +16,54 @@ import com.baldev.eventify.presentation.mainactivity.events.EventsFragment;
 import com.baldev.eventify.presentation.mainactivity.events.EventsFragmentPresenter;
 import com.baldev.eventify.presentation.mainactivity.groups.GroupsFragment;
 import com.baldev.eventify.presentation.mainactivity.groups.GroupsFragmentPresenter;
+import com.baldev.eventify.presentation.startingactivity.StartingActivityPresenter;
 import com.baldev.eventify.presentation.userlist.UserListContract;
 import com.baldev.eventify.presentation.userlist.UserListContract.View;
 import com.baldev.eventify.presentation.userlist.UserListPresenter;
 
 import java.util.List;
 
-import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideCreateGroupAction;
-import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideGetMyEvents;
-import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideGetMyGroupsAction;
-import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideGetMyUserAction;
-import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideGetUsersAction;
-import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideSaveEvent;
-import static com.baldev.eventify.dependencyinjection.ActionsFactory.provideSaveUserAction;
+public class PresenterFactory {
 
-public abstract class PresenterFactory {
+	private final ActionsFactory actionsFactory;
 
-	private static GetMyGroups getMyGroups = provideGetMyGroupsAction();
-
-	@NonNull
-	public static CreateUserContract.Presenter provideCreateUserPresenter(CreateUserContract.View view) {
-		return new CreateUserPresenter(view, provideSaveUserAction());
+	public PresenterFactory(ActionsFactory actionsFactory) {
+		this.actionsFactory = actionsFactory;
 	}
 
 	@NonNull
-	public static CreateGroupContract.Presenter provideCreateGroupPresenter(CreateGroupContract.View view) {
-		return new CreateGroupPresenter(view, provideCreateGroupAction(), provideGetMyUserAction());
+	public CreateUserContract.Presenter provideCreateUserPresenter(CreateUserContract.View view) {
+		return new CreateUserPresenter(view, actionsFactory.provideSaveUser());
 	}
 
 	@NonNull
-	public static UserListContract.Presenter provideUserListPresenter(View view, List<User> preselectedUsers) {
-		return new UserListPresenter(view, preselectedUsers, provideGetUsersAction());
+	public CreateGroupContract.Presenter provideCreateGroupPresenter(CreateGroupContract.View view) {
+		return new CreateGroupPresenter(view, actionsFactory.provideCreateGroup(), actionsFactory.provideGetMyUser());
 	}
 
 	@NonNull
-	public static MainActivityContract.Presenter provideMainActivityPresenter(MainActivityContract.View view) {
-		return new MainActivityPresenter(view, getMyGroups);
+	public UserListContract.Presenter provideUserListPresenter(View view, List<User> preselectedUsers) {
+		return new UserListPresenter(view, preselectedUsers, actionsFactory.provideGetUsers());
 	}
 
-	public static CreateEventContract.Presenter provideCreateEventPresenter(CreateEventContract.View view) {
-		return new CreateEventPresenter(view, getMyGroups, provideSaveEvent());
+	@NonNull
+	public MainActivityContract.Presenter provideMainActivityPresenter(MainActivityContract.View view) {
+		return new MainActivityPresenter(view, actionsFactory.provideGetMyGroups());
 	}
 
-	public static GroupsFragmentPresenter provideGroupsFragmentPresenter(GroupsFragment view) {
-		return new GroupsFragmentPresenter(view, provideGetMyGroupsAction());
+	public CreateEventContract.Presenter provideCreateEventPresenter(CreateEventContract.View view) {
+		return new CreateEventPresenter(view, actionsFactory.provideGetMyGroups(), actionsFactory.provideSaveEvent());
 	}
 
-	public static EventsFragmentPresenter provideEventsFragmentPresenter(EventsFragment view) {
-		return new EventsFragmentPresenter(view, provideGetMyEvents());
+	public GroupsFragmentPresenter provideGroupsFragmentPresenter(GroupsFragment view) {
+		return new GroupsFragmentPresenter(view, actionsFactory.provideGetMyGroups());
+	}
+
+	public EventsFragmentPresenter provideEventsFragmentPresenter(EventsFragment view) {
+		return new EventsFragmentPresenter(view, actionsFactory.provideGetMyEvents());
+	}
+
+	public StartingActivityPresenter provideStartingActivityPresenter(StartApplication startApplication) {
+		return new StartingActivityPresenter(startApplication);
 	}
 }
