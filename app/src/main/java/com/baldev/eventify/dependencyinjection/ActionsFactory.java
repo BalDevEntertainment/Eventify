@@ -1,6 +1,8 @@
 package com.baldev.eventify.dependencyinjection;
 
 
+import android.content.SharedPreferences;
+
 import com.baldev.eventify.domain.actions.StartApplication;
 import com.baldev.eventify.domain.actions.events.GetMyEvents;
 import com.baldev.eventify.domain.actions.events.SaveEvent;
@@ -56,7 +58,7 @@ public class ActionsFactory {
 		return new SaveEvent(ServicesFactory.provideCreateEventService(), ServicesFactory.provideSaveEvent());
 	}
 
-	public StartApplication startApplication() {
-		return new StartApplication();
+	public StartApplication provideStartApplication(SharedPreferences sharedPreferences) {
+		return new StartApplication(sharedPreferences);
 	}
 }
