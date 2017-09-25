@@ -19,12 +19,12 @@ public class StartingActivityPresenter implements StartingActivityContract.Prese
 	public void OnViewCreated(View view) {
 		startApplication.execute(new ApplicationStartCallback() {
 			@Override
-			public void onUserFound() {
+			public void onApplicationStartedSuccessfully() {
 				view.startMainActivity();
 			}
 
 			@Override
-			public void OnUserNotFound() {
+			public void onApplicationStartFailed() {
 				view.startCreateUserActivity();
 			}
 		});

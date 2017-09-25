@@ -18,32 +18,61 @@ public class StartApplication {
 		if (isUserSavedInSharedPreferences()) {
 			initializeDatabase(callback);
 		} else {
-			callback.OnUserNotFound();
+			callback.onApplicationStartFailed();
 		}
 	}
 
 	private void initializeDatabase(final ApplicationStartCallback callback) {
-		String myUserId = sharedPreferences.getString(USER_ID_KEY, null);
-		RepositoriesFactory.provideUsersRepository().initialize(myUserId,
-				new DefaultRepositoryInitializationCallback(callback));
+		initializeUserDatabase(new InitializeRepositoriesCallback() {
+			@Override
+			public void onRepositoryInitialized() {
+				initializeGroupDatabase(new InitializeRepositoriesCallback() {
+					@Override
+					public void onRepositoryInitialized() {
+						callback.onApplicationStartedSuccessfully();
+					}
+
+					@Override
+					public void onRepositoryInitializationFailed() {
+						callback.onApplicationStartFailed();
+					}
+				});
+			}
+
+			@Override
+			public void onRepositoryInitializationFailed() {
+				callback.onApplicationStartFailed();
+			}
+		});
 	}
 
-	private class DefaultRepositoryInitializationCallback implements InitializeRepositoriesCallback {
-		private ApplicationStartCallback callback;
+	private void initializeGroupDatabase(InitializeRepositoriesCallback callback) {
+		RepositoriesFactory.provideGroupsRepository().initialize(new InitializeRepositoriesCallback() {
+			@Override
+			public void onRepositoryInitialized() {
+				callback.onRepositoryInitialized();
+			}
 
-		private DefaultRepositoryInitializationCallback(ApplicationStartCallback callback) {
-			this.callback = callback;
-		}
+			@Override
+			public void onRepositoryInitializationFailed() {
+				callback.onRepositoryInitializationFailed();
+			}
+		});
+	}
 
-		@Override
-		public void onDatabaseInitialized() {
-			callback.onUserFound();
-		}
+	private void initializeUserDatabase(InitializeRepositoriesCallback callback) {
+		String myUserId = sharedPreferences.getString(USER_ID_KEY, null);
+		RepositoriesFactory.provideUsersRepository().initialize(myUserId, new InitializeRepositoriesCallback() {
+			@Override
+			public void onRepositoryInitialized() {
+				callback.onRepositoryInitialized();
+			}
 
-		@Override
-		public void onUserNotFound() {
-			callback.OnUserNotFound();
-		}
+			@Override
+			public void onRepositoryInitializationFailed() {
+				callback.onRepositoryInitializationFailed();
+			}
+		});
 	}
 
 	private boolean isUserSavedInSharedPreferences() {

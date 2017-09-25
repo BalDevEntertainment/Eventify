@@ -1,7 +1,8 @@
 package com.baldev.eventify.dependencyinjection;
 
 
-import com.baldev.eventify.domain.repositories.FirebaseUserRepository;
+import com.baldev.eventify.infrastructure.repositories.FirebaseGroupRepository;
+import com.baldev.eventify.infrastructure.repositories.FirebaseUserRepository;
 import com.baldev.eventify.infrastructure.repositories.CacheGroupsRepository;
 
 public abstract class FactoryProvider {
@@ -18,7 +19,7 @@ public abstract class FactoryProvider {
 
 	public static ActionsFactory actionsFactory() {
 		if (actionsFactory == null) {
-			actionsFactory = new ActionsFactory(CacheGroupsRepository.getInstance(), FirebaseUserRepository.getInstance());
+			actionsFactory = new ActionsFactory(FirebaseGroupRepository.getInstance(), FirebaseUserRepository.getInstance());
 		}
 		return actionsFactory;
 	}

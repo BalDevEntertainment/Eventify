@@ -1,9 +1,11 @@
-package com.baldev.eventify.domain.repositories;
+package com.baldev.eventify.infrastructure.repositories;
 
 import com.baldev.eventify.domain.actions.users.SaveUserCallback;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.entities.UserCreationRequest;
 import com.baldev.eventify.domain.exceptions.InvalidUserNameException;
+import com.baldev.eventify.domain.repositories.GetUsersCallback;
+import com.baldev.eventify.domain.repositories.UsersRepository;
 import com.baldev.eventify.infrastructure.depdendencyinjection.RepositoriesFactory.InitializeRepositoriesCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,26 +67,30 @@ public class FirebaseUserRepository implements UsersRepository {
 		this.database.child(USERS_KEY).addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
-				for (DataSnapshot userDataSnapshot : dataSnapshot.getChildren()) {
-					if (userDataSnapshot.hasChild(ID_KEY)) {
-						if (userDataSnapshot.child(ID_KEY).getValue().equals(myUserId)) {
-							myUser = userDataSnapshot.getValue(User.class);
-							break;
-						}
-					}
-				}
+				myUser = getMyUser(dataSnapshot, myUserId);
 				if (myUser != null) {
-					callback.onDatabaseInitialized();
+					callback.onRepositoryInitialized();
 				} else {
-					callback.onUserNotFound();
+					callback.onRepositoryInitializationFailed();
 				}
 			}
 
 			@Override
 			public void onCancelled(DatabaseError databaseError) {
-
+				callback.onRepositoryInitializationFailed();
 			}
 		});
+	}
+
+	private User getMyUser(DataSnapshot dataSnapshot, String myUserId) {
+		for (DataSnapshot userDataSnapshot : dataSnapshot.getChildren()) {
+			if (userDataSnapshot.hasChild(ID_KEY)) {
+				if (userDataSnapshot.child(ID_KEY).getValue().equals(myUserId)) {
+					return userDataSnapshot.getValue(User.class);
+				}
+			}
+		}
+		return null;
 	}
 
 }

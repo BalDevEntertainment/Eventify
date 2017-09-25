@@ -52,12 +52,12 @@ public class GroupTest {
 
 	@Test(expected = InvalidGroupNameException.class)
 	public void givenInvalidGroupName_WhenNewGroup_ThenThrowInvalidGroupNameException() throws InvalidGroupNameException {
-		new Group("", userList);
+		new Group(newGroupId, "", userList);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullUserList_WhenNewGroup_ThenThrowNullPointerException() throws InvalidGroupNameException {
-		new Group(validGroupName, null);
+		new Group(newGroupId, validGroupName, null);
 	}
 
 	@Test(expected = UserNotFoundException.class)
@@ -69,7 +69,7 @@ public class GroupTest {
 
 	@NonNull
 	private Group buildValidGroup() throws InvalidGroupNameException {
-		return new Group(validGroupName, userList);
+		return new Group(newGroupId, validGroupName, userList);
 	}
 
 	@Test()

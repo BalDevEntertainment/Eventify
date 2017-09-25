@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public class DummyGroup extends Group {
-	public DummyGroup(List<User> users) throws InvalidGroupNameException {
-		super("Dummy Group", users);
+	public DummyGroup(String groupId, List<User> users) throws InvalidGroupNameException {
+		super(groupId, "Dummy Group", users);
 	}
 }

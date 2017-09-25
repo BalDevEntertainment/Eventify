@@ -5,6 +5,7 @@ import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.entities.User;
 import com.baldev.eventify.domain.exceptions.InvalidGroupNameException;
 import com.baldev.eventify.domain.repositories.GroupsRepository;
+import com.baldev.eventify.infrastructure.depdendencyinjection.RepositoriesFactory.InitializeRepositoriesCallback;
 import com.google.common.base.Optional;
 
 import java.util.ArrayList;
@@ -31,6 +32,11 @@ public class CacheGroupsRepository implements GroupsRepository {
 	}
 
 	@Override
+	public void initialize(InitializeRepositoriesCallback callback) {
+
+	}
+
+	@Override
 	public List<Group> getGroupsByUser(User user) {
 		return Optional.fromNullable(groupsMap.get(user))
 				.or(new ArrayList<>());
@@ -38,7 +44,7 @@ public class CacheGroupsRepository implements GroupsRepository {
 
 	@Override
 	public Group createGroup(User user, String groupName, List<User> users) throws InvalidGroupNameException {
-		Group group = new Group(groupName, users);
+		Group group = new Group("DummyId", groupName, users);
 		if (groupsMap.containsKey(user)) {
 			groupsMap.get(user).add(group);
 		} else {

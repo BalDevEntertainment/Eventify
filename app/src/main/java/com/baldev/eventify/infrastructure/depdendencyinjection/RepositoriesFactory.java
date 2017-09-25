@@ -4,11 +4,11 @@ package com.baldev.eventify.infrastructure.depdendencyinjection;
 import android.support.annotation.NonNull;
 
 import com.baldev.eventify.domain.repositories.EventsRepository;
-import com.baldev.eventify.domain.repositories.FirebaseUserRepository;
 import com.baldev.eventify.domain.repositories.GroupsRepository;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 import com.baldev.eventify.infrastructure.repositories.CacheEventsRepository;
-import com.baldev.eventify.infrastructure.repositories.CacheGroupsRepository;
+import com.baldev.eventify.infrastructure.repositories.FirebaseGroupRepository;
+import com.baldev.eventify.infrastructure.repositories.FirebaseUserRepository;
 
 public abstract class RepositoriesFactory {
 
@@ -19,7 +19,7 @@ public abstract class RepositoriesFactory {
 
 	@NonNull
 	public static GroupsRepository provideGroupsRepository() {
-		return CacheGroupsRepository.getInstance();
+		return FirebaseGroupRepository.getInstance();
 	}
 
 	public static EventsRepository provideEventsRepository() {
@@ -27,8 +27,8 @@ public abstract class RepositoriesFactory {
 	}
 
 	public interface InitializeRepositoriesCallback {
-		void onDatabaseInitialized();
+		void onRepositoryInitialized();
 
-		void onUserNotFound();
+		void onRepositoryInitializationFailed();
 	}
 }

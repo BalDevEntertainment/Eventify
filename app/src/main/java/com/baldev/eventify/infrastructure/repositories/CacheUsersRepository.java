@@ -68,7 +68,7 @@ public class CacheUsersRepository implements UsersRepository {
 
 	@Override
 	public void initialize(String myUserId, InitializeRepositoriesCallback callback) {
-		callback.onDatabaseInitialized();
+		callback.onRepositoryInitialized();
 	}
 
 	private User getUserById(String id) {
