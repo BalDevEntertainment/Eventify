@@ -16,38 +16,52 @@ public class StartApplication {
 
 	public void execute(ApplicationStartCallback callback) {
 		if (isUserSavedInSharedPreferences()) {
-			initializeDatabase(callback);
+			initializeRepositories(new InitializeRepositoriesCallback() {
+				@Override
+				public void onRepositoryInitialized() {
+					callback.onApplicationStartedSuccessfully();
+				}
+
+				@Override
+				public void onRepositoryInitializationFailed() {
+					callback.onApplicationStartFailed();
+				}
+			});
 		} else {
 			callback.onApplicationStartFailed();
 		}
 	}
 
-	private void initializeDatabase(final ApplicationStartCallback callback) {
-		initializeUserDatabase(new InitializeRepositoriesCallback() {
+	private void initializeRepositories(final InitializeRepositoriesCallback callback) {
+		initializeUserRepository(new InitializeRepositoriesCallback() {
 			@Override
 			public void onRepositoryInitialized() {
-				initializeGroupDatabase(new InitializeRepositoriesCallback() {
-					@Override
-					public void onRepositoryInitialized() {
-						callback.onApplicationStartedSuccessfully();
-					}
-
-					@Override
-					public void onRepositoryInitializationFailed() {
-						callback.onApplicationStartFailed();
-					}
-				});
+				onUsersRepositoryInitialized(callback);
 			}
 
 			@Override
 			public void onRepositoryInitializationFailed() {
-				callback.onApplicationStartFailed();
+				callback.onRepositoryInitializationFailed();
 			}
 		});
 	}
 
-	private void initializeGroupDatabase(InitializeRepositoriesCallback callback) {
-		RepositoriesFactory.provideGroupsRepository().initialize(new InitializeRepositoriesCallback() {
+	private void onUsersRepositoryInitialized(final InitializeRepositoriesCallback callback) {
+		initializeGroupRepository(new InitializeRepositoriesCallback() {
+			@Override
+			public void onRepositoryInitialized() {
+				onGroupsRepositoryInitialized(callback);
+			}
+
+			@Override
+			public void onRepositoryInitializationFailed() {
+				callback.onRepositoryInitializationFailed();
+			}
+		});
+	}
+
+	private void onGroupsRepositoryInitialized(final InitializeRepositoriesCallback callback) {
+		initializeEventsRepository(new InitializeRepositoriesCallback() {
 			@Override
 			public void onRepositoryInitialized() {
 				callback.onRepositoryInitialized();
@@ -60,19 +74,41 @@ public class StartApplication {
 		});
 	}
 
-	private void initializeUserDatabase(InitializeRepositoriesCallback callback) {
+	private void initializeUserRepository(InitializeRepositoriesCallback callback) {
 		String myUserId = sharedPreferences.getString(USER_ID_KEY, null);
-		RepositoriesFactory.provideUsersRepository().initialize(myUserId, new InitializeRepositoriesCallback() {
-			@Override
-			public void onRepositoryInitialized() {
-				callback.onRepositoryInitialized();
-			}
+		RepositoriesFactory.provideUsersRepository().initialize(myUserId,
+				new DefaultRepositoryInitializationCallback(callback));
+	}
 
-			@Override
-			public void onRepositoryInitializationFailed() {
-				callback.onRepositoryInitializationFailed();
-			}
-		});
+	private void initializeGroupRepository(InitializeRepositoriesCallback callback) {
+		RepositoriesFactory.provideGroupsRepository().initialize(new DefaultRepositoryInitializationCallback(callback));
+	}
+
+	private void initializeEventsRepository(final InitializeRepositoriesCallback callback) {
+		RepositoriesFactory.provideGroupsRepository().initialize(new DefaultRepositoryInitializationCallback(callback));
+	}
+
+
+	private class Wrapper {
+
+	}
+
+	private class DefaultRepositoryInitializationCallback implements InitializeRepositoriesCallback {
+		private InitializeRepositoriesCallback callback;
+
+		private DefaultRepositoryInitializationCallback(InitializeRepositoriesCallback callback) {
+			this.callback = callback;
+		}
+
+		@Override
+		public void onRepositoryInitialized() {
+			callback.onRepositoryInitialized();
+		}
+
+		@Override
+		public void onRepositoryInitializationFailed() {
+			callback.onRepositoryInitializationFailed();
+		}
 	}
 
 	private boolean isUserSavedInSharedPreferences() {
