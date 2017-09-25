@@ -16,98 +16,54 @@ public class StartApplication {
 
 	public void execute(ApplicationStartCallback callback) {
 		if (isUserSavedInSharedPreferences()) {
-			initializeRepositories(new InitializeRepositoriesCallback() {
-				@Override
-				public void onRepositoryInitialized() {
-					callback.onApplicationStartedSuccessfully();
-				}
-
-				@Override
-				public void onRepositoryInitializationFailed() {
-					callback.onApplicationStartFailed();
-				}
-			});
+			initializeRepositories(callback);
 		} else {
 			callback.onApplicationStartFailed();
 		}
 	}
 
-	private void initializeRepositories(final InitializeRepositoriesCallback callback) {
-		initializeUserRepository(new InitializeRepositoriesCallback() {
-			@Override
-			public void onRepositoryInitialized() {
-				onUsersRepositoryInitialized(callback);
-			}
-
-			@Override
-			public void onRepositoryInitializationFailed() {
-				callback.onRepositoryInitializationFailed();
-			}
-		});
+	private void initializeRepositories(final ApplicationStartCallback callback) {
+		initializeUserRepository(
+				initializeGroupsRepository(
+						initializeEventsRepository(callback::onApplicationStartedSuccessfully, callback), callback), callback);
 	}
 
-	private void onUsersRepositoryInitialized(final InitializeRepositoriesCallback callback) {
-		initializeGroupRepository(new InitializeRepositoriesCallback() {
-			@Override
-			public void onRepositoryInitialized() {
-				onGroupsRepositoryInitialized(callback);
-			}
-
-			@Override
-			public void onRepositoryInitializationFailed() {
-				callback.onRepositoryInitializationFailed();
-			}
-		});
-	}
-
-	private void onGroupsRepositoryInitialized(final InitializeRepositoriesCallback callback) {
-		initializeEventsRepository(new InitializeRepositoriesCallback() {
-			@Override
-			public void onRepositoryInitialized() {
-				callback.onRepositoryInitialized();
-			}
-
-			@Override
-			public void onRepositoryInitializationFailed() {
-				callback.onRepositoryInitializationFailed();
-			}
-		});
-	}
-
-	private void initializeUserRepository(InitializeRepositoriesCallback callback) {
+	private void initializeUserRepository(RepositoryInitializationCallback repositoryInitializationCallback, ApplicationStartCallback callback) {
 		String myUserId = sharedPreferences.getString(USER_ID_KEY, null);
-		RepositoriesFactory.provideUsersRepository().initialize(myUserId,
-				new DefaultRepositoryInitializationCallback(callback));
+		RepositoriesFactory.provideUsersRepository().initialize(myUserId, new DefaultRepositoryInitializationCallback(repositoryInitializationCallback, callback));
 	}
 
-	private void initializeGroupRepository(InitializeRepositoriesCallback callback) {
-		RepositoriesFactory.provideGroupsRepository().initialize(new DefaultRepositoryInitializationCallback(callback));
+	private RepositoryInitializationCallback initializeGroupsRepository(RepositoryInitializationCallback repositoryInitializationCallback, ApplicationStartCallback callback) {
+		return () -> RepositoriesFactory.provideGroupsRepository().initialize(new DefaultRepositoryInitializationCallback(repositoryInitializationCallback, callback));
 	}
 
-	private void initializeEventsRepository(final InitializeRepositoriesCallback callback) {
-		RepositoriesFactory.provideGroupsRepository().initialize(new DefaultRepositoryInitializationCallback(callback));
+	private RepositoryInitializationCallback initializeEventsRepository(RepositoryInitializationCallback repositoryInitializationCallback, ApplicationStartCallback callback) {
+		return () -> RepositoriesFactory.provideEventsRepository().initialize(new DefaultRepositoryInitializationCallback(repositoryInitializationCallback, callback));
 	}
 
-
-	private class Wrapper {
-
+	private interface RepositoryInitializationCallback {
+		void onInitializationComplete();
 	}
 
 	private class DefaultRepositoryInitializationCallback implements InitializeRepositoriesCallback {
-		private InitializeRepositoriesCallback callback;
 
-		private DefaultRepositoryInitializationCallback(InitializeRepositoriesCallback callback) {
+		private ApplicationStartCallback callback;
+		private RepositoryInitializationCallback repositoryInitializationCallback;
+
+		private DefaultRepositoryInitializationCallback(RepositoryInitializationCallback repositoryInitializationCallback,
+														ApplicationStartCallback callback) {
+			this.repositoryInitializationCallback = repositoryInitializationCallback;
 			this.callback = callback;
 		}
 
 		@Override
 		public void onRepositoryInitialized() {
-			callback.onRepositoryInitialized();
+			repositoryInitializationCallback.onInitializationComplete();
 		}
 
 		@Override
 		public void onRepositoryInitializationFailed() {
-			callback.onRepositoryInitializationFailed();
+			this.callback.onApplicationStartFailed();
 		}
 	}
 

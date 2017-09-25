@@ -8,10 +8,14 @@ import java.util.Date;
 @IgnoreExtraProperties
 public class Event {
 	private String id;
-	private final Group group;
-	private final String description;
-	private final Date date;
-	private final int duration;
+	private Group group;
+	private String description;
+	private Date date;
+	private int duration;
+
+	public Event() {
+
+	}
 
 	public Event(String id, Group group, String description, Date date, int duration) {
 		this.id = id;
