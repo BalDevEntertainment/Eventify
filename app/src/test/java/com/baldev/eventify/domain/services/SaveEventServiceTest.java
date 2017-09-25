@@ -1,8 +1,7 @@
 package com.baldev.eventify.domain.services;
 
-import com.baldev.eventify.domain.entities.Event;
-import com.baldev.eventify.domain.repositories.EventsRepository;
 import com.baldev.eventify.domain.entities.Group;
+import com.baldev.eventify.domain.repositories.EventsRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +20,18 @@ public class SaveEventServiceTest {
 	private EventsRepository eventsRepository;
 
 	@Mock
-	private Event event;
+	private Group group;
+	@Mock
+	private String description;
+	@Mock
+	private Date date;
+	@Mock
+	private int duration;
 
 	@Test
-	public void whenSaveEvent_ThenSaveRepositoryIsCalledOnce () {
+	public void whenSaveEvent_ThenSaveRepositoryIsCalledOnce() {
 		SaveEventService saveEventService = new SaveEventService(eventsRepository);
-		saveEventService.saveEvent(event);
-		verify(eventsRepository, times(1)).saveEvent(event);
+		saveEventService.saveEvent(group, description, date, duration);
+		verify(eventsRepository, times(1)).saveEvent(group, description, date, duration);
 	}
 }

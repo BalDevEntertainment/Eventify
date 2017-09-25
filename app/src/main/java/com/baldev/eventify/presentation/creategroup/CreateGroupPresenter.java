@@ -26,7 +26,7 @@ public class CreateGroupPresenter implements Presenter {
 		this.getMyUser = getMyUser;
 		this.createGroup = createGroup;
 		this.view = view;
-		initializeUsersList();
+		initializeUsersList(users);
 		initializeUserListAdapter();
 	}
 
@@ -42,7 +42,7 @@ public class CreateGroupPresenter implements Presenter {
 
 	@Override
 	public void onSelectedUsersRetrieved(List<User> users) {
-		initializeUsersList();
+		initializeUsersList(users);
 		initializeUserListAdapter();
 	}
 
@@ -55,8 +55,9 @@ public class CreateGroupPresenter implements Presenter {
 		view.setUserListToAdapter(users);
 	}
 
-	private void initializeUsersList() {
-		users.clear();
-		users.add(getMyUser.execute());
+	private void initializeUsersList(List<User> newUsers) {
+		this.users.clear();
+		this.users.add(getMyUser.execute());
+		this.users.addAll(newUsers);
 	}
 }

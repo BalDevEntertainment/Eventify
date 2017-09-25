@@ -5,7 +5,6 @@ import com.baldev.eventify.domain.actions.events.SaveEvent;
 import com.baldev.eventify.domain.entities.Event;
 import com.baldev.eventify.domain.entities.Group;
 import com.baldev.eventify.domain.exceptions.NoGroupSelectedException;
-import com.baldev.eventify.domain.services.CreateEventService;
 import com.baldev.eventify.domain.services.SaveEventService;
 
 import org.junit.Test;
@@ -17,7 +16,6 @@ import java.util.Date;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SaveEventTest {
@@ -30,28 +28,19 @@ public class SaveEventTest {
 	private Date date;
 	@Mock
 	private Event event;
-	@Mock
-	private CreateEventService createEventService;
 
 	private int duration = 1;
 	private String description = "Event description";
 
 	@Test(expected = NullPointerException.class)
-	public void givenNullCreateEventService_whenSaveEvent_ThenThrowNullPointerException() {
-		new SaveEvent(null, saveEventService);
-	}
-
-	@Test(expected = NullPointerException.class)
 	public void givenNullSaveEventService_whenSaveEvent_ThenThrowNullPointerException() {
-		new SaveEvent(createEventService, null);
+		new SaveEvent(null);
 	}
 
 	@Test
 	public void whenSaveEvent_ThenSaveEventServiceIsCalledOnce() throws NoGroupSelectedException {
-		SaveEvent saveEvent = new SaveEvent(createEventService, saveEventService);
-		when(createEventService.createEvent(group, description, date, duration)).thenReturn(event);
+		SaveEvent saveEvent = new SaveEvent(saveEventService);
 		saveEvent.execute(group, description, date, duration);
-		verify(createEventService, times(1)).createEvent(group, description, date, duration);
-		verify(saveEventService, times(1)).saveEvent(event);
+		verify(saveEventService, times(1)).saveEvent(group, description, date, duration);
 	}
 }

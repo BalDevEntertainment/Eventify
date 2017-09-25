@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FirebaseUserRepository implements UsersRepository {
@@ -54,7 +55,20 @@ public class FirebaseUserRepository implements UsersRepository {
 
 	@Override
 	public void getUsers(GetUsersCallback getUsersCallback) {
+		this.database.child(USERS_KEY).addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				List<User> users = new ArrayList<>();
+				for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+					users.add(snapshot.getValue(User.class));
+				}
+				getUsersCallback.onUsersRetrieved(users);
+			}
 
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+			}
+		});
 	}
 
 	@Override

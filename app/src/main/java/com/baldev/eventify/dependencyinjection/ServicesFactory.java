@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.baldev.eventify.domain.repositories.UsersRepository;
 import com.baldev.eventify.domain.services.AddUsersToGroupService;
-import com.baldev.eventify.domain.services.CreateEventService;
 import com.baldev.eventify.domain.services.CreateUserService;
 import com.baldev.eventify.domain.services.GroupsService;
 import com.baldev.eventify.domain.services.SaveEventService;
@@ -37,9 +36,5 @@ public abstract class ServicesFactory {
 
 	public static SaveEventService provideSaveEvent() {
 		return new SaveEventService(RepositoriesFactory.provideEventsRepository());
-	}
-
-	public static CreateEventService provideCreateEventService() {
-		return new CreateEventService();
 	}
 }

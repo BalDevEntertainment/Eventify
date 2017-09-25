@@ -55,7 +55,7 @@ public class ActionsFactory {
 	}
 
 	public SaveEvent provideSaveEvent() {
-		return new SaveEvent(ServicesFactory.provideCreateEventService(), ServicesFactory.provideSaveEvent());
+		return new SaveEvent(ServicesFactory.provideSaveEvent());
 	}
 
 	public StartApplication provideStartApplication(SharedPreferences sharedPreferences) {

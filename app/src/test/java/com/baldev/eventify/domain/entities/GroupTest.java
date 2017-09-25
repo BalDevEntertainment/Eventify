@@ -29,6 +29,8 @@ public class GroupTest {
 
 	@Mock
 	private User differentUser;
+	@Mock
+	private String groupId;
 	private String validGroupName = "Group Name";
 
 	@Before
@@ -52,12 +54,12 @@ public class GroupTest {
 
 	@Test(expected = InvalidGroupNameException.class)
 	public void givenInvalidGroupName_WhenNewGroup_ThenThrowInvalidGroupNameException() throws InvalidGroupNameException {
-		new Group(newGroupId, "", userList);
+		new Group(groupId, "", userList);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void givenNullUserList_WhenNewGroup_ThenThrowNullPointerException() throws InvalidGroupNameException {
-		new Group(newGroupId, validGroupName, null);
+		new Group(groupId, validGroupName, null);
 	}
 
 	@Test(expected = UserNotFoundException.class)
@@ -69,7 +71,7 @@ public class GroupTest {
 
 	@NonNull
 	private Group buildValidGroup() throws InvalidGroupNameException {
-		return new Group(newGroupId, validGroupName, userList);
+		return new Group(groupId, validGroupName, userList);
 	}
 
 	@Test()

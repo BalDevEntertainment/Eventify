@@ -7,6 +7,7 @@ import com.baldev.eventify.domain.repositories.EventsRepository;
 import com.baldev.eventify.domain.repositories.GroupsRepository;
 import com.baldev.eventify.domain.repositories.UsersRepository;
 import com.baldev.eventify.infrastructure.repositories.CacheEventsRepository;
+import com.baldev.eventify.infrastructure.repositories.FirebaseEventsRepository;
 import com.baldev.eventify.infrastructure.repositories.FirebaseGroupRepository;
 import com.baldev.eventify.infrastructure.repositories.FirebaseUserRepository;
 
@@ -23,7 +24,7 @@ public abstract class RepositoriesFactory {
 	}
 
 	public static EventsRepository provideEventsRepository() {
-		return CacheEventsRepository.getInstance();
+		return FirebaseEventsRepository.getInstance();
 	}
 
 	public interface InitializeRepositoriesCallback {
