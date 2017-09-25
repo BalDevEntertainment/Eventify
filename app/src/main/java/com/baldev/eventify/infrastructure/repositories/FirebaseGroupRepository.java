@@ -65,6 +65,7 @@ public class FirebaseGroupRepository implements GroupsRepository {
 		String newGroupId = database.child(GROUPS_KEY).push().getKey();
 		Group group = new Group(newGroupId, groupName, users);
 		database.child(GROUPS_KEY).child(group.getId()).setValue(group);
+		groups.add(group);
 		return group;
 	}
 }
